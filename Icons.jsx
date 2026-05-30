@@ -65,5 +65,16 @@ const IconPlay = (p) => <Icon {...p}><path d="m6 4 14 8-14 8z" fill="currentColo
 const IconMenu = (p) => <Icon {...p}>
   <path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/>
 </Icon>;
+const IconMail = (p) => <Icon {...p}>
+  <rect width="20" height="16" x="2" y="4" rx="2"/>
+  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+</Icon>;
+const IconMapPin = (p) => <Icon {...p}>
+  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+  <circle cx="12" cy="10" r="3"/>
+</Icon>;
+const IconClock = (p) => <Icon {...p}>
+  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+</Icon>;
 
-window.VIcons = { IconGlobe, IconEye, IconBox, IconCamera, IconBuilding, IconHome, IconCap, IconHotel, IconChat, IconChart, IconArrowRight, IconCheck, IconSparkle, IconPlay, IconMenu };
+window.VIcons = { IconGlobe, IconEye, IconBox, IconCamera, IconBuilding, IconHome, IconCap, IconHotel, IconChat, IconChart, IconArrowRight, IconCheck, IconSparkle, IconPlay, IconMenu, IconMail, IconMapPin, IconClock };

@@ -1,28 +1,6 @@
-const { IconArrowRight, IconSparkle } = window.VIcons;
-
 function FooterCTA() {
   return (
     <>
-      <section id="contact" className="v-cta">
-        <div className="v-cta__glow"/>
-        <div className="v-wrap v-cta__inner">
-          <div className="v-eyebrow v-eyebrow--crimson"><IconSparkle size={14}/> The trojan horse</div>
-          <h2 className="v-cta__h">
-            Pick a landmark.<br/>
-            <span className="v-serif">We'll digitize it for free.</span>
-          </h2>
-          <p className="v-cta__p">
-            One free virtual capture of a Pakistani landmark per quarter — yours
-            to embed, ours for case studies. Tell us which one.
-          </p>
-          <div className="v-cta__row">
-            <a href="mailto:viylsavirtualtour@gmail.com" className="v-btn v-btn--primary v-btn--lg">
-              Nominate a landmark <IconArrowRight size={18}/>
-            </a>
-            <a href="mailto:viylsavirtualtour@gmail.com" className="v-btn v-btn--ghost-dark v-btn--lg">Or book a 10-min demo</a>
-          </div>
-        </div>
-      </section>
       <footer className="v-footer">
         <div className="v-wrap v-footer__inner">
             <div className="v-footer__brand">

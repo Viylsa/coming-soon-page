@@ -26,11 +26,11 @@ function Hero() {
             </a>
           </div>
           <div className="v-hero__strip">
-            <span><b>14</b> rooms</span>
+            <span><b>360°</b> tours</span>
             <span className="v-hero__dot">·</span>
-            <span><b data-count="1204">1,204</b> visits this month</span>
+            <span>AI guide in <b>English &amp; Urdu</b></span>
             <span className="v-hero__dot">·</span>
-            <span><b>4m 12s</b> avg dwell</span>
+            <span><b>Live</b> visitor analytics</span>
           </div>
         </div>
 
@@ -53,13 +53,13 @@ function Hero() {
               </div>
               <div className="v-hpv__url">
                 <span className="v-hpv__lock">●</span>
-                viylsa.pk/tour/nutech
+                viylsa.app/tour/campus
               </div>
             </div>
             <div className="v-hpv__stage">
               <img
                 src="assets/screens/tour-building.png"
-                alt="NUTECH academic block — 360° tour"
+                alt="University academic block — 360° tour"
                 className="v-hpv__photo"
               />
               {/* Live viewers badge */}

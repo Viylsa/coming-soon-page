@@ -1,6 +1,5 @@
-/* Live tour player — embeds the real ui_kits/tour-player as an iframe,
-   so the marketing site shows VIYLSA's actual product UI (not a mock).
-   Any update to the tour-player kit flows here automatically. */
+/* Live tour player — embeds VIYLSA's actual hosted tour as an iframe,
+   so the marketing site shows the real product UI, not a mock. */
 
 function LiveTourPreview() {
   const [loaded, setLoaded] = React.useState(false);
@@ -23,7 +22,7 @@ function LiveTourPreview() {
             </div>
             <div className="v-tdemo__url">
               <span className="v-tdemo__lock">●</span>
-              razee4315.github.io/nutech-tour-threejs
+              viylsa.app/tour/campus
             </div>
             <div className="v-tdemo__spacer"></div>
           </div>
@@ -33,7 +32,7 @@ function LiveTourPreview() {
             <iframe
               className="v-tdemo__frame"
               src="https://razee4315.github.io/nutech-tour-threejs/"
-              title="VIYLSA Tour Player — NUTECH"
+              title="VIYLSA Tour Player — live campus tour"
               loading="lazy"
               allow="fullscreen; xr-spatial-tracking; accelerometer; gyroscope"
               allowFullScreen

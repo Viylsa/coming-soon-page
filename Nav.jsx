@@ -61,7 +61,7 @@ function Nav() {
         </ul>
 
         <div className="v-nav__cta">
-          <a href="#contact" className="v-btn v-btn--link">Sign in</a>
+          <a href="#contact" className="v-btn v-btn--link">Contact</a>
           <a href="#contact" className="v-btn v-btn--primary v-btn--sm">
             Book a demo <IconArrowRight size={16}/>
           </a>

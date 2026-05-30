@@ -1,6 +1,6 @@
 const { IconArrowRight, IconPlay } = window.VIcons;
 
-/* Single featured showcase — VIYLSA's one real, live tour (NUTECH).
+/* Single featured showcase — VIYLSA's one real, live tour.
    No placeholder venues: when there's one real thing, show it big. */
 function TourGallery() {
   const stats = [
@@ -27,7 +27,7 @@ function TourGallery() {
             rel="noopener"
             className="v-showcase__media"
           >
-            <img src="assets/screens/tour-building.png" alt="NUTECH campus — 360° virtual tour"/>
+            <img src="assets/screens/tour-building.png" alt="University campus — 360° virtual tour"/>
             <span className="v-showcase__badge">360° · Live</span>
             <span className="v-showcase__play"><IconPlay size={22}/></span>
             <span className="v-showcase__hint">Click to walk the campus</span>
@@ -35,10 +35,9 @@ function TourGallery() {
 
           <div className="v-showcase__body">
             <div className="v-showcase__kicker">University · Islamabad</div>
-            <h3 className="v-showcase__title">NUTECH Campus</h3>
+            <h3 className="v-showcase__title">Our first live tour</h3>
             <p className="v-showcase__p">
-              Our first production tour: the National University of Technology
-              (NUTECH) in Islamabad. Walk from the main gate to the
+              A real university campus in Islamabad. Walk from the main gate to the
               academic block and into a lecture hall — with an AI guide answering
               questions along the way.
             </p>
