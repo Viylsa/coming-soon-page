@@ -28,7 +28,7 @@ function LiveTourPreview() {
           </div>
 
           <div className="v-tdemo__stage">
-            {!loaded && <div className="v-tdemo__loading">Loading tour…</div>}
+            {!loaded && <div className="v-tdemo__loading"><span className="v-tdemo__loading-shimmer"></span>Loading the live tour…</div>}
             <iframe
               className="v-tdemo__frame"
               src="https://razee4315.github.io/nutech-tour-threejs/"
@@ -38,6 +38,11 @@ function LiveTourPreview() {
               allowFullScreen
               onLoad={() => setLoaded(true)}
             />
+            {loaded && (
+              <div className="v-tdemo__hint">
+                <span className="v-tdemo__hint-ic">⟷</span> Tap &amp; drag to look around
+              </div>
+            )}
           </div>
         </div>
 

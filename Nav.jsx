@@ -20,10 +20,10 @@ function Nav() {
   }, [open]);
 
   const links = [
-    ['Product', '#how'],
-    ['Tours', '#tours'],
+    ['Tour', '#live-tour'],
+    ['AI guide', '#ai-guide'],
+    ['How it works', '#how'],
     ['Pricing', '#pricing'],
-    ['Team', '#team'],
   ];
 
   const moveIndicator = (e) => {

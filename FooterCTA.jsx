@@ -13,11 +13,11 @@ function FooterCTA() {
           <div className="v-footer__cols">
             <div>
               <div className="v-footer__col-h">Product</div>
-              <a href="#tours">Tours</a><a href="#live-tour">AI Guide</a><a href="#how">How it works</a><a href="#pricing">Pricing</a>
+              <a href="#live-tour">Live tour</a><a href="#ai-guide">AI guide</a><a href="#analytics">Analytics</a><a href="#how">How it works</a><a href="#pricing">Pricing</a>
             </div>
             <div>
               <div className="v-footer__col-h">Company</div>
-              <a href="#team">Team</a><a href="#pricing">Packages</a><a href="#contact">Contact</a>
+              <a href="#tours">Founding venues</a><a href="#team">Team</a><a href="#contact">Contact</a>
             </div>
             <div>
               <div className="v-footer__col-h">Get in touch</div>

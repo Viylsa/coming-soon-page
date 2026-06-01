@@ -1,4 +1,4 @@
-const { IconCamera, IconSparkle, IconBox, IconArrowRight } = window.VIcons;
+const { IconCamera, IconSparkle, IconBox } = window.VIcons;
 
 function HowItWorks() {
   const steps = [
@@ -6,41 +6,39 @@ function HowItWorks() {
       n: '01',
       Icon: IconCamera,
       h: 'We capture',
-      p: 'Our team brings a 360° rig and shoots the venue in one afternoon. You don\'t need any hardware.',
+      p: 'Our Islamabad & Rawalpindi crew brings a 360° rig and shoots your venue in one afternoon. No hardware to buy, nothing to ship.',
     },
     {
       n: '02',
       Icon: IconSparkle,
       h: 'We train the AI',
-      p: 'Feed it your floor plan, FAQ, pricing, and brochures. It answers visitors in English and Urdu, 24 / 7.',
+      p: 'Feed it your floor plan, FAQ, pricing and brochures. It answers visitors in English and Urdu, 24/7 — like your best front-desk staffer.',
     },
     {
       n: '03',
       Icon: IconBox,
-      h: 'You embed',
-      p: 'One line of code on your website — or a shareable link for WhatsApp & email campaigns. Live the same day.',
+      h: 'You go live',
+      p: 'One line of code on your site — or a shareable link for WhatsApp & email. Live the same day, on every device.',
     },
   ];
   return (
-    <section id="how" className="v-section v-section--haze">
+    <section id="how" className="v-section v-band">
+      <div className="v-band__grain" aria-hidden="true"></div>
+      <div className="v-band__glow" aria-hidden="true"></div>
       <div className="v-wrap">
-        <div data-reveal>
-          <div className="v-eyebrow">How it works</div>
-          <h2 className="v-h2">Three steps. <span className="v-muted">Usually one afternoon.</span></h2>
+        <div data-reveal="blur">
+          <div className="v-eyebrow v-eyebrow--onband">How it works</div>
+          <h2 className="v-h2 v-h2--onband">Three steps. <span className="v-serif v-serif--onband">Usually one afternoon.</span></h2>
         </div>
-        <div className="v-steps">
+        <div className="v-rail">
           {steps.map(({ n, Icon, h, p }, i) => (
-            <React.Fragment key={n}>
-              <div className="v-step" data-reveal data-reveal-delay={i + 1}>
-                <div className="v-step__head">
-                  <span className="v-step__n">{n}</span>
-                  <span className="v-step__ic"><Icon size={24}/></span>
-                </div>
-                <h3 className="v-step__h">{h}</h3>
-                <p className="v-step__p">{p}</p>
-              </div>
-              {i < 2 && <div className="v-step__arrow"><IconArrowRight size={18}/></div>}
-            </React.Fragment>
+            <div className="v-rail__step" key={n} data-reveal="scale" data-reveal-delay={i + 1}>
+              <span className="v-rail__ghost" aria-hidden="true">{n}</span>
+              <div className="v-rail__node"><Icon size={22}/></div>
+              <div className="v-rail__n">Step {n}</div>
+              <h3 className="v-rail__h">{h}</h3>
+              <p className="v-rail__p">{p}</p>
+            </div>
           ))}
         </div>
       </div>

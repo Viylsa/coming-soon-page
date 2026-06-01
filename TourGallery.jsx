@@ -34,7 +34,7 @@ function TourGallery() {
           </a>
 
           <div className="v-showcase__body">
-            <div className="v-showcase__kicker">University · Islamabad</div>
+            <div className="v-showcase__kicker">Tour #001 · University, Islamabad</div>
             <h3 className="v-showcase__title">Our first live tour</h3>
             <p className="v-showcase__p">
               A real university campus in Islamabad. Walk from the main gate to the
@@ -44,7 +44,9 @@ function TourGallery() {
             <div className="v-showcase__stats">
               {stats.map(([n, l]) => (
                 <div className="v-showcase__stat" key={l}>
-                  <div className="v-showcase__stat-n">{n}</div>
+                  <div className="v-showcase__stat-n">
+                    {/^\d+$/.test(n) ? <b data-count={n}>{n}</b> : n}
+                  </div>
                   <div className="v-showcase__stat-l">{l}</div>
                 </div>
               ))}
@@ -55,9 +57,20 @@ function TourGallery() {
           </div>
         </div>
 
-        <p className="v-showcase__more">
-          More tours coming soon — <a href="#contact">be one of the first venues</a>.
-        </p>
+        <div className="v-founding" data-reveal="scale">
+          <div className="v-founding__body">
+            <div className="v-eyebrow v-eyebrow--crimson">Founding venues · 2026</div>
+            <h3 className="v-founding__h">Be one of our first venues.</h3>
+            <p className="v-founding__p">
+              We're taking on a small group of founding venues this year — locked-in
+              early pricing, priority shooting dates, and a tour built hand-in-hand
+              with our team.
+            </p>
+          </div>
+          <a href="#contact" className="v-btn v-btn--primary v-btn--lg">
+            Claim a founding slot <IconArrowRight size={18}/>
+          </a>
+        </div>
       </div>
     </section>
   );

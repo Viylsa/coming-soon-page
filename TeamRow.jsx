@@ -1,8 +1,8 @@
 function TeamRow() {
   const team = [
-    { name: 'Aleena Tahir', role: 'Co-Founder & CEO', bio: 'LLMs & AI Agents — building the chatbot engine.', initial: 'A' },
-    { name: 'Saqlain Abbas', role: 'Co-Founder & CTO', bio: 'Full-stack — platform architecture & development.', initial: 'S' },
-    { name: 'Aena Habib', role: 'CMO', bio: 'Brand strategy & growth marketing lead.', initial: 'A' },
+    { name: 'Aleena Tahir', role: 'Co-Founder & CEO', initial: 'A' },
+    { name: 'Saqlain Abbas', role: 'Co-Founder & CTO', initial: 'S' },
+    { name: 'Aena Habib', role: 'Co-Founder & CMO', initial: 'A' },
   ];
   return (
     <section id="team" className="v-section">
@@ -15,9 +15,10 @@ function TeamRow() {
           {team.map((m, i) => (
             <div className="v-person" key={m.name} data-reveal data-reveal-delay={i + 1}>
               <div className="v-person__avatar">{m.initial}</div>
-              <div className="v-person__name">{m.name}</div>
-              <div className="v-person__role">{m.role}</div>
-              <p className="v-person__bio">{m.bio}</p>
+              <div className="v-person__meta">
+                <div className="v-person__name">{m.name}</div>
+                <div className="v-person__role">{m.role}</div>
+              </div>
             </div>
           ))}
         </div>

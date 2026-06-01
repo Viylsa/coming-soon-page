@@ -8,14 +8,15 @@ function Hero() {
       <div className="v-hero__inner">
         <div className="v-hero__copy" data-reveal="left">
           <div className="v-eyebrow v-eyebrow--crimson">
-            <IconSparkle size={14}/> Virtual tours with a built-in AI guide
+            <IconSparkle size={14}/> Pakistan's first 360° tours with a built-in AI guide
           </div>
           <h1 className="v-display">
-            Bringing <em>visits</em><br/>online.
+            Bringing <em>visits</em> <br/>online.
           </h1>
           <p className="v-hero__sub">
-            360° tours of your space — with an AI assistant who answers questions
-            and a dashboard that tells you who's interested.
+            A 360° tour anyone can walk from their phone — with an AI guide that
+            answers visitors in <b>Urdu or English</b>, 24/7, and a dashboard that
+            tells you exactly who's interested.
           </p>
           <div className="v-hero__cta">
             <a href="#contact" className="v-btn v-btn--primary v-btn--lg">
@@ -34,7 +35,7 @@ function Hero() {
           </div>
         </div>
 
-        <div className="v-hero__preview" data-reveal="right">
+        <div className="v-hero__preview">
           {/* Secondary cards peeking out from behind */}
           <div className="v-hpv__peek v-hpv__peek--back">
             <img src="assets/screens/tour-classroom.png" alt=""/>
@@ -56,12 +57,18 @@ function Hero() {
                 viylsa.app/tour/campus
               </div>
             </div>
-            <div className="v-hpv__stage">
-              <img
-                src="assets/screens/tour-building.png"
-                alt="University academic block — 360° tour"
-                className="v-hpv__photo"
-              />
+            <div className="v-hpv__stage" data-tilt>
+              <div className="v-hpv__pan">
+                <img
+                  src="assets/screens/tour-building.png"
+                  alt="University academic block — 360° tour"
+                  className="v-hpv__photo"
+                />
+              </div>
+              {/* Drag-to-look cue — fades out on first interaction (motion.js) */}
+              <div className="v-hpv__draghint">
+                <span className="v-hpv__draghint-ic">⟷</span> Drag to look around
+              </div>
               {/* Live viewers badge */}
               <div className="v-hpv__live">
                 <span className="v-hpv__live-dot"></span>

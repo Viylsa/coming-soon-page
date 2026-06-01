@@ -8,17 +8,19 @@ function Pricing() {
       coverage: [
         ['Space', '500 – 1,000 sq ft'],
         ['Scenes', 'Up to 10 panoramas'],
-        ['Hotspots', 'Up to 8 basic'],
+        ['Hotspots', 'Up to 8 hotspots'],
+        ['Delivery', '3 – 5 days'],
+        ['Revisions', '1 round'],
       ],
       features: [
+        'AI guide trained on your FAQ & pricing — replies in English & Urdu',
         'Professional 360° panoramic photography',
         'Standard UI with clean navigation',
         'Custom branded loading screen',
-        'Background music integration',
         'Fully responsive — mobile, tablet & desktop',
         'Shareable link + Google Maps integration',
+        'VR-ready (Oculus, Pico) — on request',
         '6 months hosting & maintenance',
-        '1 round of revision · 5-day delivery',
       ],
       featured: false,
       cta: 'Get a quote',
@@ -29,14 +31,17 @@ function Pricing() {
       coverage: [
         ['Space', '1,000 – 2,000 sq ft'],
         ['Scenes', 'Up to 20 panoramas'],
-        ['Hotspots', 'Advanced — video & links'],
+        ['Hotspots', 'Up to 20 — video & links'],
+        ['Delivery', '5 – 7 days'],
+        ['Revisions', '2 rounds'],
       ],
       plus: 'Everything in Starter, plus',
       features: [
+        'Smarter AI guide — trained on floor plans, brochures & lead routing',
+        'Visitor analytics — visits, dwell time & most-viewed spaces',
         'Custom UI with your logo & colour theme',
         'Colour grading & mini-map navigation',
         'Video embeds, links & info overlays',
-        'Basic analytics — visits & time spent',
         'WhatsApp & lead-form integration',
         'Social sharing enabled',
       ],
@@ -49,45 +54,24 @@ function Pricing() {
       coverage: [
         ['Space', '2,000 – 4,000 sq ft+'],
         ['Scenes', 'Up to 40 panoramas'],
-        ['Hotspots', 'Unlimited rich media'],
+        ['Hotspots', 'Up to 60 rich media'],
+        ['Delivery', '7 – 10 days'],
+        ['Revisions', '3 rounds'],
       ],
       plus: 'Everything in Professional, plus',
       features: [
-        'Fully custom UI/UX built to your brand',
-        'Voiceover + background music',
-        'VR mode (Oculus, Pico & compatible)',
+        'Fully trained AI guide with lead routing & handoff',
+        'Analytics — visitor counts, dwell time & most-viewed spaces',
         'Lead capture form & contact integration',
-        'Analytics — visitor count & dwell time',
+        'Fully custom UI/UX built to your brand',
+        'VR mode (Oculus, Pico & compatible)',
+        'Voiceover + background music',
         'Priority support',
       ],
       featured: false,
       cta: 'Talk to sales',
     },
   ];
-
-  const table = {
-    rows: [
-      ['Space coverage', '500–1,000 sq ft', '1,000–2,000 sq ft', '2,000–4,000 sq ft'],
-      ['360° scenes', 'Up to 10', 'Up to 20', 'Up to 40'],
-      ['Interactive hotspots', 'Basic', 'Advanced', 'Unlimited rich media'],
-      ['UI customization', 'Standard', 'Logo & colour theme', 'Fully custom UI/UX'],
-      ['Background music', true, true, 'Voiceover + music'],
-      ['Colour grading & mini-map', false, true, true],
-      ['VR mode (Oculus, Pico)', false, false, true],
-      ['Analytics (visits, time)', false, true, true],
-      ['Social sharing', false, true, true],
-      ['Lead capture / contact form', false, false, true],
-      ['Hosting & maintenance', '6 months', '6 months', '6 months'],
-      ['Revisions', '1 round', '1 round', '1 round'],
-      ['Delivery time', '5 days', '5 days', '5 days'],
-    ],
-  };
-
-  const Cell = ({ v }) => {
-    if (v === true) return <span className="v-cmp__yes"><IconCheck size={15}/></span>;
-    if (v === false) return <span className="v-cmp__no">—</span>;
-    return <span className="v-cmp__txt">{v}</span>;
-  };
 
   return (
     <section id="pricing" className="v-section v-section--haze">
@@ -132,32 +116,6 @@ function Pricing() {
               </a>
             </div>
           ))}
-        </div>
-
-        <div className="v-cmp" data-reveal>
-          <div className="v-cmp__title">Compare at a glance</div>
-          <div className="v-cmp__scroll">
-            <table className="v-cmp__table">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Starter</th>
-                  <th className="v-cmp__th-feat">Professional</th>
-                  <th>Enterprise</th>
-                </tr>
-              </thead>
-              <tbody>
-                {table.rows.map((r) => (
-                  <tr key={r[0]}>
-                    <td className="v-cmp__feature">{r[0]}</td>
-                    <td><Cell v={r[1]}/></td>
-                    <td className="v-cmp__td-feat"><Cell v={r[2]}/></td>
-                    <td><Cell v={r[3]}/></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </section>

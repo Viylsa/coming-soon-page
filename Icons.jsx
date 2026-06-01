@@ -76,5 +76,9 @@ const IconMapPin = (p) => <Icon {...p}>
 const IconClock = (p) => <Icon {...p}>
   <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
 </Icon>;
+const IconWhatsApp = (p) => <Icon {...p}>
+  <path d="M21 11.5a8.38 8.38 0 0 1-12.4 7.35L3 20.5l1.7-5.4A8.5 8.5 0 1 1 21 11.5Z"/>
+  <path d="M9 8.7c.25 0 .5.1.66.55l.5 1.2c.1.2 0 .42-.12.58l-.32.4c-.13.17-.12.32-.02.5a5 5 0 0 0 2.32 2.22c.2.1.38.08.5-.05l.42-.5c.18-.2.4-.2.6-.1l1.2.6c.3.16.4.3.4.5 0 .5-.34 1.2-1.2 1.42-.83.2-1.95 0-3.6-1.1-1.65-1.1-2.55-2.62-2.84-3.5-.3-.9.04-1.85.6-2.4.2-.2.42-.3.62-.3Z"/>
+</Icon>;
 
-window.VIcons = { IconGlobe, IconEye, IconBox, IconCamera, IconBuilding, IconHome, IconCap, IconHotel, IconChat, IconChart, IconArrowRight, IconCheck, IconSparkle, IconPlay, IconMenu, IconMail, IconMapPin, IconClock };
+window.VIcons = { IconGlobe, IconEye, IconBox, IconCamera, IconBuilding, IconHome, IconCap, IconHotel, IconChat, IconChart, IconArrowRight, IconCheck, IconSparkle, IconPlay, IconMenu, IconMail, IconMapPin, IconClock, IconWhatsApp };

@@ -8,7 +8,7 @@
    Editorial accents (pull-quotes / italics): Instrument Serif Italic
    Mono / data: Geist Mono
 */
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Playfair+Display:wght@500;600;700&display=swap');
 
 :root {
   /* ===== Brand Colors =====
@@ -45,6 +45,7 @@
   --bg-elev:       var(--canvas-paper);
   --bg-sunken:     var(--canvas-haze);
   --fg:            var(--ink-1000);
+  --fg-soft:       var(--ink-700);   /* secondary body / lede — was referenced but never defined */
   --fg-muted:      var(--ink-500);
   --fg-subtle:     var(--ink-400);
   --fg-onbrand:    #FFFFFF;
@@ -66,6 +67,7 @@
   --font-body:    'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif:   'Instrument Serif', 'Times New Roman', Georgia, serif;
   --font-mono:    'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --font-logo:    'Playfair Display', Georgia, 'Times New Roman', serif;  /* brand wordmark */
 
   /* ===== Type Scale (clamped for fluid) ===== */
   --fs-display-xl: clamp(56px, 7.5vw, 112px);
@@ -111,6 +113,15 @@
   --space-8:  64px;
   --space-9:  96px;
   --space-10: 128px;
+
+  /* ===== Fluid spacing (scale continuously from 360px → desktop) ===== */
+  --pad-section:  clamp(56px, 10vw, 110px);   /* vertical rhythm per section */
+  --pad-dark:     clamp(64px, 12vw, 110px);   /* hero/contact/CTA dark bands  */
+  --gutter:       clamp(20px, 5vw, 32px);     /* page side padding            */
+  --head-gap:     clamp(24px, 5vw, 36px);     /* space under a section head   */
+
+  /* ===== Crimson brand field (for the one full-bleed band) ===== */
+  --crimson-field: radial-gradient(120% 120% at 18% 0%, #7F141A 0%, #5E0D14 55%, #3F080E 100%);
 
   /* ===== Shadows ===== */
   --shadow-xs: 0 1px 2px rgba(10, 10, 11, 0.04);

@@ -1,4 +1,8 @@
-const { IconArrowRight, IconSparkle, IconMail, IconMapPin, IconClock, IconCheck } = window.VIcons;
+const { IconArrowRight, IconSparkle, IconMail, IconMapPin, IconClock, IconCheck, IconWhatsApp } = window.VIcons;
+
+/* WhatsApp number — international format, digits only, no + (for wa.me links). */
+const WHATSAPP_NUMBER = '923105968568';
+const WHATSAPP_DISPLAY = '+92 310 5968568';
 
 /* Contact section — closing call-to-action with a working form.
    The form composes a pre-filled email (no backend needed) and also
@@ -14,7 +18,7 @@ function Contact() {
     const org = el.org.value.trim();
     const message = el.message.value.trim();
 
-    const subject = encodeURIComponent('VIYLSA enquiry — ' + (name || 'website'));
+    const subject = encodeURIComponent('VIYLSA demo request — ' + (name || 'website'));
     const body = encodeURIComponent(
       'Name: ' + name + '\n' +
       'Email: ' + email + '\n' +
@@ -42,6 +46,13 @@ function Contact() {
           </p>
 
           <div className="v-contact__details">
+            <a className="v-contact__item" href={'https://wa.me/' + WHATSAPP_NUMBER} target="_blank" rel="noopener">
+              <span className="v-contact__ic"><IconWhatsApp size={18}/></span>
+              <span>
+                <span className="v-contact__item-k">WhatsApp · fastest reply</span>
+                <span className="v-contact__item-v">{WHATSAPP_DISPLAY}</span>
+              </span>
+            </a>
             <a className="v-contact__item" href="mailto:viylsavirtualtour@gmail.com">
               <span className="v-contact__ic"><IconMail size={18}/></span>
               <span>
@@ -70,7 +81,7 @@ function Contact() {
           {sent ? (
             <div className="v-contact__sent">
               <span className="v-contact__sent-ic"><IconCheck size={26}/></span>
-              <h3>Your message is ready to send</h3>
+              <h3>Your demo request is ready to send</h3>
               <p>
                 We've opened your email app with everything filled in — just press
                 send. Prefer to write us directly?{' '}
@@ -96,7 +107,7 @@ function Contact() {
                 <textarea id="c-msg" name="message" rows="4" required placeholder="Tell us about your space…"></textarea>
               </div>
               <button type="submit" className="v-btn v-btn--primary v-btn--lg v-contact__submit">
-                Send message <IconArrowRight size={18}/>
+                Book my demo <IconArrowRight size={18}/>
               </button>
               <p className="v-contact__formnote">Opens in your email app — no account or sign-up needed.</p>
             </>
