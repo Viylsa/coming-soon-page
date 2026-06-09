@@ -13,11 +13,11 @@ function FooterCTA() {
           <div className="v-footer__cols">
             <div>
               <div className="v-footer__col-h">Product</div>
-              <a href="#live-tour">Live tour</a><a href="#ai-guide">AI guide</a><a href="#analytics">Analytics</a><a href="#how">How it works</a><a href="#pricing">Pricing</a>
+              <a href="#live-tour">Live tour</a><a href="#ai-guide">AI guide</a><a href="#analytics">Analytics</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
             </div>
             <div>
               <div className="v-footer__col-h">Company</div>
-              <a href="#tours">Founding venues</a><a href="#team">Team</a><a href="#contact">Contact</a>
+              <a href="#founding">Founding venues</a><a href="#team">Team</a><a href="#contact">Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
             </div>
             <div>
               <div className="v-footer__col-h">Get in touch</div>
@@ -27,7 +27,7 @@ function FooterCTA() {
           </div>
         </div>
         <div className="v-footer__base">
-          <span>© 2026 VIYLSA. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} VIYLSA. All rights reserved.</span>
           <a href="#top" className="v-footer__totop">Back to top ↑</a>
         </div>
       </footer>

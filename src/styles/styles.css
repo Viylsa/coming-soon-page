@@ -858,10 +858,8 @@ body {
   .v-ai__dot,
   .v-ai__typing span,
   .v-ai__bubble,
-  .v-showcase__media img,
   .v-tdemo__loading-shimmer,
   .v-tdemo__dots span:nth-child(3) { animation: none; }
-  .v-showcase__media img { transform: scale(1.04); }
   .v-tdemo__hint { display: none; }
   .v-rcpt__bar-fill, .v-ai__lead { transition: none; }
   /* Show the hero collage immediately, no entrance transforms */
@@ -1154,110 +1152,29 @@ body {
 }
 
 
-/* ==================================================
-   TOUR SHOWCASE — single featured live tour
-   ================================================== */
-.v-showcase {
-  display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 0;
-  background: var(--canvas-paper);
-  border: 1px solid var(--canvas-mist);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.30);
-}
-.v-showcase__media {
-  position: relative;
-  display: block;
-  min-height: 420px;
-  background: #1a1816;
-  overflow: hidden;
-  text-decoration: none;
-}
-.v-showcase__media img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  /* slow Ken-Burns drift so the still reads as a moving 360 sweep */
-  animation: v-kenburns 26s ease-in-out infinite alternate;
-  transition: transform 600ms cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-@keyframes v-kenburns {
-  from { transform: scale(1.04) translateX(0); }
-  to   { transform: scale(1.13) translateX(-2.5%); }
-}
-.v-showcase__media:hover img { animation-play-state: paused; transform: scale(1.07); }
-.v-showcase__media::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(120deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0) 40%, rgba(20,8,12,0.35) 100%);
-  pointer-events: none;
-}
-.v-showcase__badge {
-  position: absolute; top: 18px; left: 18px; z-index: 2;
-  background: var(--viylsa-crimson); color: white;
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.10em;
-  padding: 6px 12px; border-radius: 999px; font-weight: 500;
-  display: inline-flex; align-items: center; gap: 6px;
-}
-.v-showcase__play {
-  position: absolute; top: 50%; left: 50%; z-index: 2;
-  transform: translate(-50%, -50%);
-  width: 68px; height: 68px; border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--viylsa-crimson);
-  display: grid; place-items: center;
-  box-shadow: 0 12px 30px -8px rgba(0,0,0,0.5);
-  transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1), background 200ms ease;
-}
-.v-showcase__play svg { margin-left: 3px; }
-.v-showcase__media:hover .v-showcase__play { transform: translate(-50%, -50%) scale(1.1); background: #fff; }
-.v-showcase__hint {
-  position: absolute; bottom: 18px; left: 18px; z-index: 2;
-  color: rgba(255,255,255,0.9);
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.v-showcase__body {
-  padding: 40px 40px 36px;
-  display: flex; flex-direction: column;
-  justify-content: center;
-}
-.v-showcase__kicker {
-  font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--viylsa-crimson);
-}
-.v-showcase__title {
-  font-family: var(--font-display);
-  font-size: clamp(26px, 3vw, 34px);
-  font-weight: 500; letter-spacing: -0.025em;
-  margin: 10px 0 0; line-height: 1.05;
-}
-.v-showcase__p {
-  margin: 14px 0 0;
-  color: var(--fg-soft);
-  font-size: 15px; line-height: 1.6;
-}
-.v-showcase__stats {
-  display: grid; grid-template-columns: repeat(2, 1fr);
+/* Tour stats strip (under the live demo) */
+.v-tdemo__stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 18px 24px;
-  margin: 26px 0 28px;
-  padding: 22px 0;
+  margin-top: clamp(20px, 3vw, 30px);
+  padding: 22px clamp(4px, 2vw, 18px);
   border-top: 1px solid var(--canvas-mist);
   border-bottom: 1px solid var(--canvas-mist);
 }
-.v-showcase__stat-n {
+.v-tdemo__stat-n {
   font-family: var(--font-display);
   font-size: 26px; font-weight: 500; letter-spacing: -0.02em;
   color: var(--fg);
 }
-.v-showcase__stat-l {
+.v-tdemo__stat-l {
   font-family: var(--font-mono); font-size: 10.5px;
   letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--fg-muted); margin-top: 3px;
 }
-.v-showcase__body .v-btn { align-self: flex-start; }
+@media (max-width: 640px) {
+  .v-tdemo__stats { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* Founding-venues offer (turns "one tour" into "get in early") */
 .v-founding {
   margin-top: clamp(28px, 4vw, 44px);
@@ -1281,10 +1198,42 @@ body {
 .v-founding .v-btn { flex-shrink: 0; }
 @media (max-width: 700px) { .v-founding { flex-direction: column; align-items: flex-start; } }
 
-@media (max-width: 860px) {
-  .v-showcase { grid-template-columns: 1fr; }
-  .v-showcase__media { min-height: 280px; }
-  .v-showcase__body { padding: 28px 24px 26px; }
+/* ==================================================
+   FAQ — native details/summary accordion
+   ================================================== */
+.v-faq__wrap { max-width: 860px; }
+.v-faq { margin-top: var(--head-gap); border-top: 1px solid var(--canvas-mist); }
+.v-faq__item { border-bottom: 1px solid var(--canvas-mist); }
+.v-faq__q {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  padding: 20px 4px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 500; letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.v-faq__q::-webkit-details-marker { display: none; }
+.v-faq__q:hover { color: var(--viylsa-crimson); }
+.v-faq__chev {
+  flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 999px;
+  display: grid; place-items: center;
+  border: 1px solid var(--canvas-line);
+  color: var(--fg-muted);
+  font-size: 15px; font-weight: 400; line-height: 1;
+  transition: transform 240ms var(--ease-out), background 200ms ease, color 200ms ease;
+}
+.v-faq__item[open] .v-faq__chev {
+  transform: rotate(45deg);
+  background: var(--viylsa-crimson); border-color: var(--viylsa-crimson);
+  color: white;
+}
+.v-faq__a {
+  margin: 0; padding: 0 44px 22px 4px;
+  color: var(--fg-soft);
+  font-size: 15.5px; line-height: 1.65;
+  max-width: 68ch;
 }
 
 

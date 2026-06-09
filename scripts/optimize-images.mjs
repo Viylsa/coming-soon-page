@@ -2,7 +2,7 @@
    favicon + apple-touch-icon + OG image. Run: node scripts/optimize-images.mjs */
 import sharp from 'sharp';
 
-const screens = ['tour-building', 'tour-classroom', 'tour-entrance'];
+const screens = ['tour-building'];
 for (const name of screens) {
   const src = `public/assets/screens/${name}.png`;
   await sharp(src).resize({ width: 1600 }).webp({ quality: 78 }).toFile(`public/assets/screens/${name}.webp`);
