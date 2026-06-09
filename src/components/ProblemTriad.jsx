@@ -45,4 +45,4 @@ function ProblemTriad() {
     </section>
   );
 }
-window.ProblemTriad = ProblemTriad;
+export default ProblemTriad;

@@ -1,4 +1,4 @@
-const { IconChart, IconCheck } = window.VIcons;
+import { IconChart, IconCheck } from '../icons.jsx';
 
 /* "You get the receipt" — pays off the Problem section's promise (#03: you
    don't know who visited). A mock analytics dashboard: KPI tiles count up, the
@@ -76,4 +76,4 @@ function Analytics() {
     </section>
   );
 }
-window.Analytics = Analytics;
+export default Analytics;

@@ -1,4 +1,4 @@
-const { IconArrowRight, IconPlay, IconSparkle } = window.VIcons;
+import { IconArrowRight, IconPlay, IconSparkle } from '../icons.jsx';
 
 function Hero() {
   return (
@@ -38,11 +38,11 @@ function Hero() {
         <div className="v-hero__preview">
           {/* Secondary cards peeking out from behind */}
           <div className="v-hpv__peek v-hpv__peek--back">
-            <img src="assets/screens/tour-classroom.png" alt=""/>
+            <img src="/assets/screens/tour-classroom.png" alt=""/>
             <span className="v-hpv__peek-label">Lecture Hall 4</span>
           </div>
           <div className="v-hpv__peek v-hpv__peek--mid">
-            <img src="assets/screens/tour-entrance.png" alt=""/>
+            <img src="/assets/screens/tour-entrance.png" alt=""/>
             <span className="v-hpv__peek-label">Main Entrance</span>
           </div>
 
@@ -60,7 +60,7 @@ function Hero() {
             <div className="v-hpv__stage" data-tilt>
               <div className="v-hpv__pan">
                 <img
-                  src="assets/screens/tour-building.png"
+                  src="/assets/screens/tour-building.png"
                   alt="University academic block — 360° tour"
                   className="v-hpv__photo"
                 />
@@ -128,4 +128,4 @@ function Hero() {
     </header>
   );
 }
-window.Hero = Hero;
+export default Hero;

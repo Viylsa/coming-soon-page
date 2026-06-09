@@ -26,4 +26,4 @@ function TeamRow() {
     </section>
   );
 }
-window.TeamRow = TeamRow;
+export default TeamRow;

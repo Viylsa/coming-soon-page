@@ -1,4 +1,5 @@
-const { IconSparkle, IconCheck } = window.VIcons;
+import React from 'react';
+import { IconSparkle, IconCheck } from '../icons.jsx';
 
 /* "Meet the AI guide" — demonstrates the bilingual assistant instead of just
    naming it. A scripted conversation cycles on a timer, answers can be flipped
@@ -113,4 +114,4 @@ function AIGuide() {
     </section>
   );
 }
-window.AIGuide = AIGuide;
+export default AIGuide;

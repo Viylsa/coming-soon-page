@@ -8,29 +8,32 @@ Live at **https://www.viylsa.app**
 
 ## Stack
 
-A single-page, dependency-free static site. React and Babel are loaded from a CDN
-and JSX is compiled in the browser — no build step, no `node_modules`.
+React 18 + Vite. JSX is compiled at build time; the deployed site is a static,
+minified bundle.
 
 ```
-index.html              Mounts the page and orders the sections
-styles.css              Page styles (imports the design tokens below)
-colors_and_type.css     VIYLSA design tokens (color, type, spacing, motion)
-motion.js               Scroll/reveal interactions
-*.jsx                   Section components (Nav, Hero, Pricing, Team, …)
-assets/                 Logo marks + 360° tour stills
-CNAME                   Custom domain (www.viylsa.app)
+index.html                  Page shell + SEO metadata
+vite.config.js              Build config
+src/main.jsx                Entry — mounts the app, imports styles & motion
+src/App.jsx                 Orders the sections
+src/components/*.jsx        Section components (Nav, Hero, Pricing, …)
+src/styles/styles.css       Page styles
+src/styles/colors_and_type.css  VIYLSA design tokens (color, type, spacing, motion)
+src/motion.js               Scroll/reveal interactions
+public/assets/              Logo marks + 360° tour stills
+public/CNAME                Custom domain (www.viylsa.app)
 ```
 
-## Run locally
-
-Because the JSX is fetched over HTTP, open it through a local server (not `file://`):
+## Develop
 
 ```bash
-python -m http.server 8000
-# then visit http://localhost:8000
+npm install
+npm run dev        # dev server with HMR
+npm run build      # production build → dist/
+npm run preview    # serve the production build locally
 ```
 
 ## Deployment
 
-Pushing to `main` triggers `.github/workflows/deploy.yml`, which publishes the
-repository root to GitHub Pages. The custom domain is set via the `CNAME` file.
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the site
+and publishes `dist/` to GitHub Pages. The custom domain is set via `public/CNAME`.

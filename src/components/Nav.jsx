@@ -1,4 +1,5 @@
-const { IconArrowRight, IconMenu } = window.VIcons;
+import React from 'react';
+import { IconArrowRight } from '../icons.jsx';
 
 function Nav() {
   const [scrolled, setScrolled] = React.useState(false);
@@ -40,7 +41,7 @@ function Nav() {
     <nav className={'v-nav' + (scrolled ? ' v-nav--scrolled' : '')}>
       <div className="v-nav__pill">
         <a href="#top" className="v-nav__brand">
-          <img src="assets/viylsa-mark.png" alt="" className="v-nav__mark"/>
+          <img src="/assets/viylsa-mark.png" alt="" className="v-nav__mark"/>
           <span className="v-nav__brand-name">VIYLSA</span>
         </a>
 
@@ -96,4 +97,4 @@ function Nav() {
     </nav>
   );
 }
-window.Nav = Nav;
+export default Nav;

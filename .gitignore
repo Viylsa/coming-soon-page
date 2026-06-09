@@ -5,3 +5,8 @@ desktop.ini
 *.swp
 .idea/
 .vscode/
+.gstack/
+
+# Build
+node_modules/
+dist/

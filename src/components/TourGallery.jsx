@@ -1,4 +1,4 @@
-const { IconArrowRight, IconPlay } = window.VIcons;
+import { IconArrowRight, IconPlay } from '../icons.jsx';
 
 /* Single featured showcase — VIYLSA's one real, live tour.
    No placeholder venues: when there's one real thing, show it big. */
@@ -27,7 +27,7 @@ function TourGallery() {
             rel="noopener"
             className="v-showcase__media"
           >
-            <img src="assets/screens/tour-building.png" alt="University campus — 360° virtual tour"/>
+            <img src="/assets/screens/tour-building.png" alt="University campus — 360° virtual tour"/>
             <span className="v-showcase__badge">360° · Live</span>
             <span className="v-showcase__play"><IconPlay size={22}/></span>
             <span className="v-showcase__hint">Click to walk the campus</span>
@@ -75,4 +75,4 @@ function TourGallery() {
     </section>
   );
 }
-window.TourGallery = TourGallery;
+export default TourGallery;

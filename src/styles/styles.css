@@ -3,7 +3,6 @@
    Imports the design tokens then defines page styles.
    Everything namespaced with .v- to keep collision-free.
    ================================================== */
-@import url('colors_and_type.css');
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }

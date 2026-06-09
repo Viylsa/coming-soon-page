@@ -1,4 +1,5 @@
-const { IconArrowRight, IconSparkle, IconMail, IconMapPin, IconClock, IconCheck, IconWhatsApp } = window.VIcons;
+import React from 'react';
+import { IconArrowRight, IconSparkle, IconMail, IconMapPin, IconClock, IconCheck, IconWhatsApp } from '../icons.jsx';
 
 /* WhatsApp number — international format, digits only, no + (for wa.me links). */
 const WHATSAPP_NUMBER = '923105968568';
@@ -117,4 +118,4 @@ function Contact() {
     </section>
   );
 }
-window.Contact = Contact;
+export default Contact;

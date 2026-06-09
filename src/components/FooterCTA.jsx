@@ -4,7 +4,7 @@ function FooterCTA() {
       <footer className="v-footer">
         <div className="v-wrap v-footer__inner">
             <div className="v-footer__brand">
-            <a href="#top" className="v-footer__brand-link"><img src="assets/viylsa-mark-white.png" alt="" className="v-footer__mark"/>
+            <a href="#top" className="v-footer__brand-link"><img src="/assets/viylsa-mark-white.png" alt="" className="v-footer__mark"/>
             <div>
               <div className="v-footer__name">VIYLSA</div>
               <div className="v-footer__tag">Bringing visits online.</div>
@@ -34,4 +34,4 @@ function FooterCTA() {
     </>
   );
 }
-window.FooterCTA = FooterCTA;
+export default FooterCTA;

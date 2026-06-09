@@ -1,4 +1,4 @@
-const { IconCheck, IconArrowRight } = window.VIcons;
+import { IconCheck, IconArrowRight } from '../icons.jsx';
 
 function Pricing() {
   const plans = [
@@ -121,4 +121,4 @@ function Pricing() {
     </section>
   );
 }
-window.Pricing = Pricing;
+export default Pricing;

@@ -1,4 +1,4 @@
-const { IconCamera, IconSparkle, IconBox } = window.VIcons;
+import { IconCamera, IconSparkle, IconBox } from '../icons.jsx';
 
 function HowItWorks() {
   const steps = [
@@ -45,4 +45,4 @@ function HowItWorks() {
     </section>
   );
 }
-window.HowItWorks = HowItWorks;
+export default HowItWorks;

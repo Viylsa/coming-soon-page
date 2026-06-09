@@ -1,3 +1,4 @@
+import React from 'react';
 /* Live tour player — embeds VIYLSA's actual hosted tour as an iframe,
    so the marketing site shows the real product UI, not a mock. */
 
@@ -71,4 +72,4 @@ function LiveTourPreview() {
   );
 }
 
-window.LiveTourPreview = LiveTourPreview;
+export default LiveTourPreview;
