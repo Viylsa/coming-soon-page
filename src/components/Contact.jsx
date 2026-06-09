@@ -4,31 +4,43 @@ import { IconArrowRight, IconSparkle, IconMail, IconMapPin, IconClock, IconCheck
 /* WhatsApp number — international format, digits only, no + (for wa.me links). */
 const WHATSAPP_NUMBER = '923105968568';
 const WHATSAPP_DISPLAY = '+92 310 5968568';
+const EMAIL = 'viylsavirtualtour@gmail.com';
 
 /* Contact section — closing call-to-action with a working form.
-   The form composes a pre-filled email (no backend needed) and also
-   lists direct contact details. */
+   WhatsApp is the primary channel (it works on every device, no mail client
+   needed, and it's how B2B conversations start here); email is the fallback. */
 function Contact() {
   const [sent, setSent] = React.useState(false);
 
+  const readForm = (form) => {
+    const el = form.elements;
+    return {
+      name: el.fullname.value.trim(),
+      org: el.org.value.trim(),
+      message: el.message.value.trim(),
+    };
+  };
+
+  const composeText = ({ name, org, message }) =>
+    'Hi VIYLSA — I\'d like to book a demo.\n\n' +
+    'Name: ' + name + '\n' +
+    (org ? 'Venue / organisation: ' + org + '\n' : '') +
+    '\n' + message;
+
   const onSubmit = (e) => {
     e.preventDefault();
-    const el = e.currentTarget.elements;
-    const name = el.fullname.value.trim();
-    const email = el.email.value.trim();
-    const org = el.org.value.trim();
-    const message = el.message.value.trim();
-
-    const subject = encodeURIComponent('VIYLSA demo request — ' + (name || 'website'));
-    const body = encodeURIComponent(
-      'Name: ' + name + '\n' +
-      'Email: ' + email + '\n' +
-      (org ? 'Venue / organisation: ' + org + '\n' : '') +
-      '\nMessage:\n' + message
-    );
-    window.location.href =
-      'mailto:viylsavirtualtour@gmail.com?subject=' + subject + '&body=' + body;
+    const text = composeText(readForm(e.currentTarget));
+    window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
     setSent(true);
+  };
+
+  const onEmailInstead = (e) => {
+    const form = e.currentTarget.closest('form');
+    if (!form.reportValidity()) return;
+    const { name, org, message } = readForm(form);
+    const subject = encodeURIComponent('VIYLSA demo request — ' + (name || 'website'));
+    const body = encodeURIComponent(composeText({ name, org, message }));
+    window.location.href = 'mailto:' + EMAIL + '?subject=' + subject + '&body=' + body;
   };
 
   return (
@@ -54,11 +66,11 @@ function Contact() {
                 <span className="v-contact__item-v">{WHATSAPP_DISPLAY}</span>
               </span>
             </a>
-            <a className="v-contact__item" href="mailto:viylsavirtualtour@gmail.com">
+            <a className="v-contact__item" href={'mailto:' + EMAIL}>
               <span className="v-contact__ic"><IconMail size={18}/></span>
               <span>
                 <span className="v-contact__item-k">Email</span>
-                <span className="v-contact__item-v">viylsavirtualtour@gmail.com</span>
+                <span className="v-contact__item-v">{EMAIL}</span>
               </span>
             </a>
             <div className="v-contact__item">
@@ -82,11 +94,12 @@ function Contact() {
           {sent ? (
             <div className="v-contact__sent">
               <span className="v-contact__sent-ic"><IconCheck size={26}/></span>
-              <h3>Your demo request is ready to send</h3>
+              <h3>Carrying on in WhatsApp</h3>
               <p>
-                We've opened your email app with everything filled in — just press
-                send. Prefer to write us directly?{' '}
-                <a href="mailto:viylsavirtualtour@gmail.com">viylsavirtualtour@gmail.com</a>
+                Your message is pre-filled — just press send and we'll reply
+                within one business day. Didn't open? Message us directly on{' '}
+                <a href={'https://wa.me/' + WHATSAPP_NUMBER} target="_blank" rel="noopener">{WHATSAPP_DISPLAY}</a>{' '}
+                or email <a href={'mailto:' + EMAIL}>{EMAIL}</a>.
               </p>
             </div>
           ) : (
@@ -94,10 +107,6 @@ function Contact() {
               <div className="v-field">
                 <label htmlFor="c-name">Name</label>
                 <input id="c-name" name="fullname" type="text" required placeholder="Your name"/>
-              </div>
-              <div className="v-field">
-                <label htmlFor="c-email">Email</label>
-                <input id="c-email" name="email" type="email" required placeholder="you@example.com"/>
               </div>
               <div className="v-field">
                 <label htmlFor="c-org">Venue / organisation <span className="v-field__opt">(optional)</span></label>
@@ -108,9 +117,12 @@ function Contact() {
                 <textarea id="c-msg" name="message" rows="4" required placeholder="Tell us about your space…"></textarea>
               </div>
               <button type="submit" className="v-btn v-btn--primary v-btn--lg v-contact__submit">
-                Book my demo <IconArrowRight size={18}/>
+                <IconWhatsApp size={18}/> Book my demo on WhatsApp
               </button>
-              <p className="v-contact__formnote">Opens in your email app — no account or sign-up needed.</p>
+              <button type="button" className="v-btn v-btn--ghost-dark v-btn--lg v-contact__submit v-contact__submit--alt" onClick={onEmailInstead}>
+                <IconMail size={16}/> Send by email instead
+              </button>
+              <p className="v-contact__formnote">Opens WhatsApp with your message pre-filled — no account or sign-up needed.</p>
             </>
           )}
         </form>

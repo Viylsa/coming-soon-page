@@ -1606,6 +1606,7 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
   box-shadow: 0 0 0 3px rgba(127, 20, 26, 0.30);
 }
 .v-contact__submit { width: 100%; justify-content: center; margin-top: 4px; }
+.v-contact__submit--alt { margin-top: 10px; font-size: 14px; padding: 12px 24px; }
 .v-contact__formnote {
   margin: 14px 0 0; text-align: center;
   font-family: var(--font-mono);
