@@ -28,18 +28,35 @@ function AIGuide() {
   ];
 
   const REDUCE = React.useRef(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const sectionRef = React.useRef(null);
   const [idx, setIdx] = React.useState(0);
   const [phase, setPhase] = React.useState('typing'); // typing → a → lead
   const [lang, setLang] = React.useState('en');
+  const [inView, setInView] = React.useState(false);
+
+  // Only run the conversation while the section is on screen.
+  React.useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => setInView(e.isIntersecting),
+      { threshold: 0.25 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   React.useEffect(() => {
     if (REDUCE.current) { setPhase('lead'); return; }
+    if (!inView) return;
     setPhase('typing');
     const t1 = setTimeout(() => setPhase('a'), 1200);
     const t2 = setTimeout(() => setPhase('lead'), 2900);
-    const t3 = setTimeout(() => setIdx((i) => (i + 1) % SCRIPT.length), 4800);
+    // 7s per exchange — enough dwell time to actually read the answer
+    // (the Urdu ones especially) before it cycles.
+    const t3 = setTimeout(() => setIdx((i) => (i + 1) % SCRIPT.length), 7000);
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, [idx]);
+  }, [idx, inView]);
 
   const ex = SCRIPT[idx];
   const rtl = lang === 'ur';
@@ -47,7 +64,7 @@ function AIGuide() {
   const a = rtl ? ex.aur : ex.aen;
 
   return (
-    <section id="ai-guide" className="v-section">
+    <section id="ai-guide" className="v-section" ref={sectionRef}>
       <div className="v-wrap v-ai__grid">
         <div className="v-ai__intro" data-reveal="left">
           <div className="v-eyebrow v-eyebrow--crimson"><IconSparkle size={14}/> The AI guide</div>

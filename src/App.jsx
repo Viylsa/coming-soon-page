@@ -14,17 +14,20 @@ import FooterCTA from './components/FooterCTA.jsx';
 export default function App() {
   return (
     <>
+      <a className="v-skip" href="#main">Skip to content</a>
       <Nav/>
-      <Hero/>
-      <ProblemTriad/>
-      <LiveTourPreview/>
-      <AIGuide/>
-      <Analytics/>
-      <HowItWorks/>
-      <Pricing/>
-      <FAQ/>
-      <TeamRow/>
-      <Contact/>
+      <main id="main">
+        <Hero/>
+        <ProblemTriad/>
+        <LiveTourPreview/>
+        <AIGuide/>
+        <Analytics/>
+        <HowItWorks/>
+        <Pricing/>
+        <FAQ/>
+        <TeamRow/>
+        <Contact/>
+      </main>
       <FooterCTA/>
     </>
   );

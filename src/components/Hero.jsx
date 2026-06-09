@@ -57,7 +57,7 @@ function Hero() {
               </div>
               {/* Drag-to-look cue — fades out on first interaction (motion.js) */}
               <div className="v-hpv__draghint">
-                <span className="v-hpv__draghint-ic">⟷</span> Drag to look around
+                <svg className="v-hpv__draghint-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m8 8-4 4 4 4"/><path d="m16 8 4 4-4 4"/><path d="M4 12h16"/></svg> Drag to look around
               </div>
             </div>
           </div>

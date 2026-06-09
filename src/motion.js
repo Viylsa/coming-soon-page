@@ -78,20 +78,17 @@
     });
   }
 
-  // ── Magnetic primary CTAs (pointer-following + spotlight) ─────────
+  // ── Primary CTA spotlight (cursor-following highlight; no magnetic
+  //    translation — it fights the :active transform and reads as gimmick) ──
   function bindMagnetic() {
     if (REDUCE || !FINE) return;
     document.querySelectorAll('.v-btn--primary:not(.is-mag)').forEach((btn) => {
       btn.classList.add('is-mag');
       btn.addEventListener('mousemove', (e) => {
         const r = btn.getBoundingClientRect();
-        const mx = e.clientX - (r.left + r.width / 2);
-        const my = e.clientY - (r.top + r.height / 2);
-        btn.style.transform = 'translate(' + (mx * 0.18).toFixed(1) + 'px,' + (my * 0.28).toFixed(1) + 'px)';
         btn.style.setProperty('--sx', (((e.clientX - r.left) / r.width) * 100).toFixed(1) + '%');
         btn.style.setProperty('--sy', (((e.clientY - r.top) / r.height) * 100).toFixed(1) + '%');
       });
-      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
     });
   }
 
