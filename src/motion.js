@@ -1,6 +1,6 @@
-/* Reveal-on-scroll, counters, hero choreography, cursor-reactive panorama,
-   magnetic CTAs. Pure vanilla. Survives React re-renders by re-querying on
-   every MutationObserver tick. Respects prefers-reduced-motion throughout. */
+/* Reveal-on-scroll, counters, CTA spotlight, nav scrollspy. Pure vanilla.
+   Survives React re-renders by re-querying on every MutationObserver tick.
+   Respects prefers-reduced-motion throughout. */
 
 (function () {
   const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -42,41 +42,6 @@
       if (e.isIntersecting) { animateCount(e.target); countIo.unobserve(e.target); }
     }
   }, { threshold: 0.6 });
-
-  // ── Hero entrance: reveal the collage on load (above the fold) ─────
-  function fireHero() {
-    const hero = document.querySelector('.v-hero:not(.is-in)');
-    if (hero) requestAnimationFrame(() => hero.classList.add('is-in'));
-  }
-
-  // ── Cursor-reactive panorama + drag-to-look hint ──────────────────
-  function bindTilt() {
-    document.querySelectorAll('[data-tilt]:not(.is-tilt)').forEach((stage) => {
-      stage.classList.add('is-tilt');
-      const photo = stage.querySelector('.v-hpv__photo');
-      const hint  = stage.querySelector('.v-hpv__draghint');
-
-      // The hint fades the first time the visitor does anything to the stage.
-      const dismiss = () => { if (hint) hint.classList.add('is-gone'); };
-      stage.addEventListener('pointerdown', dismiss, { once: true, passive: true });
-      window.addEventListener('scroll', dismiss, { once: true, passive: true });
-
-      if (!photo || REDUCE || !FINE) return;
-      let raf = 0, target = 0, cur = 0;
-      const loop = () => {
-        cur += (target - cur) * 0.12;
-        photo.style.setProperty('--cursor-pan', cur.toFixed(2) + 'px');
-        if (Math.abs(target - cur) > 0.15) raf = requestAnimationFrame(loop);
-        else raf = 0;
-      };
-      stage.addEventListener('mousemove', (e) => {
-        const r = stage.getBoundingClientRect();
-        target = (0.5 - (e.clientX - r.left) / r.width) * 36;   // px, inverted = natural look
-        if (!raf) raf = requestAnimationFrame(loop);
-      }, { passive: true });
-      stage.addEventListener('mouseleave', () => { target = 0; if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
-    });
-  }
 
   // ── Primary CTA spotlight (cursor-following highlight; no magnetic
   //    translation — it fights the :active transform and reads as gimmick) ──
@@ -123,8 +88,6 @@
       el.classList.add('is-watched');
       countIo.observe(el);
     });
-    fireHero();
-    bindTilt();
     bindMagnetic();
     bindScrollspy();
   }
