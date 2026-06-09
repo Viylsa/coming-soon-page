@@ -15,7 +15,7 @@ function Analytics() {
     <section id="analytics" className="v-section v-section--haze">
       <div className="v-wrap v-rcpt__grid">
         <div className="v-rcpt__intro" data-reveal="left">
-          <div className="v-eyebrow v-eyebrow--crimson"><IconChart size={14}/> The receipt</div>
+          <div className="v-eyebrow v-eyebrow--crimson"><IconChart size={14}/> Visitor analytics</div>
           <h2 className="v-h2">Every visit, <span className="v-serif">on the record.</span></h2>
           <p className="v-rcpt__lede">
             A walk-in used to be a black box — no name, no path, no idea what they

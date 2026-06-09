@@ -19,7 +19,7 @@ function Pricing() {
         'Custom branded loading screen',
         'Fully responsive — mobile, tablet & desktop',
         'Shareable link + Google Maps integration',
-        'VR-ready (Oculus, Pico) — on request',
+        'VR-ready (Meta Quest, Pico) — on request',
         '6 months hosting & maintenance',
       ],
       featured: false,
@@ -64,7 +64,7 @@ function Pricing() {
         'Analytics — visitor counts, dwell time & most-viewed spaces',
         'Lead capture form & contact integration',
         'Fully custom UI/UX built to your brand',
-        'VR mode (Oculus, Pico & compatible)',
+        'VR mode (Meta Quest, Pico & compatible)',
         'Voiceover + background music',
         'Priority support',
       ],
@@ -81,7 +81,7 @@ function Pricing() {
             <div className="v-eyebrow">Packages</div>
             <h2 className="v-h2">Three ways to bring your space <span className="v-serif">online.</span></h2>
           </div>
-          <div className="v-pricing__note">All packages are fully customizable to your space &amp; needs.</div>
+          <div className="v-pricing__note">All packages are fully customisable to your space &amp; needs.</div>
         </div>
 
         <div className="v-pricing">

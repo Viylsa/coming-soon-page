@@ -3,7 +3,7 @@ function ProblemTriad() {
     {
       n: '01',
       h: 'Static photos lie.',
-      p: 'A wide-angle lens makes a 12-sq-m room look palatial — be it a lecture hall, a hospital ward, or a wedding lawn. A tour shows the space as it really is: corner to corner, ceiling to floor.',
+      p: 'A wide-angle lens makes a tiny room look palatial — be it a lecture hall, a hospital ward, or a wedding lawn. A tour shows the space as it really is: corner to corner, ceiling to floor.',
     },
     {
       n: '02',

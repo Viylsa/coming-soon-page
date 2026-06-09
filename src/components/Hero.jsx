@@ -8,7 +8,7 @@ function Hero() {
       <div className="v-hero__inner">
         <div className="v-hero__copy" data-reveal="left">
           <div className="v-eyebrow v-eyebrow--crimson">
-            <IconSparkle size={14}/> Pakistan's first 360° tours with a built-in AI guide
+            <IconSparkle size={14}/> 360° tours with a built-in AI guide — built for Pakistan
           </div>
           <h1 className="v-display">
             Bringing <em>visits</em> <br/>online.

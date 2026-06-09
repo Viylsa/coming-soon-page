@@ -9,7 +9,12 @@ function TeamRow() {
       <div className="v-wrap">
         <div data-reveal>
           <div className="v-eyebrow">The team</div>
-          <h2 className="v-h2">Three founders. <span className="v-muted">All in.</span></h2>
+          <h2 className="v-h2">Three founders. <span className="v-muted">On every shoot.</span></h2>
+          <p className="v-team__lede">
+            VIYLSA is built and shot in Islamabad &amp; Rawalpindi — the same three
+            people who sell you a tour are the ones who turn up with the camera,
+            train the AI guide, and stay reachable after launch.
+          </p>
         </div>
         <div className="v-team">
           {team.map((m, i) => (
