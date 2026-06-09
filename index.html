@@ -3,11 +3,27 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>VIYLSA — Bringing visits online.</title>
-  <meta name="description" content="VIYLSA turns physical spaces into intelligent 360° virtual tours — with a built-in AI guide that answers in English & Urdu, live visitor analytics, and lead capture. Pakistan-first."/>
+  <title>VIYLSA — 360° Virtual Tours with a Built-in AI Guide</title>
+  <meta name="description" content="VIYLSA turns physical spaces into intelligent 360° virtual tours — with a built-in AI guide that answers in English & Urdu, visitor analytics, and lead capture. Built for Pakistan."/>
   <meta name="theme-color" content="#0A0A0B"/>
+  <link rel="canonical" href="https://www.viylsa.app/"/>
   <link rel="icon" type="image/png" href="/favicon.png"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+  <!-- Social link previews (WhatsApp, LinkedIn, X, Facebook) -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="VIYLSA"/>
+  <meta property="og:title" content="VIYLSA — 360° Virtual Tours with a Built-in AI Guide"/>
+  <meta property="og:description" content="Walk any venue from your phone. An AI guide answers visitors in English & Urdu, 24/7 — and you see exactly who's interested."/>
+  <meta property="og:url" content="https://www.viylsa.app/"/>
+  <meta property="og:image" content="https://www.viylsa.app/assets/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale" content="en_PK"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="VIYLSA — 360° Virtual Tours with a Built-in AI Guide"/>
+  <meta name="twitter:description" content="Walk any venue from your phone. An AI guide answers visitors in English & Urdu, 24/7 — and you see exactly who's interested."/>
+  <meta name="twitter:image" content="https://www.viylsa.app/assets/og-image.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
@@ -15,5 +31,71 @@
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://www.viylsa.app/#org",
+        "name": "VIYLSA",
+        "url": "https://www.viylsa.app/",
+        "logo": "https://www.viylsa.app/apple-touch-icon.png",
+        "image": "https://www.viylsa.app/assets/og-image.jpg",
+        "slogan": "Bringing visits online.",
+        "description": "360° virtual tours with a built-in AI guide that answers visitors in English & Urdu, visitor analytics and lead capture — built for Pakistan.",
+        "email": "viylsavirtualtour@gmail.com",
+        "telephone": "+92-310-5968568",
+        "areaServed": "Pakistan",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Islamabad",
+          "addressCountry": "PK"
+        },
+        "founder": [
+          { "@type": "Person", "name": "Aleena Tahir" },
+          { "@type": "Person", "name": "Saqlain Abbas" },
+          { "@type": "Person", "name": "Aena Habib" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.viylsa.app/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How long does the shoot take?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Most venues are captured in a single afternoon. You don't need to close — we work around your opening hours and shoot the spaces you choose." }
+          },
+          {
+            "@type": "Question",
+            "name": "What do we need to prepare?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Nothing technical. Tidy the spaces you want shown, and share the documents you'd like the AI guide to learn from — a floor plan, your FAQ, pricing or brochures." }
+          },
+          {
+            "@type": "Question",
+            "name": "Who hosts the tour, and how do we share it?",
+            "acceptedAnswer": { "@type": "Answer", "text": "VIYLSA hosts everything. You get a shareable link that works on WhatsApp, email and social media, plus a one-line embed for your own website. Hosting and maintenance are included with every package." }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens when the included hosting ends?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A simple renewal, agreed up front — no surprises. Your tour stays live throughout, and the photography we capture is yours to keep." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can the AI guide give a wrong answer?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The guide only answers from the documents you approve. When it isn't sure, it passes the visitor to your contact details instead of guessing — and every conversation is visible in your dashboard." }
+          },
+          {
+            "@type": "Question",
+            "name": "Which languages does the AI guide speak?",
+            "acceptedAnswer": { "@type": "Answer", "text": "English and Urdu, switchable by the visitor mid-conversation. More languages are available on request for Enterprise venues." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </body>
 </html>
