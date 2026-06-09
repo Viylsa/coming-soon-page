@@ -76,7 +76,7 @@ function Hero() {
             </div>
             <div className="v-hpv__chat-bubble v-hpv__chat-bubble--ai">
               <span className="v-hpv__chat-typing"><span></span><span></span><span></span></span>
-              <span className="v-hpv__chat-text">30 August — I can send you the application form right now.</span>
+              <span className="v-hpv__chat-text">30 August — I can send you the form right now.</span>
             </div>
           </div>
 

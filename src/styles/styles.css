@@ -337,6 +337,9 @@ input:focus-visible, textarea:focus-visible {
   max-width: 1180px; margin: 0 auto; padding: 0 32px;
   display: grid; grid-template-columns: 1.05fr 1fr; gap: 64px; align-items: center;
 }
+/* Grid items default to min-width:auto — a wide max-content child (e.g. a
+   long chat bubble) would silently push the column past the viewport. */
+.v-hero__inner > * { min-width: 0; }
 .v-hero__copy .v-eyebrow { color: rgba(255,255,255,0.6); }
 .v-hero__copy .v-eyebrow--crimson { color: #E89AA0; }
 .v-display {
