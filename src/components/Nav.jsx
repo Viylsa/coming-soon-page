@@ -41,7 +41,7 @@ function Nav() {
     <nav className={'v-nav' + (scrolled ? ' v-nav--scrolled' : '')}>
       <div className="v-nav__pill">
         <a href="#top" className="v-nav__brand">
-          <img src="/assets/viylsa-mark.png" alt="" className="v-nav__mark"/>
+          <img src="/assets/viylsa-mark-sm.png" alt="" className="v-nav__mark" width="256" height="247"/>
           <span className="v-nav__brand-name">VIYLSA</span>
         </a>
 

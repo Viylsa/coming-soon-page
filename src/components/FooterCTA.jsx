@@ -4,7 +4,7 @@ function FooterCTA() {
       <footer className="v-footer">
         <div className="v-wrap v-footer__inner">
             <div className="v-footer__brand">
-            <a href="#top" className="v-footer__brand-link"><img src="/assets/viylsa-mark-white.png" alt="" className="v-footer__mark"/>
+            <a href="#top" className="v-footer__brand-link"><img src="/assets/viylsa-mark-white-sm.png" alt="" className="v-footer__mark" width="256" height="247" loading="lazy"/>
             <div>
               <div className="v-footer__name">VIYLSA</div>
               <div className="v-footer__tag">Bringing visits online.</div>
