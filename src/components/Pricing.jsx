@@ -15,11 +15,8 @@ function Pricing() {
       features: [
         'AI guide trained on your FAQ & pricing — replies in English & Urdu',
         'Professional 360° panoramic photography',
-        'Standard UI with clean navigation',
         'Custom branded loading screen',
-        'Fully responsive — mobile, tablet & desktop',
         'Shareable link + Google Maps integration',
-        'VR-ready (Meta Quest, Pico) — on request',
         '6 months hosting & maintenance',
       ],
       featured: false,
@@ -40,10 +37,8 @@ function Pricing() {
         'Smarter AI guide — trained on floor plans, brochures & lead routing',
         'Visitor analytics — visits, dwell time & most-viewed spaces',
         'Custom UI with your logo & colour theme',
-        'Colour grading & mini-map navigation',
         'Video embeds, links & info overlays',
         'WhatsApp & lead-form integration',
-        'Social sharing enabled',
       ],
       featured: true,
       cta: 'Get a quote',
@@ -61,8 +56,6 @@ function Pricing() {
       plus: 'Everything in Professional, plus',
       features: [
         'Fully trained AI guide with lead routing & handoff',
-        'Analytics — visitor counts, dwell time & most-viewed spaces',
-        'Lead capture form & contact integration',
         'Fully custom UI/UX built to your brand',
         'VR mode (Meta Quest, Pico & compatible)',
         'Voiceover + background music',
@@ -81,7 +74,10 @@ function Pricing() {
             <div className="v-eyebrow">Packages</div>
             <h2 className="v-h2">Three ways to bring your space <span className="v-serif">online.</span></h2>
           </div>
-          <div className="v-pricing__note">All packages are fully customisable to your space &amp; needs.</div>
+          <div className="v-pricing__note">
+            Every venue is different, so every package is quoted to your space —
+            one call to scope it, a fixed price before we shoot.
+          </div>
         </div>
 
         <div className="v-pricing">
@@ -98,11 +94,6 @@ function Pricing() {
                     <span className="v-plan__cov-v">{v}</span>
                   </div>
                 ))}
-              </div>
-
-              <div className="v-plan__price">
-                <div className="v-plan__num">Call for price</div>
-                <div className="v-plan__onboard">Custom quote · no fixed tiers</div>
               </div>
 
               {p.plus && <div className="v-plan__plus">{p.plus}:</div>}
