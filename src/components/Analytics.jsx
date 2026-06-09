@@ -32,8 +32,8 @@ function Analytics() {
         <div className="v-rcpt__dash" data-reveal="wipe">
           <div className="v-rcpt__card">
             <div className="v-rcpt__card-head">
-              <span className="v-rcpt__card-title">Campus tour · last 7 days</span>
-              <span className="v-rcpt__card-live"><span className="v-rcpt__live-dot"></span> Live</span>
+              <span className="v-rcpt__card-title">Campus tour · a sample week</span>
+              <span className="v-rcpt__card-live">Sample data</span>
             </div>
 
             <div className="v-rcpt__kpis">

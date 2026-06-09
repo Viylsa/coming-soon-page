@@ -23,7 +23,7 @@ function LiveTourPreview() {
             </div>
             <div className="v-tdemo__url">
               <span className="v-tdemo__lock">●</span>
-              viylsa.app/tour/campus
+              VIYLSA tour player · live demo
             </div>
             <div className="v-tdemo__spacer"></div>
           </div>

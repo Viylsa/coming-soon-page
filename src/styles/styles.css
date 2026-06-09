@@ -851,11 +851,9 @@ body {
   .v-hpv__chat,
   .v-hpv__analytics,
   .v-hpv__draghint,
-  .v-hpv__live-dot,
   .v-ai__dot,
   .v-ai__typing span,
   .v-ai__bubble,
-  .v-rcpt__live-dot,
   .v-showcase__media img,
   .v-tdemo__loading-shimmer,
   .v-tdemo__dots span:nth-child(3) { animation: none; }
@@ -863,9 +861,8 @@ body {
   .v-tdemo__hint { display: none; }
   .v-rcpt__bar-fill, .v-ai__lead { transition: none; }
   /* Show the hero collage immediately, no entrance transforms */
-  .v-hpv__frame, .v-hpv__peek, .v-hpv__chat, .v-hpv__analytics,
-  .v-hero.is-in .v-hpv__frame, .v-hero.is-in .v-hpv__peek--back,
-  .v-hero.is-in .v-hpv__peek--mid { opacity: 1; transition: none; }
+  .v-hpv__frame, .v-hpv__chat, .v-hpv__analytics,
+  .v-hero.is-in .v-hpv__frame { opacity: 1; transition: none; }
   .v-hpv__frame { transform: rotate(-1.2deg); }
   .v-hpv__photo { transform: scale(1.16); }
   .v-hpv__draghint { display: none; }
@@ -982,127 +979,6 @@ body {
   50%      { margin-left: 5px; }
 }
 
-/* Live viewers pill (top right of stage) */
-.v-hpv__live {
-  position: absolute; top: 14px; right: 14px;
-  background: rgba(15, 15, 17, 0.78);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: white;
-  padding: 6px 12px 6px 10px;
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  display: inline-flex; align-items: center; gap: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.v-hpv__live b { font-weight: 600; }
-.v-hpv__live-dot {
-  width: 6px; height: 6px; border-radius: 999px;
-  background: var(--viylsa-crimson-bright);
-  box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.6);
-  animation: v-hpv-livedot 2s ease-in-out infinite;
-}
-@keyframes v-hpv-livedot {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.55); }
-  50%      { box-shadow: 0 0 0 6px rgba(220, 20, 60, 0); }
-}
-
-/* Hotspot + auto-revealed tooltip */
-.v-hpv__hotspot {
-  position: absolute;
-  width: 30px; height: 30px;
-  transform: translate(-50%, -50%);
-}
-.v-hpv__hot-i {
-  display: grid; place-items: center;
-  width: 30px; height: 30px; border-radius: 999px;
-  background: rgba(15, 15, 17, 0.88);
-  color: #fff;
-  font-family: var(--font-serif); font-style: italic;
-  font-size: 17px; font-weight: 400;
-  box-shadow:
-    0 4px 10px rgba(0,0,0,0.35),
-    inset 0 0 0 1.5px rgba(255,255,255,0.85),
-    0 0 0 0 rgba(255, 255, 255, 0.35);
-  animation: v-hpv-hot-pulse 2.6s ease-in-out infinite;
-}
-@keyframes v-hpv-hot-pulse {
-  0%, 100% { box-shadow: 0 4px 10px rgba(0,0,0,0.35), inset 0 0 0 1.5px rgba(255,255,255,0.85), 0 0 0 0 rgba(255,255,255,0.4); }
-  50%      { box-shadow: 0 4px 10px rgba(0,0,0,0.35), inset 0 0 0 1.5px rgba(255,255,255,0.85), 0 0 0 10px rgba(255,255,255,0); }
-}
-.v-hpv__tooltip {
-  position: absolute;
-  top: calc(100% + 10px); left: 50%;
-  transform: translateX(-50%);
-  background: rgba(15, 15, 17, 0.94);
-  color: #fff;
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-size: 13px; line-height: 1.4;
-  white-space: nowrap;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 12px 24px -8px rgba(0,0,0,0.45);
-  animation: v-hpv-tip-in 700ms ease-out both;
-  animation-delay: 1.4s;
-  opacity: 0;
-}
-.v-hpv__tooltip::before {
-  content: ""; position: absolute;
-  top: -5px; left: 50%; transform: translateX(-50%) rotate(45deg);
-  width: 10px; height: 10px;
-  background: rgba(15, 15, 17, 0.94);
-  border-left: 1px solid rgba(255,255,255,0.08);
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-.v-hpv__tip-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #FF98A8;
-  margin-bottom: 3px;
-}
-@keyframes v-hpv-tip-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(-4px); }
-  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-
-/* Peek cards behind */
-.v-hpv__peek {
-  position: absolute;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 16px 30px -18px rgba(0, 0, 0, 0.5);
-  transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-.v-hpv__peek img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: brightness(0.7) saturate(0.85);
-}
-.v-hpv__peek-label {
-  position: absolute; bottom: 8px; left: 8px; right: 8px;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
-}
-.v-hpv__peek--back {
-  width: 200px; aspect-ratio: 16 / 10;
-  top: 22px; left: 4px;
-  transform: rotate(-7deg);
-  z-index: 1;
-  opacity: 0.85;
-}
-.v-hpv__peek--mid {
-  width: 160px; aspect-ratio: 16 / 10;
-  top: 80px; left: 90px;
-  transform: rotate(-3.5deg);
-  z-index: 2;
-  opacity: 0.92;
-}
 
 /* Floating AI chat card */
 .v-hpv__chat {
@@ -1245,25 +1121,14 @@ body {
 }
 
 /* ── Choreographed hero assembly (desktop only) ──
-   motion.js adds .is-in to .v-hero on load: the frame settles, the peek cards
-   slide out from behind it, then the AI chat and analytics cards fade up in
-   sequence — the product looks like it's coming alive, not one flat slab fade. */
+   motion.js adds .is-in to .v-hero on load: the frame settles, then the AI
+   chat and analytics cards fade up in sequence — the product looks like it's
+   coming alive, not one flat slab fade. */
 @media (min-width: 901px) {
   .v-hpv__frame { opacity: 0; transform: translateY(28px) scale(0.96) rotate(-1.2deg); }
   .v-hero.is-in .v-hpv__frame {
     opacity: 1; transform: translateY(0) scale(1) rotate(-1.2deg);
     transition: opacity 0.55s var(--ease-out), transform 0.72s var(--ease-out);
-  }
-  .v-hpv__peek { opacity: 0; }
-  .v-hpv__peek--back { transform: translateX(48px) rotate(-7deg); }
-  .v-hpv__peek--mid  { transform: translateX(38px) rotate(-3.5deg); }
-  .v-hero.is-in .v-hpv__peek--back {
-    opacity: 0.85; transform: translateX(0) rotate(-7deg);
-    transition: opacity 0.5s ease 0.18s, transform 0.7s var(--ease-out) 0.18s;
-  }
-  .v-hero.is-in .v-hpv__peek--mid {
-    opacity: 0.92; transform: translateX(0) rotate(-3.5deg);
-    transition: opacity 0.5s ease 0.26s, transform 0.7s var(--ease-out) 0.26s;
   }
   .v-hpv__chat { opacity: 0; }
   .v-hero.is-in .v-hpv__chat { opacity: 1; transition: opacity 0.55s ease 0.42s; }
@@ -1271,10 +1136,7 @@ body {
   .v-hero.is-in .v-hpv__analytics { opacity: 1; transition: opacity 0.55s ease 0.56s; }
 }
 
-/* Hide peek cards as the frame narrows */
 @media (max-width: 1080px) {
-  .v-hpv__peek--back { display: none; }
-  .v-hpv__peek--mid { left: 30px; top: 64px; }
   .v-hpv__analytics { right: 8px; }
   .v-hpv__chat { width: 250px; }
 }
@@ -1283,7 +1145,6 @@ body {
 @media (max-width: 900px) {
   .v-hero__preview { display: flex; flex-direction: column; gap: 16px; min-height: 0; padding: 24px 0 4px; }
   .v-hpv__frame { max-width: 100%; margin: 0; transform: none; }
-  .v-hpv__peek--mid, .v-hpv__peek--back { display: none; }
   .v-hpv__chat { position: relative; inset: auto; left: auto; bottom: auto; width: 100%; margin: 0; transform: none; animation: none; }
   .v-hpv__analytics { position: relative; inset: auto; top: auto; right: auto; bottom: auto; width: 100%; margin: 0; transform: none; animation: none; }
 }
@@ -1484,7 +1345,6 @@ body {
   .v-display br { display: none; }                 /* let the headline wrap naturally */
   .v-display { font-size: clamp(38px, 11vw, 56px); }
   .v-hero__sub { font-size: clamp(15px, 4vw, 18px); }
-  .v-hpv__tooltip { display: none; }               /* decorative; the stack tells the story */
   /* stack the hero CTAs full-width so the long "Book a 10-minute demo" never clips */
   .v-hero__cta { flex-direction: column; align-items: stretch; }
   .v-hero__cta .v-btn { width: 100%; justify-content: center; }
@@ -1657,7 +1517,11 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 .v-ai__head-meta { flex: 1; min-width: 0; }
 .v-ai__name { font-family: var(--font-display); font-weight: 500; font-size: 15px; letter-spacing: -0.01em; }
 .v-ai__sub { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); margin-top: 3px; display: flex; align-items: center; gap: 6px; }
-.v-ai__dot { width: 6px; height: 6px; border-radius: 999px; background: var(--viylsa-crimson-bright); box-shadow: 0 0 0 0 rgba(220,20,60,0.5); animation: v-hpv-livedot 2s ease-in-out infinite; }
+.v-ai__dot { width: 6px; height: 6px; border-radius: 999px; background: var(--viylsa-crimson-bright); box-shadow: 0 0 0 0 rgba(220,20,60,0.5); animation: v-pulse-dot 2s ease-in-out infinite; }
+@keyframes v-pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.55); }
+  50%      { box-shadow: 0 0 0 6px rgba(220, 20, 60, 0); }
+}
 .v-ai__langs { display: flex; gap: 2px; background: var(--canvas-haze); border: 1px solid var(--canvas-mist); border-radius: 999px; padding: 3px; flex-shrink: 0; }
 .v-ai__lang { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; border: none; background: transparent; color: var(--fg-muted); padding: 5px 11px; border-radius: 999px; cursor: pointer; transition: background 0.18s ease, color 0.18s ease; }
 .v-ai__lang.is-on { background: var(--ink-1000); color: #fff; }
@@ -1692,7 +1556,6 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 .v-rcpt__card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid var(--canvas-mist); }
 .v-rcpt__card-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); }
 .v-rcpt__card-live { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--viylsa-crimson); }
-.v-rcpt__live-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--viylsa-crimson-bright); box-shadow: 0 0 0 0 rgba(220,20,60,0.5); animation: v-hpv-livedot 2s ease-in-out infinite; }
 .v-rcpt__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .v-rcpt__kpi { padding: 14px; background: var(--canvas-haze); border-radius: var(--radius-md); }
 .v-rcpt__kpi-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); }

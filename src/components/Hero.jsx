@@ -36,16 +36,6 @@ function Hero() {
         </div>
 
         <div className="v-hero__preview">
-          {/* Secondary cards peeking out from behind */}
-          <div className="v-hpv__peek v-hpv__peek--back">
-            <img src="/assets/screens/tour-classroom.webp" alt="" width="1600" height="775" loading="lazy"/>
-            <span className="v-hpv__peek-label">Lecture Hall 4</span>
-          </div>
-          <div className="v-hpv__peek v-hpv__peek--mid">
-            <img src="/assets/screens/tour-entrance.webp" alt="" width="1600" height="767" loading="lazy"/>
-            <span className="v-hpv__peek-label">Main Entrance</span>
-          </div>
-
           {/* Main browser-framed scene */}
           <div className="v-hpv__frame">
             <div className="v-hpv__chrome">
@@ -54,7 +44,7 @@ function Hero() {
               </div>
               <div className="v-hpv__url">
                 <span className="v-hpv__lock">●</span>
-                viylsa.app/tour/campus
+                VIYLSA tour player · campus demo
               </div>
             </div>
             <div className="v-hpv__stage" data-tilt>
@@ -69,19 +59,6 @@ function Hero() {
               <div className="v-hpv__draghint">
                 <span className="v-hpv__draghint-ic">⟷</span> Drag to look around
               </div>
-              {/* Live viewers badge */}
-              <div className="v-hpv__live">
-                <span className="v-hpv__live-dot"></span>
-                <b>3</b> watching now
-              </div>
-              {/* Hotspot + tooltip */}
-              <div className="v-hpv__hotspot" style={{ top: '46%', left: '52%' }}>
-                <span className="v-hpv__hot-i">i</span>
-                <div className="v-hpv__tooltip">
-                  <div className="v-hpv__tip-eyebrow">About this block</div>
-                  Faculty offices · open Mon–Fri
-                </div>
-              </div>
             </div>
           </div>
 
@@ -95,11 +72,11 @@ function Hero() {
               </div>
             </div>
             <div className="v-hpv__chat-bubble v-hpv__chat-bubble--user">
-              How much does it cost to rent?
+              When do admissions close?
             </div>
             <div className="v-hpv__chat-bubble v-hpv__chat-bubble--ai">
               <span className="v-hpv__chat-typing"><span></span><span></span><span></span></span>
-              <span className="v-hpv__chat-text">₨ 85,000 / month · 3-bed · east-facing balcony</span>
+              <span className="v-hpv__chat-text">30 August — I can send you the application form right now.</span>
             </div>
           </div>
 
