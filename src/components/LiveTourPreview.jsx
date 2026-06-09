@@ -20,12 +20,12 @@ function LiveTourPreview() {
       <div className="v-wrap">
         <div className="v-section__head" data-reveal>
           <div>
-            <div className="v-eyebrow v-eyebrow--crimson">See the product</div>
+            <div className="v-eyebrow v-eyebrow--crimson">Client tour · #001</div>
             <h2 className="v-h2">This is exactly what your visitors <span className="v-serif">walk into.</span></h2>
             <p className="v-tdemo__lede">
-              Our first live tour — a real university campus in Islamabad. Drag,
-              click hotspots, browse all views — the live tour player, embedded
-              right here. No mock, no marketing video.
+              Built for our first client — a university campus in Islamabad.
+              Drag, click hotspots, browse all views — the live tour player,
+              embedded right here. No mock, no marketing video.
             </p>
           </div>
           <a href={TOUR_URL} target="_blank" rel="noopener" className="v-btn v-btn--link">Open fullscreen ↗</a>

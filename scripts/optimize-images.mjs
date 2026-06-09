@@ -5,13 +5,6 @@ import sharp from 'sharp';
 
 const PANO = 'assets-src/academic-block.avif'; // 3584×1792 equirect
 
-/* Hero background: the natural-looking middle band of the equirect —
-   above it the sky stretches, below it the pavement warps (and the
-   photographer's shadow appears). */
-const band = { left: 0, top: 140, width: 3584, height: 1010 };
-await sharp(PANO).extract(band).avif({ quality: 60 }).toFile('public/assets/hero-pano.avif');
-await sharp(PANO).extract(band).webp({ quality: 80 }).toFile('public/assets/hero-pano.webp');
-
 /* OG image (1200×630): tight crop on the academic block. */
 await sharp(PANO)
   .extract({ left: 980, top: 250, width: 1660, height: 871 })
