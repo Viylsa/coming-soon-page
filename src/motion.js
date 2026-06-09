@@ -95,6 +95,27 @@
     });
   }
 
+  // ── Scrollspy: highlight the nav link for the section in view ──────
+  const spyIo = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      const id = '#' + e.target.id;
+      document.querySelectorAll('.v-nav__links a').forEach((a) => {
+        if (a.getAttribute('href') === id) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+    }
+  }, { rootMargin: '-25% 0px -65% 0px' });
+  function bindScrollspy() {
+    document.querySelectorAll('.v-nav__links a[href^="#"]').forEach((a) => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target && !target.classList.contains('is-spied')) {
+        target.classList.add('is-spied');
+        spyIo.observe(target);
+      }
+    });
+  }
+
   function scan() {
     document.querySelectorAll('[data-reveal]:not(.is-watched)').forEach((el) => {
       el.classList.add('is-watched');
@@ -108,6 +129,7 @@
     fireHero();
     bindTilt();
     bindMagnetic();
+    bindScrollspy();
   }
 
   // Initial pass + re-scan whenever React adds nodes

@@ -23,6 +23,7 @@ function Nav() {
   const links = [
     ['Tour', '#live-tour'],
     ['AI guide', '#ai-guide'],
+    ['Analytics', '#analytics'],
     ['How it works', '#how'],
     ['Pricing', '#pricing'],
   ];
@@ -62,7 +63,6 @@ function Nav() {
         </ul>
 
         <div className="v-nav__cta">
-          <a href="#contact" className="v-btn v-btn--link">Contact</a>
           <a href="#contact" className="v-btn v-btn--primary v-btn--sm">
             Book a demo <IconArrowRight size={16}/>
           </a>

@@ -100,19 +100,19 @@ body {
 .v-nav__pill {
   pointer-events: auto;
   display: flex; align-items: center;
-  gap: 36px;
-  padding: 10px 10px 10px 18px;
+  gap: 28px;
+  padding: 9px 9px 9px 18px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 999px;
   box-shadow: 0 0 0 0 rgba(0,0,0,0);
   color: white;
+  /* Paint-only transition — animating gap/padding causes layout work
+     on every frame, which janks on mid-range phones. */
   transition:
     background 380ms cubic-bezier(0.22, 0.61, 0.36, 1),
     border-color 380ms cubic-bezier(0.22, 0.61, 0.36, 1),
     box-shadow 380ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    gap 380ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    padding 380ms cubic-bezier(0.22, 0.61, 0.36, 1),
     transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .v-nav--scrolled .v-nav__pill {
@@ -125,8 +125,6 @@ body {
     0 18px 44px -14px rgba(0, 0, 0, 0.55),
     0 0 0 1px rgba(127, 20, 26, 0.20),
     inset 0 1px 0 rgba(255, 200, 200, 0.08);
-  gap: 24px;
-  padding: 8px 8px 8px 18px;
 }
 
 .v-nav__brand {
@@ -134,13 +132,12 @@ body {
   color: white; text-decoration: none;
   font-family: var(--font-display); font-weight: 500;
   font-size: 17px; letter-spacing: -0.01em;
-  padding-right: 0;
+  padding-right: 14px;
   border-right: 1px solid transparent;
-  transition: padding-right 380ms ease, border-color 380ms ease, opacity 200ms ease;
+  transition: border-color 380ms ease, opacity 200ms ease;
 }
 .v-nav__brand:hover { opacity: 0.85; }
 .v-nav--scrolled .v-nav__brand {
-  padding-right: 14px;
   border-right-color: rgba(255, 210, 210, 0.10);
 }
 .v-nav__mark {
@@ -151,7 +148,7 @@ body {
   transition: transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .v-nav--scrolled .v-nav__mark { transform: scale(0.95); }
-.v-nav__brand-name { font-family: var(--font-logo); font-weight: 600; font-size: 19px; letter-spacing: 0.03em; }
+.v-nav__brand-name { font-family: var(--font-logo); font-weight: 600; font-size: 18px; letter-spacing: 0.10em; }
 
 /* Sliding-indicator link rail */
 .v-nav__links {
@@ -182,6 +179,13 @@ body {
   transition: color 200ms ease;
 }
 .v-nav__links a:hover { color: white; }
+.v-nav__links a[aria-current] { color: white; }
+.v-nav__links a[aria-current]::after {
+  content: ""; position: absolute; left: 50%; bottom: 4px;
+  width: 4px; height: 4px; border-radius: 999px;
+  transform: translateX(-50%);
+  background: var(--viylsa-crimson-bright);
+}
 
 .v-nav__cta { display: flex; align-items: center; gap: 8px; }
 .v-nav__cta .v-btn--link {
@@ -267,8 +271,7 @@ body {
 .v-nav__drawer-cta .v-btn { width: 100%; justify-content: center; border-radius: 12px; }
 
 @media (max-width: 880px) {
-  .v-nav__pill { padding: 8px 8px 8px 16px; gap: 12px; }
-  .v-nav--scrolled .v-nav__pill { padding: 6px 6px 6px 14px; gap: 10px; }
+  .v-nav__pill { padding: 7px 7px 7px 15px; gap: 11px; }
   .v-nav__brand { padding-right: 0; }
   .v-nav__links { display: none; }
   .v-nav__cta .v-btn--link { display: none; }
@@ -280,7 +283,10 @@ body {
   .v-nav__cta .v-btn--primary { padding: 9px 15px; }
 }
 @media (max-width: 560px) {
-  .v-nav__brand-name { display: none; }
+  /* Keep the wordmark — a first-time phone visitor should still read the
+     brand name in the header. Just tighten it. */
+  .v-nav__brand-name { font-size: 16px; }
+  .v-nav__brand { gap: 8px; }
   .v-nav__brand,
   .v-nav--scrolled .v-nav__brand { border-right: 0; padding-right: 0; }
   .v-nav__cta .v-btn--primary { padding: 8px 13px; font-size: 13px; }

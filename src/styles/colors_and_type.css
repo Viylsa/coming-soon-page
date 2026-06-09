@@ -66,7 +66,7 @@
   --font-body:    'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif:   'Instrument Serif', 'Times New Roman', Georgia, serif;
   --font-mono:    'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
-  --font-logo:    'Playfair Display', Georgia, 'Times New Roman', serif;  /* brand wordmark */
+  --font-logo:    'Geist', ui-sans-serif, system-ui, sans-serif;  /* brand wordmark */
 
   /* ===== Type Scale (clamped for fluid) ===== */
   --fs-display-xl: clamp(56px, 7.5vw, 112px);

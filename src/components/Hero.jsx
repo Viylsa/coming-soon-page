@@ -22,7 +22,7 @@ function Hero() {
             <a href="#contact" className="v-btn v-btn--primary v-btn--lg">
               Book a 10-minute demo <IconArrowRight size={18}/>
             </a>
-            <a href="#how" className="v-btn v-btn--ghost-dark v-btn--lg">
+            <a href="#live-tour" className="v-btn v-btn--ghost-dark v-btn--lg">
               <IconPlay size={16}/> See a live tour
             </a>
           </div>
