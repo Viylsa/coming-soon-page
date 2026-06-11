@@ -33,9 +33,6 @@ function LiveTourPreview() {
 
         <div className="v-tdemo" data-reveal>
           <div className="v-tdemo__chrome">
-            <div className="v-tdemo__dots">
-              <span></span><span></span><span></span>
-            </div>
             <div className="v-tdemo__url">
               <span className="v-tdemo__lock">●</span>
               VIYLSA tour player · live demo

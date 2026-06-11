@@ -681,14 +681,6 @@ input:focus-visible, textarea:focus-visible {
   padding: 0 16px;
   border-bottom: 1px solid #e3dfd8;
 }
-.v-tdemo__dots { display: flex; gap: 7px; }
-.v-tdemo__dots span {
-  width: 12px; height: 12px; border-radius: 999px;
-  background: #c9c4ba;
-}
-.v-tdemo__dots span:nth-child(1) { background: #ed6a5e; }
-.v-tdemo__dots span:nth-child(2) { background: #f5bf4f; }
-.v-tdemo__dots span:nth-child(3) { background: #62c554; }
 .v-tdemo__url {
   font-family: var(--font-mono); font-size: 12px;
   color: var(--fg-muted);
@@ -773,7 +765,9 @@ input:focus-visible, textarea:focus-visible {
   /* 16:9 yields an unusable ~185px letterbox on a phone — give the tour real
      vertical room so it feels immersive, and reclaim chrome width. */
   .v-tdemo__stage { aspect-ratio: 3 / 4; }
-  .v-tdemo__url { display: none; }
+  /* Dots are gone, so the url pill is the only thing in the chrome bar —
+     keep it on phones, just let it shrink and clip. */
+  .v-tdemo__url { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .v-tdemo__chrome { gap: 10px; }
 }
 
@@ -899,14 +893,6 @@ input:focus-visible, textarea:focus-visible {
   border-left: 0; border-top: 0;
 }
 
-.v-tdemo__dots span:nth-child(3) {
-  animation: v-live-pulse 2.4s ease-in-out infinite;
-}
-@keyframes v-live-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(98, 197, 84, 0.6); }
-  50%      { box-shadow: 0 0 0 4px rgba(98, 197, 84, 0); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   [data-reveal], [data-reveal].is-in {
     opacity: 1; transform: none; transition: none;
@@ -921,8 +907,7 @@ input:focus-visible, textarea:focus-visible {
   .v-ai__dot,
   .v-ai__typing span,
   .v-ai__bubble,
-  .v-tdemo__loading-shimmer,
-  .v-tdemo__dots span:nth-child(3) { animation: none; }
+  .v-tdemo__loading-shimmer { animation: none; }
   .v-tdemo__hint { display: none; }
   .v-rcpt__bar-fill, .v-ai__lead { transition: none; }
 }
