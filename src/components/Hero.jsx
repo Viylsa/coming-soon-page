@@ -1,4 +1,5 @@
-import { IconArrowRight, IconPlay, IconSparkle } from '../icons.jsx';
+import { useRef } from 'react';
+import { IconArrowRight, IconPlay } from '../icons.jsx';
 
 /* Type-led editorial hero — the brand carries it, not a client's venue.
    No photography: deep ink, soft crimson glow, film grain, big type.
@@ -8,16 +9,26 @@ import { IconArrowRight, IconPlay, IconSparkle } from '../icons.jsx';
 const VENUES = ['Universities', 'Hotels', 'Hospitals', 'Event halls', 'Real estate', 'Showrooms', 'Restaurants', 'Schools'];
 
 function Hero() {
+  const heroRef = useRef(null);
+
+  // Feed cursor position to CSS as --mx/--my so the crimson grain layer's
+  // radial mask can follow the pointer (see .v-hero__grain-spot).
+  const handleMouseMove = (e) => {
+    const el = heroRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+    el.style.setProperty('--my', `${e.clientY - rect.top}px`);
+  };
+
   return (
-    <header id="top" className="v-hero">
+    <header id="top" className="v-hero" ref={heroRef} onMouseMove={handleMouseMove}>
       <div className="v-hero__glow" aria-hidden="true"/>
       <div className="v-hero__grain" aria-hidden="true"/>
+      <div className="v-hero__grain-spot" aria-hidden="true"/>
 
       <div className="v-hero__inner">
         <div className="v-hero__copy" data-reveal>
-          <div className="v-eyebrow v-eyebrow--crimson">
-            <IconSparkle size={14}/> 360° tours · AI guide in Urdu &amp; English · built for Pakistan
-          </div>
           <h1 className="v-display">
             Bringing <em>visits</em> online.
           </h1>
