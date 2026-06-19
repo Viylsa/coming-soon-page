@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { IconArrowRight, IconPlay } from '../icons.jsx';
+import { IconArrowRight } from '../icons.jsx';
 
 /* Type-led editorial hero — the brand carries it, centred. Deep ink, a soft
    crimson glow + film grain, big type; a small eyebrow + live trust line add
@@ -41,7 +41,6 @@ function Hero() {
 
       <div className="v-hero__inner">
         <div className="v-hero__copy">
-          <div className="v-eyebrow v-eyebrow--crimson v-hero__eyebrow">360° virtual tours · Islamabad &amp; Rawalpindi</div>
           <h1 className="v-display">
             Bringing <span className="v-display__em">visits</span> online.
           </h1>
@@ -50,17 +49,10 @@ function Hero() {
             their phone, and shows you exactly who's interested.
           </p>
           <div className="v-hero__cta">
-            <a href="#live-tour" className="v-btn v-btn--primary v-btn--lg">
-              <IconPlay size={16}/> See a live client tour
-            </a>
-            <a href="#contact" className="v-btn v-btn--ghost-dark v-btn--lg">
+            <a href="#contact" className="v-btn v-btn--primary v-btn--lg">
               Book a demo <IconArrowRight size={18}/>
             </a>
           </div>
-          <p className="v-hero__trust">
-            <span className="v-hero__trust-dot" aria-hidden="true"></span>
-            A live 360° campus tour already running for NUTECH
-          </p>
         </div>
       </div>
 

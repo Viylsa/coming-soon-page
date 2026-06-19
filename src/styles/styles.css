@@ -110,13 +110,13 @@ input:focus-visible, textarea:focus-visible {
 
 /* ---------- nav (morphing floating capsule) ---------- */
 .v-nav {
-  position: fixed; top: 22px; left: 0; right: 0; z-index: 50;
+  position: fixed; top: 16px; left: 0; right: 0; z-index: 50;
   display: flex; justify-content: center;
   padding: 0 16px;
   pointer-events: none;
   transition: top 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-.v-nav--scrolled { top: 14px; }
+.v-nav--scrolled { top: 10px; }
 
 /* At rest the pill is invisible — links + brand + CTA sit naturally,
    spaced out, against the hero. On scroll, the pill materialises:
@@ -124,8 +124,8 @@ input:focus-visible, textarea:focus-visible {
 .v-nav__pill {
   pointer-events: auto;
   display: flex; align-items: center;
-  gap: 28px;
-  padding: 9px 9px 9px 18px;
+  gap: 22px;
+  padding: 6px 6px 6px 16px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 999px;
@@ -152,11 +152,11 @@ input:focus-visible, textarea:focus-visible {
 }
 
 .v-nav__brand {
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: center; gap: 10px;
   color: white; text-decoration: none;
   font-family: var(--font-display); font-weight: 500;
-  font-size: 17px; letter-spacing: -0.01em;
-  padding-right: 14px;
+  font-size: 15px; letter-spacing: -0.01em;
+  padding-right: 12px;
   border-right: 1px solid transparent;
   transition: border-color 380ms ease, opacity 200ms ease;
 }
@@ -165,14 +165,14 @@ input:focus-visible, textarea:focus-visible {
   border-right-color: rgba(255, 210, 210, 0.10);
 }
 .v-nav__mark {
-  width: 32px; height: 32px;
+  width: 26px; height: 26px;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
   transition: transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .v-nav--scrolled .v-nav__mark { transform: scale(0.95); }
-.v-nav__brand-name { font-family: var(--font-logo); font-weight: 600; font-size: 18px; letter-spacing: 0.10em; }
+.v-nav__brand-name { font-family: var(--font-logo); font-weight: 600; font-size: 16px; letter-spacing: 0.10em; }
 
 /* Sliding-indicator link rail */
 .v-nav__links {
@@ -194,9 +194,9 @@ input:focus-visible, textarea:focus-visible {
 .v-nav__links a {
   position: relative; z-index: 1;
   display: inline-flex; align-items: center;
-  padding: 9px 16px;
+  padding: 7px 13px;
   color: rgba(255, 255, 255, 0.92);
-  font-size: 14.5px; font-weight: 500;
+  font-size: 14px; font-weight: 500;
   letter-spacing: -0.005em;
   text-decoration: none;
   border-radius: 999px;
@@ -219,7 +219,7 @@ input:focus-visible, textarea:focus-visible {
 .v-nav__cta .v-btn--link:hover { color: white; text-decoration: none; }
 .v-nav__cta .v-btn--primary {
   border-radius: 999px;
-  padding: 9px 16px;
+  padding: 7px 14px;
 }
 
 /* Hamburger — 44px hit area (touch-target minimum) */
@@ -341,11 +341,11 @@ input:focus-visible, textarea:focus-visible {
     radial-gradient(110% 90% at 50% 115%, #2A0C10 0%, rgba(42, 12, 16, 0) 60%),
     var(--ink-1000);
   color: white;
-  /* svh (smallest viewport height) keeps the whole hero — marquee included —
-     within the visible area even while a mobile toolbar is shown; the vh line
-     is the fallback for browsers without svh. */
-  min-height: clamp(600px, 92vh, 860px);
-  min-height: clamp(560px, 86svh, 820px);
+  /* Full-screen hero. svh (smallest viewport height) keeps the whole hero —
+     marquee included — within the visible area even while a mobile toolbar is
+     shown; the vh line is the fallback for browsers without svh. */
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex; flex-direction: column;
   justify-content: center;
   /* Top padding clears the floating nav (~88px); bottom padding reserves room
