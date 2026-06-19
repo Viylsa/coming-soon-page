@@ -17,7 +17,7 @@ function FooterCTA() {
             </div>
             <div>
               <div className="v-footer__col-h">Company</div>
-              <a href="#founding">Founding venues</a><a href="#team">Team</a><a href="#contact">Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
+              <a href="/about.html">About</a><a href="/virtual-tours-islamabad.html">Virtual tours in Islamabad</a><a href="#founding">Founding venues</a><a href="#team">Team</a><a href="#contact">Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
             </div>
             <div>
               <div className="v-footer__col-h">Get in touch</div>

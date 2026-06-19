@@ -62,11 +62,11 @@
   --dark-border:   rgba(255, 255, 255, 0.10);
 
   /* ===== Type Families ===== */
-  --font-display: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-body:    'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-body:    'Geist Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif:   'Instrument Serif', 'Times New Roman', Georgia, serif;
-  --font-mono:    'Geist Mono', ui-monospace, 'JetBrains Mono', Menlo, monospace;
-  --font-logo:    'Geist', ui-sans-serif, system-ui, sans-serif;  /* brand wordmark */
+  --font-mono:    'Geist Mono Variable', ui-monospace, 'JetBrains Mono', Menlo, monospace;
+  --font-logo:    'Geist Variable', ui-sans-serif, system-ui, sans-serif;  /* brand wordmark */
 
   /* ===== Type Scale (clamped for fluid) ===== */
   --fs-display-xl: clamp(56px, 7.5vw, 112px);

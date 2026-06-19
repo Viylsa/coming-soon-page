@@ -33,9 +33,10 @@ function Hero() {
             Bringing <em>visits</em> online.
           </h1>
           <p className="v-hero__sub">
-            Any venue, walkable from any phone — with an AI guide that answers
-            visitors in <b>Urdu or English</b>, 24/7, and a dashboard that tells
-            you exactly who's interested.
+            <b>VIYLSA</b> turns any venue in Islamabad, Rawalpindi and across
+            Pakistan into a 360° virtual tour you can walk from any phone — with
+            an AI guide that answers visitors in <b>Urdu or English</b>, 24/7,
+            and a dashboard that tells you exactly who's interested.
           </p>
           <div className="v-hero__cta">
             <a href="#live-tour" className="v-btn v-btn--primary v-btn--lg">

@@ -27,7 +27,9 @@ function AIGuide() {
     },
   ];
 
-  const REDUCE = React.useRef(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const REDUCE = React.useRef(
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
   const sectionRef = React.useRef(null);
   const [idx, setIdx] = React.useState(0);
   const [phase, setPhase] = React.useState('typing'); // typing → a → lead
