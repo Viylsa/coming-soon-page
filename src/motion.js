@@ -131,8 +131,14 @@
     bindMarquee();
   }
 
-  // Initial pass + re-scan whenever React adds nodes
-  const mo = new MutationObserver(() => scan());
+  // Initial pass + re-scan whenever React adds nodes. Bursts (the AI chat swaps
+  // keyed bubbles every cycle) are coalesced into one scan per frame.
+  let scanQueued = false;
+  const mo = new MutationObserver(() => {
+    if (scanQueued) return;
+    scanQueued = true;
+    requestAnimationFrame(() => { scanQueued = false; scan(); });
+  });
   function start() {
     scan();
     mo.observe(document.body, { childList: true, subtree: true });

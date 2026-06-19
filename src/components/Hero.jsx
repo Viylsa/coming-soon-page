@@ -44,7 +44,7 @@ function Hero() {
         <div className="v-hero__copy">
           <div className="v-eyebrow v-eyebrow--crimson v-hero__eyebrow">360° virtual tours · Islamabad &amp; Rawalpindi</div>
           <h1 className="v-display">
-            Bringing <em>visits</em> online.
+            Bringing <span className="v-display__em">visits</span> online.
           </h1>
           <p className="v-hero__sub">
             <b>VIYLSA</b> turns your venue into a 360° tour anyone can walk from

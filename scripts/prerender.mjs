@@ -16,7 +16,7 @@
  */
 import { preview } from 'vite';
 import puppeteer from 'puppeteer';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const PORT = 4317;
@@ -57,7 +57,23 @@ try {
     });
 
     const rendered = await page.evaluate(() => document.documentElement.outerHTML);
-    const html = '<!doctype html>\n' + rendered + '\n';
+
+    // Preload the LCP headline fonts (Geist latin + Instrument Serif latin
+    // italic, used by the hero "Bringing visits online.") so the swap lands
+    // before paint and the largest element doesn't reflow. Uses the actual
+    // build-hashed filenames so it never goes stale.
+    const assets = readdirSync(resolve('dist', 'assets'));
+    const pick = (re) => assets.find((f) => re.test(f));
+    const preloadFonts = [
+      pick(/^geist-latin-wght-normal-.*\.woff2$/),
+      pick(/^instrument-serif-latin-400-italic-.*\.woff2$/),
+    ].filter(Boolean);
+    const preloads = preloadFonts
+      .map((f) => `  <link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin>`)
+      .join('\n');
+
+    let html = '<!doctype html>\n' + rendered + '\n';
+    if (preloads) html = html.replace('</head>', preloads + '\n</head>');
     const out = resolve('dist', file);
     writeFileSync(out, html, 'utf8');
     console.log(`prerendered ${route} -> dist/${file} (${html.length} bytes)`);

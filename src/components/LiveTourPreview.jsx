@@ -104,7 +104,9 @@ function LiveTourPreview() {
           {stats.map(([n, l]) => (
             <div className="v-tdemo__stat" key={l}>
               <div className="v-tdemo__stat-n">
-                {/^\d+$/.test(n) ? <b data-count={n}>{n}</b> : n}
+                {/^\d+$/.test(n)
+                  ? <><b data-count={n} aria-hidden="true">{n}</b><span className="v-sr-only">{n}</span></>
+                  : n}
               </div>
               <div className="v-tdemo__stat-l">{l}</div>
             </div>

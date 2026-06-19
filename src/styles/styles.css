@@ -34,6 +34,13 @@ input:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--viylsa-crimson-bright);
   outline-offset: 2px;
 }
+/* visually hidden but available to assistive tech (e.g. the real value behind
+   an animated count-up, whose visible node is aria-hidden). */
+.v-sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
 
 /* ---------- shared utilities ---------- */
 .v-wrap { max-width: 1180px; margin: 0 auto; padding: 0 var(--gutter); }
@@ -313,6 +320,16 @@ input:focus-visible, textarea:focus-visible {
   /* Keep the demo CTA visible & thumb-reachable — it is the whole point of
      the site. Just shrink it instead of hiding it. */
   .v-nav__cta .v-btn--primary { padding: 9px 15px; }
+  /* Drop the heavy backdrop-blur on phones (it re-rasterises the fixed pill on
+     every scroll frame — janky on mid-range Android). Near-opaque bg instead. */
+  .v-nav--scrolled .v-nav__pill {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    background: rgba(20, 8, 12, 0.96);
+  }
+  .v-nav__drawer {
+    backdrop-filter: blur(14px) saturate(150%); -webkit-backdrop-filter: blur(14px) saturate(150%);
+    background: rgba(33, 16, 20, 0.97);
+  }
 }
 @media (max-width: 560px) {
   /* Keep the wordmark — a first-time phone visitor should still read the
@@ -415,7 +432,9 @@ input:focus-visible, textarea:focus-visible {
   text-wrap: balance;
   color: white;
 }
-.v-display em {
+/* decorative serif accent — a span, not <em>, so screen readers don't add
+   spurious emphasis prosody to the brand headline. */
+.v-display__em {
   font-family: var(--font-serif);
   font-style: italic;
   letter-spacing: -0.01em;
@@ -1030,21 +1049,6 @@ html.v-js [data-reveal="wipe"] { clip-path: inset(0 0 16% 0); transform: transla
 [data-reveal].is-in .v-serif::after,
 .is-in .v-serif::after { transform: scaleX(1); }
 
-.v-hero__stage::before,
-.v-hero__stage::after {
-  content: ""; position: absolute; z-index: 6;
-  width: 22px; height: 22px;
-  border: 1.5px solid rgba(255,255,255,0.45);
-  pointer-events: none;
-}
-.v-hero__stage::before {
-  top: 10px; left: 10px;
-  border-right: 0; border-bottom: 0;
-}
-.v-hero__stage::after {
-  bottom: 10px; right: 10px;
-  border-left: 0; border-top: 0;
-}
 
 /* ── Hero load entrance ── transform-only (opacity stays 1) so the prerendered
    then re-mounted hero never flashes; the headline "locks in" with a subtle
@@ -1643,4 +1647,15 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 @media (max-width: 700px) { .v-sticky-cta { display: inline-flex; } }
 @media (prefers-reduced-motion: reduce) {
   .v-sticky-cta { transition: opacity 0.2s ease; transform: none; }
+}
+
+
+/* ==================================================
+   URDU (Nastaliq) — applied to the AI-guide demo's Urdu bubbles only.
+   Nastaliq needs generous leading; a touch larger than the Latin bubble.
+   ================================================== */
+.v-ai__bubble[lang="ur"] {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', var(--font-body);
+  line-height: 2.0;
+  font-size: 15px;
 }

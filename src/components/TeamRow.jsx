@@ -1,8 +1,8 @@
 function TeamRow() {
   const team = [
-    { name: 'Aleena Tahir', role: 'Co-Founder & CEO', initial: 'A' },
-    { name: 'Saqlain Abbas', role: 'Co-Founder & CTO', initial: 'S' },
-    { name: 'Aena Habib', role: 'Co-Founder & CMO', initial: 'A' },
+    { name: 'Aleena Tahir', role: 'Co-Founder & CEO', initial: 'AT' },
+    { name: 'Saqlain Abbas', role: 'Co-Founder & CTO', initial: 'SA' },
+    { name: 'Aena Habib', role: 'Co-Founder & CMO', initial: 'AH' },
   ];
   return (
     <section id="team" className="v-section">

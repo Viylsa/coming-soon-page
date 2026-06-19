@@ -139,6 +139,11 @@
 }
 
 /* ============== Base Elements ============== */
+html {
+  /* the product is a light design (UA form controls, scrollbars, etc. render
+     light-appropriate); explicit dark sections style their own surfaces. */
+  color-scheme: light;
+}
 html, body {
   background: var(--bg);
   color: var(--fg);
