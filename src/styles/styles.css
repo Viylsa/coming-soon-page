@@ -706,18 +706,22 @@ input:focus-visible, textarea:focus-visible {
 .v-rail__n { position: relative; z-index: 1; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #FFB7BD; margin-top: 22px; }
 .v-rail__h { position: relative; z-index: 1; font-family: var(--font-display); font-size: clamp(20px, 2.4vw, 25px); font-weight: 500; letter-spacing: -0.02em; margin: 6px 0 0; color: #fff; }
 .v-rail__p { position: relative; z-index: 1; margin: 10px 0 0; font-size: 14.5px; line-height: 1.62; color: rgba(255, 255, 255, 0.78); }
-@media (max-width: 800px) {
+/* 3-up card rail → 1 col at the 900 primary breakpoint (was 800, which left a
+   cramped 3-up on ~834px tablets). */
+@media (max-width: 900px) {
   .v-rail { grid-template-columns: 1fr; gap: 14px; }
 }
 
 /* ---------- Pricing ---------- */
-.v-pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+/* padding-top gives the raised featured card + its "Most popular" tag room so
+   they never crowd the section head between 901–1180px. */
+.v-pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; padding-top: 18px; }
 .v-plan { background: var(--canvas-paper); border: 1px solid var(--canvas-mist); border-radius: var(--radius-lg); padding: 30px 28px; display: flex; flex-direction: column; position: relative; }
 /* The popular plan sits raised, with a crimson top-accent + halo */
 .v-plan--featured {
   border-color: var(--viylsa-crimson);
   box-shadow: 0 26px 54px -26px rgba(127, 20, 26, 0.45);
-  margin-top: -16px;
+  margin-top: -10px;
   background:
     linear-gradient(180deg, rgba(127, 20, 26, 0.035), rgba(127, 20, 26, 0) 140px),
     var(--canvas-paper);
@@ -1474,10 +1478,13 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 .v-rcpt__bar-val { font-family: var(--font-mono); font-size: 12px; color: var(--fg-muted); min-width: 28px; text-align: right; }
 .v-rcpt__foot { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--canvas-mist); font-size: 13.5px; line-height: 1.55; color: var(--fg-soft); }
 .v-rcpt__foot b { color: var(--viylsa-crimson); font-weight: 600; }
-@media (max-width: 860px) { .v-rcpt__grid { grid-template-columns: 1fr; gap: 36px; } }
+@media (max-width: 900px) { .v-rcpt__grid { grid-template-columns: 1fr; gap: 36px; } }
 @media (max-width: 420px) {
   .v-rcpt__kpis { grid-template-columns: 1fr; gap: 10px; }
-  .v-rcpt__bar { grid-template-columns: 88px 1fr auto; gap: 10px; }
+  /* Give the bar the full card width and float the label above it, so the
+     track isn't squeezed to ~150px and long labels never clip. */
+  .v-rcpt__bar { grid-template-columns: 1fr auto; gap: 8px 10px; }
+  .v-rcpt__bar-label { grid-column: 1 / -1; margin-bottom: 2px; }
 }
 
 
@@ -1525,6 +1532,115 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
   margin: 14px 0 0; max-width: 46ch;
   font-size: 15px; line-height: 1.62; color: var(--fg-soft);
 }
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .v-ai__embed { grid-template-columns: 1fr; gap: 28px; }
+}
+
+
+/* ==================================================
+   RESPONSIVE SYSTEM (Phase 5)
+   Canonical breakpoints, documented:
+     900px  primary — 2-up content grids & 3-up card grids → 1 col
+     700px  team editorial row → stacked
+     600px / 560px  phone polish
+     420px  tiny-phone (analytics bars stack)
+     880px  nav-specific (links → hamburger)
+     1600px large-display content-cap bump
+   ================================================== */
+
+/* Large/4K displays: nudge the content cap up so a 1180 column doesn't float in
+   huge dead margins. Only ≥1600px, so 1440-and-below layouts are untouched. */
+@media (min-width: 1600px) {
+  .v-wrap, .v-hero__inner, .v-footer__base { max-width: 1280px; }
+}
+
+/* Landscape phones / very short viewports: keep the hero compact so the copy
+   doesn't collide with the fixed nav or push the marquee out. */
+@media (max-height: 500px) {
+  .v-hero { min-height: 460px; padding-top: 64px; padding-bottom: 46px; }
+  .v-hero__player { display: none; }
+}
+
+/* Touch targets: links acting as buttons get a comfortable 44px hit area. */
+@media (pointer: coarse) {
+  .v-btn--link { min-height: 44px; padding-top: 11px; padding-bottom: 11px; }
+  .v-footer__cols a { padding: 5px 0; }
+}
+
+/* Floor the smallest mono labels and ease tracking on phones so fine print
+   doesn't fray at 360px. */
+.v-rcpt__kpi-label, .v-rcpt__rooms-h, .v-rcpt__kpi-trend { font-size: 11px; }
+@media (max-width: 560px) {
+  .v-eyebrow, .v-mono, .v-tdemo__stat-l, .v-rcpt__kpi-label, .v-rcpt__rooms-h,
+  .v-ai__sub, .v-plan__cov-k, .v-plan__plus, .v-rail__n, .v-footer__tag,
+  .v-tdemo__cap-num, .v-tdemo__hint { letter-spacing: 0.08em; }
+}
+
+
+/* ==================================================
+   LIVE-TOUR FACADE (tap-to-load on touch) + fallback
+   ================================================== */
+.v-tdemo__shot {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(120% 90% at 30% 8%, rgba(127, 20, 26, 0.5) 0%, rgba(127, 20, 26, 0) 52%),
+    radial-gradient(120% 120% at 86% 104%, rgba(42, 12, 16, 0.95), rgba(10, 10, 11, 0) 60%),
+    linear-gradient(158deg, #1c0e12 0%, #0a0a0b 72%);
+}
+.v-tdemo__shot::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 3px 3px; opacity: 0.45;
+}
+.v-tdemo__facade {
+  position: absolute; inset: 0; z-index: 4;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  width: 100%; border: 0; cursor: pointer; color: #fff; background: transparent;
+}
+.v-tdemo__facade-cta {
+  position: relative; z-index: 1;
+  display: inline-flex; flex-direction: column; align-items: center; gap: 14px;
+  font-family: var(--font-display); font-weight: 500; font-size: 16px;
+}
+.v-tdemo__facade-play {
+  width: 60px; height: 60px; border-radius: 999px; display: grid; place-items: center;
+  background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.42); color: #fff;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: background 0.3s ease, transform 0.4s var(--ease-spring), border-color 0.3s ease;
+}
+.v-tdemo__facade:hover .v-tdemo__facade-play,
+.v-tdemo__facade:focus-visible .v-tdemo__facade-play {
+  background: var(--viylsa-crimson); border-color: var(--viylsa-crimson); transform: scale(1.08);
+}
+.v-tdemo__facade-note {
+  position: relative; z-index: 1;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+.v-tdemo__fallback {
+  position: absolute; inset: 0; z-index: 4;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  text-align: center; padding: 24px; color: rgba(255, 255, 255, 0.85);
+}
+.v-tdemo__fallback p, .v-tdemo__fallback .v-btn { position: relative; z-index: 1; }
+
+
+/* ==================================================
+   STICKY MOBILE CTA (phones only)
+   ================================================== */
+.v-sticky-cta {
+  position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 45;
+  display: none; align-items: center; justify-content: center; gap: 8px;
+  padding: 15px 18px; border-radius: 14px;
+  background: var(--viylsa-crimson); color: #fff;
+  font-family: var(--font-display); font-weight: 500; font-size: 16px;
+  text-decoration: none;
+  box-shadow: 0 14px 32px -10px rgba(127, 20, 26, 0.65);
+  transform: translateY(150%); opacity: 0;
+  transition: transform 0.42s var(--ease-out), opacity 0.3s ease;
+}
+.v-sticky-cta.is-shown { transform: translateY(0); opacity: 1; }
+@media (max-width: 700px) { .v-sticky-cta { display: inline-flex; } }
+@media (prefers-reduced-motion: reduce) {
+  .v-sticky-cta { transition: opacity 0.2s ease; transform: none; }
 }
