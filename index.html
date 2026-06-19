@@ -31,32 +31,109 @@
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <!--
+    TODO (off-site step): once the social/business profiles exist, add a
+    "sameAs" array to the #org node below listing the EXACT canonical URLs
+    (Google Business Profile / Maps share link, LinkedIn company page,
+    Instagram, Facebook, YouTube, X, Crunchbase, Wikidata). A sameAs that
+    points at a 404 hurts, so add each URL only after the profile is live.
+    Likewise add each founder's real LinkedIn URL as "sameAs" on their Person.
+  -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "LocalBusiness",
+        "@type": ["Organization", "LocalBusiness"],
         "@id": "https://www.viylsa.app/#org",
         "name": "VIYLSA",
+        "alternateName": ["VIYLSA Virtual Tours", "Viylsa"],
         "url": "https://www.viylsa.app/",
-        "logo": "https://www.viylsa.app/apple-touch-icon.png",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.viylsa.app/assets/viylsa-mark-sm.png",
+          "width": 256,
+          "height": 247
+        },
         "image": "https://www.viylsa.app/assets/og-image.jpg",
         "slogan": "Bringing visits online.",
         "description": "360° virtual tours with a built-in AI guide that answers visitors in English & Urdu, visitor analytics and lead capture — built for Pakistan.",
         "email": "viylsavirtualtour@gmail.com",
         "telephone": "+92-310-5968568",
-        "areaServed": "Pakistan",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Islamabad",
           "addressCountry": "PK"
         },
+        "areaServed": [
+          { "@type": "City", "name": "Islamabad" },
+          { "@type": "City", "name": "Rawalpindi" },
+          { "@type": "Country", "name": "Pakistan" }
+        ],
+        "knowsAbout": [
+          "360° virtual tours",
+          "Virtual tour photography",
+          "AI virtual tour guide",
+          "Visitor analytics"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+92-310-5968568",
+          "email": "viylsavirtualtour@gmail.com",
+          "contactType": "sales",
+          "areaServed": "PK",
+          "availableLanguage": ["en", "ur"]
+        },
         "founder": [
-          { "@type": "Person", "name": "Aleena Tahir" },
-          { "@type": "Person", "name": "Saqlain Abbas" },
-          { "@type": "Person", "name": "Aena Habib" }
+          { "@type": "Person", "name": "Aleena Tahir", "jobTitle": "Co-founder" },
+          { "@type": "Person", "name": "Saqlain Abbas", "jobTitle": "Co-founder" },
+          { "@type": "Person", "name": "Aena Habib", "jobTitle": "Co-founder" }
         ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.viylsa.app/#website",
+        "url": "https://www.viylsa.app/",
+        "name": "VIYLSA",
+        "alternateName": ["VIYLSA Virtual Tours", "Viylsa"],
+        "inLanguage": "en-PK",
+        "publisher": { "@id": "https://www.viylsa.app/#org" }
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.viylsa.app/#service",
+        "name": "360° virtual tour with a built-in AI guide",
+        "serviceType": "360° virtual tour with AI guide",
+        "provider": { "@id": "https://www.viylsa.app/#org" },
+        "areaServed": { "@type": "Country", "name": "Pakistan" },
+        "availableLanguage": ["en", "ur"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Virtual tour packages",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "name": "Starter",
+              "category": "Small retail, cafés, boutiques",
+              "url": "https://www.viylsa.app/#pricing",
+              "description": "Up to 10 panoramas, up to 8 hotspots, AI guide in English & Urdu, Google Maps integration, 6 months hosting. 3–5 day delivery, 1 revision."
+            },
+            {
+              "@type": "Offer",
+              "name": "Professional",
+              "category": "Offices, restaurants, real estate",
+              "url": "https://www.viylsa.app/#pricing",
+              "description": "Up to 20 panoramas, video/link hotspots, visitor analytics, custom-branded UI, WhatsApp & lead-form integration. 5–7 day delivery, 2 revisions."
+            },
+            {
+              "@type": "Offer",
+              "name": "Enterprise",
+              "category": "Hotels, hospitals, campuses",
+              "url": "https://www.viylsa.app/#pricing",
+              "description": "Up to 40 panoramas, up to 60 rich-media hotspots, VR mode (Meta Quest/Pico), fully custom UI, voiceover, priority support. 7–10 day delivery, 3 revisions."
+            }
+          ]
+        }
       },
       {
         "@type": "FAQPage",
