@@ -52,7 +52,7 @@ function Hero() {
       {/* Venue-type marquee — "built for every space", no client imagery */}
       <div className="v-hero__marquee" aria-hidden="true">
         <div className="v-hero__marquee-track">
-          {[...VENUES, ...VENUES].map((v, i) => (
+          {[...VENUES, ...VENUES, ...VENUES, ...VENUES].map((v, i) => (
             <span className="v-hero__marquee-item" key={i}>
               {v} <span className="v-hero__marquee-dot">·</span>
             </span>

@@ -9,6 +9,12 @@
   const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const FINE   = window.matchMedia('(pointer: fine)').matches;
 
+  // Mark that JS (and therefore the reveal machinery) is live. The initial
+  // hidden state of [data-reveal] is gated behind html.v-js (see styles.css),
+  // so a no-JS visitor or a failed bundle load can NEVER leave content stuck at
+  // opacity:0 — it just renders fully visible. Added synchronously, first thing.
+  document.documentElement.classList.add('v-js');
+
   // ── Reveal-on-scroll ──────────────────────────────────────────────
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
@@ -85,6 +91,16 @@
     document.querySelectorAll('[data-reveal]:not(.is-watched)').forEach((el) => {
       el.classList.add('is-watched');
       if (REDUCE) { el.classList.add('is-in'); return; }
+      // Kill the first-paint flash. createRoot() re-mounts the prerendered DOM
+      // without .is-in, so [data-reveal] elements blink to opacity:0 until the
+      // observer fires. This scan runs inside the MutationObserver microtask
+      // (before paint), so anything already in the first viewport is revealed
+      // synchronously — no blink, no observer round-trip. Below-fold elements
+      // still animate in on scroll via the observer.
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.95) {
+        el.classList.add('is-in');
+        return;
+      }
       io.observe(el);
     });
     document.querySelectorAll('[data-count]:not(.is-watched)').forEach((el) => {

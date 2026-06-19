@@ -322,11 +322,23 @@ input:focus-visible, textarea:focus-visible {
     radial-gradient(110% 90% at 50% 115%, #2A0C10 0%, rgba(42, 12, 16, 0) 60%),
     var(--ink-1000);
   color: white;
+  /* svh (smallest viewport height) keeps the whole hero — marquee included —
+     within the visible area even while a mobile toolbar is shown; the vh line
+     is the fallback for browsers without svh. */
   min-height: clamp(600px, 92vh, 860px);
+  min-height: clamp(560px, 86svh, 820px);
   display: flex; flex-direction: column;
   justify-content: center;
-  padding: clamp(120px, 16vw, 150px) 0 0;
+  /* Top padding clears the floating nav (~88px); bottom padding reserves room
+     for the marquee, which is now pinned absolutely to the hero's bottom edge
+     (see .v-hero__marquee) so it is ALWAYS the last thing inside the fold. */
+  padding: clamp(96px, 12vw, 124px) 0 78px;
   overflow: hidden;
+}
+/* Short laptops (≈1366×768 → ~657px usable) and landscape phones: tighten so
+   the centered copy never collides with the pinned marquee. */
+@media (max-height: 760px) {
+  .v-hero { padding-top: clamp(72px, 9vw, 92px); padding-bottom: 56px; }
 }
 .v-hero__glow {
   position: absolute; left: 50%; bottom: -42%;
@@ -403,9 +415,12 @@ input:focus-visible, textarea:focus-visible {
 
 /* ── Venue-type marquee ── */
 .v-hero__marquee {
-  position: relative; z-index: 2;
-  margin-top: clamp(48px, 7vw, 72px);
-  padding: 20px 0;
+  /* Pinned to the hero's bottom edge — decoupled from the centered copy column
+     so it can never be pushed below the fold by tall copy (the old margin-top +
+     trailing-flex-child layout was the root cause of the "marquee only appears
+     after scrolling" bug). It is aria-hidden decoration, so absolute is safe. */
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 18px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to right, transparent, black 14%, black 86%, transparent);
@@ -416,7 +431,9 @@ input:focus-visible, textarea:focus-visible {
   animation: v-marquee 36s linear infinite;
 }
 @keyframes v-marquee {
-  to { transform: translateX(-50%); }
+  /* track holds 4 copies of the venue list; advancing by one copy (25%) loops
+     seamlessly with no blank gap on wide (≥1440px) monitors. */
+  to { transform: translateX(-25%); }
 }
 .v-hero__marquee-item {
   font-family: var(--font-mono);
@@ -778,7 +795,12 @@ input:focus-visible, textarea:focus-visible {
    Respects prefers-reduced-motion.
    ================================================== */
 
-[data-reveal] {
+/* The hidden initial state is gated behind html.v-js (motion.js adds it the
+   moment it runs). Without JS — or if the bundle fails to load — none of these
+   match, so every [data-reveal] element renders fully visible and unshifted.
+   This is what makes the reveal a true progressive enhancement and kills the
+   "page is permanently blank" failure mode. */
+html.v-js [data-reveal] {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 520ms cubic-bezier(0.22, 0.61, 0.36, 1),
@@ -788,18 +810,18 @@ input:focus-visible, textarea:focus-visible {
   /* will-change is added transiently in motion.js on observe and cleared on
      transitionend — never left on permanently (saves memory on low-end phones). */
 }
-[data-reveal].is-in { opacity: 1; transform: none; filter: none; }
-[data-reveal="wipe"].is-in { clip-path: inset(0 0 0 0); }   /* only the wipe variant clips */
-[data-reveal="left"]  { transform: translateX(-20px); }
-[data-reveal="right"] { transform: translateX(20px); }
+html.v-js [data-reveal].is-in { opacity: 1; transform: none; filter: none; }
+html.v-js [data-reveal="wipe"].is-in { clip-path: inset(0 0 0 0); }   /* only the wipe variant clips */
+html.v-js [data-reveal="left"]  { transform: translateX(-20px); }
+html.v-js [data-reveal="right"] { transform: translateX(20px); }
 /* Headers/eyebrows: a tighter clarity reveal (slight rise + de-blur). */
-[data-reveal="blur"] { transform: translateY(12px); filter: blur(7px); }
+html.v-js [data-reveal="blur"] { transform: translateY(12px); filter: blur(7px); }
 /* Cards: rise + a touch of scale so they feel like they settle into place. */
-[data-reveal="scale"] { transform: translateY(20px) scale(0.975); }
-[data-reveal="scale"].is-in { transform: translateY(0) scale(1); }
+html.v-js [data-reveal="scale"] { transform: translateY(20px) scale(0.975); }
+html.v-js [data-reveal="scale"].is-in { transform: translateY(0) scale(1); }
 /* Product moments (live tour, dashboards): a clip-path wipe — reads as
    "the real thing is being revealed", distinct from body copy. */
-[data-reveal="wipe"] { clip-path: inset(0 0 14% 0); transform: translateY(14px); }
+html.v-js [data-reveal="wipe"] { clip-path: inset(0 0 14% 0); transform: translateY(14px); }
 [data-reveal-delay="1"]  { transition-delay: 70ms; }
 [data-reveal-delay="2"]  { transition-delay: 140ms; }
 [data-reveal-delay="3"]  { transition-delay: 210ms; }
