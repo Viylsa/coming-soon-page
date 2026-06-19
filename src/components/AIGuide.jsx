@@ -9,21 +9,21 @@ function AIGuide() {
   const SCRIPT = [
     {
       qen: 'What are the hostel fees per semester?',
-      aen: 'Hostel fees are Rs 45,000 per semester, including mess. Want the full breakdown?',
+      aen: 'Hostel fees are around Rs 45,000 a semester, mess included. Want the full breakdown?',
       qur: 'ہاسٹل کی فیس فی سمسٹر کتنی ہے؟',
-      aur: 'ہاسٹل کی فیس فی سمسٹر 45,000 روپے ہے، میس سمیت۔ کیا میں مکمل تفصیل بھیج دوں؟',
+      aur: 'ہاسٹل کی فیس تقریباً 45,000 روپے فی سمسٹر ہے، میس سمیت۔ کیا میں مکمل تفصیل بھیج دوں؟',
     },
     {
       qen: 'When does admission close?',
-      aen: 'Admissions close on 30 August. I can send you the application form right now.',
+      aen: 'Admissions usually close at the end of August. I can send you the application form right now.',
       qur: 'داخلے کی آخری تاریخ کب ہے؟',
-      aur: 'داخلے 30 اگست کو بند ہوں گے۔ میں ابھی آپ کو داخلہ فارم بھیج سکتا ہوں۔',
+      aur: 'داخلے عموماً اگست کے آخر میں بند ہوتے ہیں۔ میں ابھی آپ کو داخلہ فارم بھیج سکتا ہوں۔',
     },
     {
       qen: 'Where is the computer lab?',
-      aen: 'It\'s on the 2nd floor of the academic block — tap here and I\'ll walk you there.',
+      aen: 'It\'s on the 2nd floor of the academic block. Tap here and I\'ll take you there.',
       qur: 'کمپیوٹر لیب کہاں ہے؟',
-      aur: 'یہ اکیڈمک بلاک کی دوسری منزل پر ہے — یہاں ٹیپ کریں، میں آپ کو وہاں لے چلتا ہوں۔',
+      aur: 'یہ اکیڈمک بلاک کی دوسری منزل پر ہے۔ یہاں ٹیپ کریں، میں آپ کو وہاں لے چلتا ہوں۔',
     },
   ];
 
@@ -127,7 +127,7 @@ function AIGuide() {
               Lead captured · added to your dashboard
             </div>
           </div>
-          <div className="v-ai__caption">A real conversation a visitor could have — in either language.</div>
+          <div className="v-ai__caption">An example of how the guide answers, in either language.</div>
         </div>
       </div>
     </section>

@@ -32,20 +32,20 @@ function Analytics() {
         <div className="v-rcpt__dash" data-reveal="wipe">
           <div className="v-rcpt__card">
             <div className="v-rcpt__card-head">
-              <span className="v-rcpt__card-title">Campus tour · a sample week</span>
-              <span className="v-rcpt__card-live">Sample data</span>
+              <span className="v-rcpt__card-title">Example dashboard · illustrative figures</span>
+              <span className="v-rcpt__card-live">Illustrative — not a real venue</span>
             </div>
 
             <div className="v-rcpt__kpis">
               <div className="v-rcpt__kpi">
                 <div className="v-rcpt__kpi-label">Visits</div>
-                <div className="v-rcpt__kpi-num"><b data-count="342">342</b></div>
-                <div className="v-rcpt__kpi-trend">↑ 24% vs last week</div>
+                <div className="v-rcpt__kpi-num"><b>300+</b></div>
+                <div className="v-rcpt__kpi-trend">in a sample week</div>
               </div>
               <div className="v-rcpt__kpi">
                 <div className="v-rcpt__kpi-label">Leads captured</div>
-                <div className="v-rcpt__kpi-num"><b data-count="37">37</b></div>
-                <div className="v-rcpt__kpi-trend">by the AI guide</div>
+                <div className="v-rcpt__kpi-num"><b>30+</b></div>
+                <div className="v-rcpt__kpi-trend">captured automatically</div>
               </div>
               <div className="v-rcpt__kpi">
                 <div className="v-rcpt__kpi-label">Avg. time in tour</div>
@@ -68,7 +68,7 @@ function Analytics() {
             </div>
 
             <div className="v-rcpt__foot">
-              <b>61%</b> of visits came after 6pm — captured while your office was closed.
+              Much of the traffic lands <b>after hours</b>, captured while your office is closed.
             </div>
           </div>
         </div>
