@@ -20,11 +20,11 @@ function LiveTourPreview() {
       <div className="v-wrap">
         <div className="v-section__head" data-reveal>
           <div>
-            <div className="v-eyebrow v-eyebrow--crimson">Client tour · #001</div>
+            <div className="v-eyebrow v-eyebrow--crimson">Live client tour</div>
             <h2 className="v-h2">This is exactly what your visitors <span className="v-serif">walk into.</span></h2>
             <p className="v-tdemo__lede">
-              Built for our first client — a university campus in Islamabad.
-              Drag, click hotspots, browse all views — the live tour player,
+              Built for NUTECH, a university campus in Islamabad. Drag, click
+              hotspots and browse every view: this is the live tour player,
               embedded right here. No mock, no marketing video.
             </p>
           </div>
@@ -74,7 +74,7 @@ function LiveTourPreview() {
           <div className="v-tdemo__cap" data-reveal>
             <div className="v-tdemo__cap-num">01</div>
             <div className="v-tdemo__cap-body">
-              <b>Hotspots</b> let visitors read context — opening hours, room details, contact info — without leaving the scene.
+              <b>Hotspots</b> let visitors read context like opening hours, room details and contact info, without leaving the scene.
             </div>
           </div>
           <div className="v-tdemo__cap" data-reveal>
@@ -86,7 +86,7 @@ function LiveTourPreview() {
           <div className="v-tdemo__cap" data-reveal>
             <div className="v-tdemo__cap-num">03</div>
             <div className="v-tdemo__cap-body">
-              <b>All Views</b> shows every location at a glance — for visitors who want to skim, not stroll.
+              <b>All Views</b> shows every location at a glance, for visitors who want to skim, not stroll.
             </div>
           </div>
         </div>
@@ -94,11 +94,11 @@ function LiveTourPreview() {
         <div id="founding" className="v-founding" data-reveal="scale">
           <div className="v-founding__body">
             <div className="v-eyebrow v-eyebrow--crimson">Founding venues · 2026</div>
-            <h3 className="v-founding__h">Be one of our first venues.</h3>
+            <h3 className="v-founding__h">Become a founding venue.</h3>
             <p className="v-founding__p">
-              We're taking on a small group of founding venues this year — locked-in
+              We're taking on a small group of founding venues this year: locked-in
               early pricing, priority shooting dates, and a tour built hand-in-hand
-              with our team.
+              with the founders who stay on call after launch.
             </p>
           </div>
           <a href="#contact" className="v-btn v-btn--primary v-btn--lg">

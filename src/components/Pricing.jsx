@@ -13,7 +13,7 @@ function Pricing() {
         ['Revisions', '1 round'],
       ],
       features: [
-        'AI guide trained on your FAQ & pricing — replies in English & Urdu',
+        'AI guide trained on your FAQ and pricing, replies in English & Urdu',
         'Professional 360° panoramic photography',
         'Custom branded loading screen',
         'Shareable link + Google Maps integration',
@@ -28,14 +28,14 @@ function Pricing() {
       coverage: [
         ['Space', '1,000 – 2,000 sq ft'],
         ['Scenes', 'Up to 20 panoramas'],
-        ['Hotspots', 'Up to 20 — video & links'],
+        ['Hotspots', 'Up to 20, video & links'],
         ['Delivery', '5 – 7 days'],
         ['Revisions', '2 rounds'],
       ],
       plus: 'Everything in Starter, plus',
       features: [
-        'Smarter AI guide — trained on floor plans, brochures & lead routing',
-        'Visitor analytics — visits, dwell time & most-viewed spaces',
+        'Smarter AI guide, trained on floor plans, brochures & lead routing',
+        'Visitor analytics: visits, dwell time & most-viewed spaces',
         'Custom UI with your logo & colour theme',
         'Video embeds, links & info overlays',
         'WhatsApp & lead-form integration',
@@ -57,12 +57,12 @@ function Pricing() {
       features: [
         'Fully trained AI guide with lead routing & handoff',
         'Fully custom UI/UX built to your brand',
-        'VR mode (Meta Quest, Pico & compatible)',
-        'Voiceover + background music',
-        'Priority support',
+        'VR-ready export (Meta Quest, Pico) on request',
+        'Voiceover and background music on request',
+        'A direct line to the founders',
       ],
       featured: false,
-      cta: 'Talk to sales',
+      cta: 'Get a quote',
     },
   ];
 
@@ -75,8 +75,8 @@ function Pricing() {
             <h2 className="v-h2">Three ways to bring your space <span className="v-serif">online.</span></h2>
           </div>
           <div className="v-pricing__note">
-            Every venue is different, so every package is quoted to your space —
-            one call to scope it, a fixed price before we shoot.
+            Every venue is different, so every package is quoted to your space.
+            One call to scope it, a fixed price before we shoot.
           </div>
         </div>
 

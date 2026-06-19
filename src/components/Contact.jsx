@@ -24,7 +24,7 @@ function Contact() {
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const composeText = ({ name, org, message }) =>
-    'Hi VIYLSA — I\'d like to book a demo.\n\n' +
+    'Hi VIYLSA, I\'d like to book a demo.\n\n' +
     'Name: ' + name.trim() + '\n' +
     (org.trim() ? 'Venue / organisation: ' + org.trim() + '\n' : '') +
     '\n' + message.trim();
@@ -63,7 +63,7 @@ function Contact() {
             Let's bring your space <span className="v-serif">online.</span>
           </h2>
           <p className="v-contact__p">
-            Tell us about your venue — a university, a property, a hotel, a hall.
+            Tell us about your venue: a university, a property, a hotel, a hall.
             We'll show you exactly how it looks as a 360° tour, and what it takes
             to get there.
           </p>
@@ -104,9 +104,9 @@ function Contact() {
           {sent ? (
             <div className="v-contact__sent">
               <span className="v-contact__sent-ic"><IconCheck size={26}/></span>
-              <h3>Carrying on in WhatsApp</h3>
+              <h3>Continue in WhatsApp</h3>
               <p>
-                Your message is pre-filled — just press send and we'll reply
+                Your message is pre-filled. Just press send and we'll reply
                 within one business day. Didn't open? Message us directly on{' '}
                 <a href={'https://wa.me/' + WHATSAPP_NUMBER} target="_blank" rel="noopener">{WHATSAPP_DISPLAY}</a>{' '}
                 or email <a href={'mailto:' + EMAIL}>{EMAIL}</a>.
@@ -132,7 +132,7 @@ function Contact() {
               <button type="button" className="v-btn v-btn--ghost-dark v-btn--lg v-contact__submit v-contact__submit--alt" onClick={onEmailInstead}>
                 <IconMail size={16}/> Send by email instead
               </button>
-              <p className="v-contact__formnote">Opens WhatsApp with your message pre-filled — no account or sign-up needed.</p>
+              <p className="v-contact__formnote">Opens WhatsApp with your message ready to send. No VIYLSA account or sign-up needed.</p>
             </>
           )}
         </form>

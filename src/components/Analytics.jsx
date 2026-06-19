@@ -35,7 +35,7 @@ function Analytics() {
           <div className="v-rcpt__card">
             <div className="v-rcpt__card-head">
               <span className="v-rcpt__card-title">Example dashboard · illustrative figures</span>
-              <span className="v-rcpt__card-live">Illustrative — not a real venue</span>
+              <span className="v-rcpt__card-live">Illustrative · not a real venue</span>
             </div>
 
             <div className="v-rcpt__kpis">

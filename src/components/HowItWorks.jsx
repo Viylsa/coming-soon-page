@@ -12,13 +12,13 @@ function HowItWorks() {
       n: '02',
       Icon: IconSparkle,
       h: 'We train the AI',
-      p: 'Feed it your floor plan, FAQ, pricing and brochures. It answers visitors in English and Urdu, 24/7 — like your best front-desk staffer.',
+      p: 'Feed it your floor plan, FAQ, pricing and brochures. It answers visitors in English and Urdu, 24/7, like your best front-desk staffer.',
     },
     {
       n: '03',
       Icon: IconBox,
       h: 'You go live',
-      p: 'One line of code on your site — or a shareable link for WhatsApp & email. Live the same day, on every device.',
+      p: 'One line of code on your site, or a shareable link for WhatsApp & email. Live the same day, on every device.',
     },
   ];
   return (

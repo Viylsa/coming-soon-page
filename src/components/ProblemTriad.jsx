@@ -3,17 +3,17 @@ function ProblemTriad() {
     {
       n: '01',
       h: 'Static photos lie.',
-      p: 'A wide-angle lens makes a tiny room look palatial — be it a lecture hall, a hospital ward, or a wedding lawn. A tour shows the space as it really is: corner to corner, ceiling to floor.',
+      p: 'A wide-angle lens makes a tiny room look palatial, whether it\'s a lecture hall, a hospital ward, or a wedding lawn. A tour shows the space as it really is: corner to corner, ceiling to floor.',
     },
     {
       n: '02',
       h: 'Your doors close at 6.',
-      p: 'Digital demand doesn\'t. A student in Lahore, a patient\'s family abroad, a couple booking a hall — none of them should have to wait for your gate to open to look inside.',
+      p: 'Digital demand doesn\'t. A student in Lahore, a patient\'s family abroad, a couple booking a hall: none of them should have to wait for your gate to open to look inside.',
     },
     {
       n: '03',
       h: 'You don\'t know who visited.',
-      p: 'No name. No path through the building. No idea what they cared about. Every walk-in is a black box — until a tour hands you the receipt.',
+      p: 'No name. No path through the building. No idea what they cared about. Every walk-in is a black box, until a tour hands you the receipt.',
     },
   ];
   const audience = ['Universities', 'Real estate', 'Hotels', 'Hospitals', 'Event halls', 'Retail'];
