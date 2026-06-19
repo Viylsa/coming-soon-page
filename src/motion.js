@@ -3,6 +3,9 @@
    Respects prefers-reduced-motion throughout. */
 
 (function () {
+  // No-op in any non-browser (build-time prerender) context.
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
   const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const FINE   = window.matchMedia('(pointer: fine)').matches;
 
