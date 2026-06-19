@@ -1,0 +1,72 @@
+/* Build-time prerender for the React SPA.
+ *
+ * GitHub Pages serves static files only — no SSR. After `vite build`, the
+ * homepage ships as `<div id="root"></div>` with all content painted by JS,
+ * which is invisible to non-JS crawlers (GPTBot, ClaudeBot, PerplexityBot) and
+ * weak for a new low-authority domain on Google's render queue.
+ *
+ * This loads the freshly built site in headless Chrome (so window/matchMedia
+ * all exist — no SSR refactor needed), lets React render + the AI-guide demo
+ * settle, forces every scroll-reveal element visible, then overwrites
+ * dist/index.html with the fully rendered HTML. The module script is kept, so
+ * on a real visit React re-renders into #root as before (createRoot, not
+ * hydrate — no hydration-mismatch constraints).
+ *
+ * Run after the build:  vite build && node scripts/prerender.mjs
+ */
+import { preview } from 'vite';
+import puppeteer from 'puppeteer';
+import { writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+const PORT = 4317;
+// Only the SPA route needs this. privacy.html / terms.html are already real HTML.
+const ROUTES = { '/': 'index.html' };
+
+const server = await preview({ preview: { port: PORT, strictPort: true } });
+const origin = `http://localhost:${PORT}`;
+const browser = await puppeteer.launch({
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox'],
+});
+
+try {
+  for (const [route, file] of Object.entries(ROUTES)) {
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1280, height: 1800 });
+    // Reduced motion makes the build deterministic: the AI-guide demo settles on
+    // an answered exchange (no cycling timers) and every scroll-reveal section is
+    // shown immediately, so the snapshot captures the full bilingual Q&A + all
+    // content rather than a random mid-animation frame.
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+    await page.goto(origin + route, { waitUntil: 'networkidle0', timeout: 60000 });
+
+    // Hero rendered…
+    await page.waitForSelector('h1', { timeout: 30000 });
+    // …and the AI-guide answer present (reduced-motion lands straight on it).
+    await page
+      .waitForSelector('.v-ai__bubble--ai:not(.v-ai__typing)', { timeout: 30000 })
+      .catch(() => {});
+    await page.evaluate(() => (document.fonts ? document.fonts.ready : null));
+
+    // Scroll-reveal hides below-fold sections at opacity:0 until they enter the
+    // viewport. Force them all visible so the snapshot exposes ALL content to
+    // crawlers and no-JS visitors.
+    await page.evaluate(() => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-in'));
+    });
+
+    const rendered = await page.evaluate(() => document.documentElement.outerHTML);
+    const html = '<!doctype html>\n' + rendered + '\n';
+    const out = resolve('dist', file);
+    writeFileSync(out, html, 'utf8');
+    console.log(`prerendered ${route} -> dist/${file} (${html.length} bytes)`);
+    await page.close();
+  }
+} finally {
+  await browser.close();
+  await server.httpServer.close();
+}
+
+// PreviewServer keep-alive sockets can hold the event loop open in CI.
+process.exit(0);
