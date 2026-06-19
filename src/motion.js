@@ -122,4 +122,19 @@
   } else {
     start();
   }
+
+  // ── Dev-only: assert every in-page anchor resolves to a live id ───
+  // Catches dead "#…" links after section renames/merges (e.g. the AI-guide
+  // demotion). Stripped from the production bundle by Vite's dead-code pass.
+  if (import.meta.env && import.meta.env.DEV) {
+    setTimeout(() => {
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        const id = a.getAttribute('href').slice(1);
+        if (id && !document.getElementById(id)) {
+          // eslint-disable-next-line no-console
+          console.warn('[viylsa] dead in-page anchor →', a.getAttribute('href'), a);
+        }
+      });
+    }, 1500);
+  }
 })();

@@ -63,6 +63,23 @@ input:focus-visible, textarea:focus-visible {
 
 .v-section { padding: var(--pad-section) 0; }
 .v-section--haze { background: var(--canvas-haze); }
+/* Dark "premium frame" band — used for the live-tour proof section so the
+   page reads dark(hero) → dark(proof) → light → light → crimson-band → light,
+   instead of a long pale run. A faint crimson floor-glow echoes the hero. */
+.v-section--dark {
+  position: relative;
+  color: var(--dark-fg);
+  background:
+    radial-gradient(120% 80% at 50% 118%, rgba(127, 20, 26, 0.22) 0%, rgba(127, 20, 26, 0) 60%),
+    var(--dark-bg);
+}
+.v-section--dark .v-h2 { color: var(--dark-fg); }
+.v-section--dark .v-serif { color: #E89AA0; }
+.v-section--dark .v-eyebrow { color: var(--dark-fg-muted); }
+.v-section--dark .v-eyebrow--crimson { color: #E89AA0; }
+.v-section--dark .v-btn--link { color: #E89AA0; }
+/* invisible scroll anchor (e.g. #ai-guide alias inside #analytics) */
+.v-anchor { display: block; height: 0; width: 0; }
 .v-section__head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom: var(--head-gap); flex-wrap: wrap; }
 
 /* ---------- buttons ---------- */
@@ -1308,4 +1325,53 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 @media (max-width: 420px) {
   .v-rcpt__kpis { grid-template-columns: 1fr; gap: 10px; }
   .v-rcpt__bar { grid-template-columns: 88px 1fr auto; gap: 10px; }
+}
+
+
+/* ==================================================
+   LIVE TOUR — dark-section overrides
+   The tour player section sits on the dark band; recolour its supporting
+   text/dividers/founding-offer for the dark ground. The fake browser chrome
+   stays light on purpose — it reads as a floating window on the dark field.
+   ================================================== */
+.v-section--dark .v-tdemo__lede { color: rgba(255, 255, 255, 0.74); }
+.v-section--dark .v-tdemo {
+  border-color: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 40px 90px -34px rgba(0, 0, 0, 0.7);
+}
+.v-section--dark .v-tdemo__stats {
+  border-top-color: var(--dark-border);
+  border-bottom-color: var(--dark-border);
+}
+.v-section--dark .v-tdemo__stat-n { color: #fff; }
+.v-section--dark .v-tdemo__stat-l { color: var(--dark-fg-muted); }
+.v-section--dark .v-tdemo__cap { border-top-color: var(--dark-border); }
+.v-section--dark .v-tdemo__cap-num { color: #E89AA0; }
+.v-section--dark .v-tdemo__cap-body { color: rgba(255, 255, 255, 0.74); }
+.v-section--dark .v-tdemo__cap-body b { color: #fff; }
+/* Founding-venues offer on dark: crimson-tinted glass, not the light-pink card */
+.v-section--dark .v-founding {
+  background: linear-gradient(180deg, rgba(127, 20, 26, 0.24), rgba(127, 20, 26, 0.08));
+  border-color: rgba(232, 154, 160, 0.26);
+}
+.v-section--dark .v-founding__h { color: #fff; }
+.v-section--dark .v-founding__p { color: rgba(255, 255, 255, 0.78); opacity: 1; }
+
+/* ==================================================
+   AI-GUIDE EMBED — supporting sub-block under the analytics dashboard
+   ================================================== */
+.v-ai__embed {
+  margin-top: clamp(40px, 5vw, 64px);
+  padding-top: clamp(28px, 4vw, 44px);
+  border-top: 1px solid var(--canvas-mist);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 56px); align-items: center;
+}
+.v-ai__embed > * { min-width: 0; }
+.v-ai__embed-p {
+  margin: 14px 0 0; max-width: 46ch;
+  font-size: 15px; line-height: 1.62; color: var(--fg-soft);
+}
+@media (max-width: 860px) {
+  .v-ai__embed { grid-template-columns: 1fr; gap: 28px; }
 }

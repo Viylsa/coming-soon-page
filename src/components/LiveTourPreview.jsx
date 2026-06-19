@@ -16,7 +16,7 @@ function LiveTourPreview() {
     ['EN · UR', 'AI guide languages'],
   ];
   return (
-    <section id="live-tour" className="v-section v-section--haze">
+    <section id="live-tour" className="v-section v-section--dark">
       <div className="v-wrap">
         <div className="v-section__head" data-reveal>
           <div>

@@ -20,12 +20,15 @@ function Nav() {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
+  // AI guide + Analytics are intentionally NOT top-level destinations — the AI
+  // guide is a supporting capability folded into the analytics section, not a
+  // co-headline. These 5 links each map to a real section the visitor wants.
   const links = [
     ['Tour', '#live-tour'],
-    ['AI guide', '#ai-guide'],
-    ['Analytics', '#analytics'],
     ['How it works', '#how'],
     ['Pricing', '#pricing'],
+    ['FAQ', '#faq'],
+    ['Contact', '#contact'],
   ];
 
   const moveIndicator = (e) => {

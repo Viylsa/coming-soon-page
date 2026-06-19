@@ -1,8 +1,7 @@
 import Nav from './components/Nav.jsx';
 import Hero from './components/Hero.jsx';
-import ProblemTriad from './components/ProblemTriad.jsx';
 import LiveTourPreview from './components/LiveTourPreview.jsx';
-import AIGuide from './components/AIGuide.jsx';
+import ProblemTriad from './components/ProblemTriad.jsx';
 import Analytics from './components/Analytics.jsx';
 import HowItWorks from './components/HowItWorks.jsx';
 import Pricing from './components/Pricing.jsx';
@@ -11,6 +10,11 @@ import TeamRow from './components/TeamRow.jsx';
 import Contact from './components/Contact.jsx';
 import FooterCTA from './components/FooterCTA.jsx';
 
+/* Section order is proof-first: the real client tour arrives in one short scroll
+   (it is the one thing that proves VIYLSA isn't vaporware), THEN the problem it
+   solves, THEN "what you get back" — the analytics dashboard with the bilingual
+   AI guide folded in as a supporting sub-block (it is a capability of the tour,
+   not a co-headline). */
 export default function App() {
   return (
     <>
@@ -18,9 +22,8 @@ export default function App() {
       <Nav/>
       <main id="main">
         <Hero/>
-        <ProblemTriad/>
         <LiveTourPreview/>
-        <AIGuide/>
+        <ProblemTriad/>
         <Analytics/>
         <HowItWorks/>
         <Pricing/>
