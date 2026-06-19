@@ -8,38 +8,48 @@ const EMAIL = 'viylsavirtualtour@gmail.com';
 
 /* Contact section — closing call-to-action with a working form.
    WhatsApp is the primary channel (it works on every device, no mail client
-   needed, and it's how B2B conversations start here); email is the fallback. */
+   needed, and it's how B2B conversations start here); email is the fallback.
+
+   The primary action is a REAL anchor whose href is the wa.me deep link, built
+   live from the (controlled) field values. That means it works in every browser
+   and in-app webview — and even with JS disabled — instead of relying on
+   window.open(), which returns null when blocked (popup blockers, the Instagram/
+   Facebook in-app browsers common in Pakistan, desktop without WhatsApp) while
+   the old code still flipped to a "sent" success state. No more false success. */
 function Contact() {
   const [sent, setSent] = React.useState(false);
+  const [form, setForm] = React.useState({ name: '', org: '', message: '' });
+  const waRef = React.useRef(null);
 
-  const readForm = (form) => {
-    const el = form.elements;
-    return {
-      name: el.fullname.value.trim(),
-      org: el.org.value.trim(),
-      message: el.message.value.trim(),
-    };
-  };
+  const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const composeText = ({ name, org, message }) =>
     'Hi VIYLSA — I\'d like to book a demo.\n\n' +
-    'Name: ' + name + '\n' +
-    (org ? 'Venue / organisation: ' + org + '\n' : '') +
-    '\n' + message;
+    'Name: ' + name.trim() + '\n' +
+    (org.trim() ? 'Venue / organisation: ' + org.trim() + '\n' : '') +
+    '\n' + message.trim();
 
+  const waHref = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(composeText(form));
+
+  const onWaClick = (e) => {
+    const f = e.currentTarget.closest('form');
+    if (f && !f.reportValidity()) { e.preventDefault(); return; }
+    setSent(true); // the anchor navigation (new tab) proceeds normally
+  };
+
+  // Enter inside a field submits the form — route it through the same anchor so
+  // there is a single conversion path. (Native validation has already passed if
+  // onSubmit fires.)
   const onSubmit = (e) => {
     e.preventDefault();
-    const text = composeText(readForm(e.currentTarget));
-    window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
-    setSent(true);
+    if (waRef.current) waRef.current.click();
   };
 
   const onEmailInstead = (e) => {
-    const form = e.currentTarget.closest('form');
-    if (!form.reportValidity()) return;
-    const { name, org, message } = readForm(form);
-    const subject = encodeURIComponent('VIYLSA demo request — ' + (name || 'website'));
-    const body = encodeURIComponent(composeText({ name, org, message }));
+    const f = e.currentTarget.closest('form');
+    if (!f.reportValidity()) return;
+    const subject = encodeURIComponent('VIYLSA demo request — ' + (form.name.trim() || 'website'));
+    const body = encodeURIComponent(composeText(form));
     window.location.href = 'mailto:' + EMAIL + '?subject=' + subject + '&body=' + body;
   };
 
@@ -106,19 +116,19 @@ function Contact() {
             <>
               <div className="v-field">
                 <label htmlFor="c-name">Name</label>
-                <input id="c-name" name="fullname" type="text" required placeholder="Your name"/>
+                <input id="c-name" name="fullname" type="text" required placeholder="Your name" value={form.name} onChange={update('name')}/>
               </div>
               <div className="v-field">
                 <label htmlFor="c-org">Venue / organisation <span className="v-field__opt">(optional)</span></label>
-                <input id="c-org" name="org" type="text" placeholder="University, hotel, property…"/>
+                <input id="c-org" name="org" type="text" placeholder="University, hotel, property…" value={form.org} onChange={update('org')}/>
               </div>
               <div className="v-field">
                 <label htmlFor="c-msg">What would you like to bring online?</label>
-                <textarea id="c-msg" name="message" rows="4" required placeholder="Tell us about your space…"></textarea>
+                <textarea id="c-msg" name="message" rows="4" required placeholder="Tell us about your space…" value={form.message} onChange={update('message')}></textarea>
               </div>
-              <button type="submit" className="v-btn v-btn--primary v-btn--lg v-contact__submit">
+              <a ref={waRef} href={waHref} target="_blank" rel="noopener" className="v-btn v-btn--primary v-btn--lg v-contact__submit" onClick={onWaClick}>
                 <IconWhatsApp size={18}/> Book my demo on WhatsApp
-              </button>
+              </a>
               <button type="button" className="v-btn v-btn--ghost-dark v-btn--lg v-contact__submit v-contact__submit--alt" onClick={onEmailInstead}>
                 <IconMail size={16}/> Send by email instead
               </button>
