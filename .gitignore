@@ -10,3 +10,7 @@ desktop.ini
 # Build
 node_modules/
 dist/
+
+# Local audit / verification artifacts (never committed)
+.audit-shots/
+scripts/_audit-*.mjs
