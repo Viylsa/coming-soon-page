@@ -1102,14 +1102,16 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal], [data-reveal].is-in { opacity: 1; transform: none; transition: none; }
+  /* !important so these resets always win over the html.v-js-gated hero/dashboard
+     animation rules (which carry higher specificity). */
+  [data-reveal], [data-reveal].is-in { opacity: 1 !important; transform: none !important; transition: none !important; }
   .v-hero__eyebrow, .v-display, .v-hero__sub, .v-hero__cta, .v-hero__trust, .v-hero__player,
   .v-hero__trust-dot, .v-hero__player-livedot,
   .v-hero__marquee-track, .v-ai__dot, .v-ai__typing span, .v-ai__bubble,
-  .v-tdemo__loading-shimmer { animation: none; }
+  .v-tdemo__loading-shimmer { animation: none !important; transform: none !important; }
   .v-tdemo__hint { display: none; }
-  .v-rcpt__bar-fill, .v-ai__lead { transition: none; }
-  .v-rcpt__dash .v-rcpt__kpi, .v-rcpt__dash .v-rcpt__foot { opacity: 1; transform: none; transition: none; }
+  .v-rcpt__bar-fill, .v-ai__lead { transition: none !important; }
+  .v-rcpt__dash .v-rcpt__kpi, .v-rcpt__dash .v-rcpt__foot { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 
