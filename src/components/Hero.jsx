@@ -1,12 +1,11 @@
 import { useRef } from 'react';
 import { IconArrowRight, IconPlay } from '../icons.jsx';
 
-/* Editorial hero, now proof-led: type-led copy on the left, a tour-player frame
-   on the right that previews the real product and links to the live embed one
-   scroll down. The frame is an IMAGE-FREE placeholder — drop a real NUTECH still
-   into .v-hero__shot later (background-image or an <img>); it looks intentional
-   without one. The venue marquee is pinned to the hero's bottom edge so it is
-   always inside the fold. */
+/* Type-led editorial hero — the brand carries it, centred. Deep ink, a soft
+   crimson glow + film grain, big type; a small eyebrow + live trust line add
+   proof, and a venue-type marquee (pinned to the hero's bottom edge so it's
+   always inside the fold) says "built for every space". The live client tour is
+   one scroll away at #live-tour. */
 
 const VENUES = ['Universities', 'Hotels', 'Hospitals', 'Event halls', 'Real estate', 'Showrooms', 'Restaurants', 'Schools'];
 
@@ -63,23 +62,6 @@ function Hero() {
             A live 360° campus tour already running for NUTECH
           </p>
         </div>
-
-        {/* Focal proof object (desktop). Image-free placeholder; links to embed. */}
-        <a href="#live-tour" className="v-hero__player" aria-label="Jump to the live client tour">
-          <span className="v-hero__player-chrome">
-            <span className="v-hero__player-lock">●</span>
-            VIYLSA tour player · NUTECH
-          </span>
-          <span className="v-hero__player-stage">
-            <span className="v-hero__shot" aria-hidden="true"></span>
-            <span className="v-hero__player-live"><span className="v-hero__player-livedot"></span> LIVE</span>
-            <span className="v-hero__player-cta">
-              <span className="v-hero__player-play"><IconPlay size={18}/></span>
-              Walk the campus
-            </span>
-            <span className="v-hero__player-hint">Tap &amp; drag to look around</span>
-          </span>
-        </a>
       </div>
 
       {/* Venue-type marquee — "built for every space", pinned to the hero bottom */}
