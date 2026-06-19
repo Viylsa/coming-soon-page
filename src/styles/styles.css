@@ -391,22 +391,27 @@ input:focus-visible, textarea:focus-visible {
   position: relative; z-index: 2;
   width: 100%;
   max-width: 1180px; margin: 0 auto; padding: 0 var(--gutter);
-  flex: 1; display: flex; align-items: center; justify-content: center;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  align-items: center;
+  gap: clamp(36px, 5vw, 76px);
 }
 .v-hero__copy {
-  max-width: 880px;
-  text-align: center;
-  display: flex; flex-direction: column; align-items: center;
+  max-width: 600px;
+  text-align: left;
+  display: flex; flex-direction: column; align-items: flex-start;
 }
+.v-hero__eyebrow { margin-bottom: 4px; }
 .v-hero__copy .v-eyebrow { color: rgba(255,255,255,0.6); }
 .v-hero__copy .v-eyebrow--crimson { color: #E89AA0; }
 .v-display {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(54px, 9vw, 124px);
+  font-size: clamp(42px, 6.2vw, 88px);
   letter-spacing: -0.04em;
   line-height: 0.98;
-  margin: 22px 0 0;
+  margin: 18px 0 0;
   text-wrap: balance;
   color: white;
 }
@@ -426,8 +431,102 @@ input:focus-visible, textarea:focus-visible {
 }
 .v-hero__sub b { color: white; font-weight: 500; }
 .v-hero__cta {
-  margin-top: 36px;
-  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  margin-top: 32px;
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start;
+}
+.v-hero__trust {
+  margin-top: 22px;
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.58);
+}
+.v-hero__trust-dot {
+  width: 7px; height: 7px; border-radius: 999px; flex-shrink: 0;
+  background: #3ddc84;
+  box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.5);
+  animation: v-pulse-live 2.4s ease-in-out infinite;
+}
+@keyframes v-pulse-live {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.5); }
+  50%      { box-shadow: 0 0 0 5px rgba(61, 220, 132, 0); }
+}
+
+/* ── Hero tour-player frame (focal proof object; image-free placeholder) ── */
+.v-hero__player {
+  display: block; position: relative;
+  border-radius: 16px; overflow: hidden;
+  background: #0b0b0d;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 40px 90px -34px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(127, 20, 26, 0.18);
+  text-decoration: none;
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+}
+.v-hero__player:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 52px 110px -36px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(232, 154, 160, 0.28);
+}
+.v-hero__player-chrome {
+  display: flex; align-items: center; gap: 8px;
+  height: 38px; padding: 0 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.5);
+}
+.v-hero__player-lock { color: #62c554; font-size: 8px; }
+.v-hero__player-stage {
+  position: relative; display: block;
+  aspect-ratio: 16 / 10;
+}
+/* IMAGE-FREE PLACEHOLDER — replace with a real NUTECH still later:
+   set background-image here, or drop an <img class="v-hero__shot"> in Hero.jsx. */
+.v-hero__shot {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 90% at 28% 8%, rgba(127, 20, 26, 0.55) 0%, rgba(127, 20, 26, 0) 52%),
+    radial-gradient(120% 120% at 88% 104%, rgba(42, 12, 16, 0.95), rgba(10, 10, 11, 0) 60%),
+    linear-gradient(158deg, #1c0e12 0%, #0a0a0b 72%);
+}
+.v-hero__shot::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 3px 3px; opacity: 0.45;
+}
+.v-hero__player-live {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+  color: #fff; padding: 5px 10px; border-radius: 999px;
+  background: rgba(127, 20, 26, 0.72);
+  border: 1px solid rgba(255, 180, 185, 0.32);
+}
+.v-hero__player-livedot {
+  width: 6px; height: 6px; border-radius: 999px; background: #fff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+  animation: v-pulse-live 2.2s ease-in-out infinite;
+}
+.v-hero__player-cta {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2;
+  display: inline-flex; flex-direction: column; align-items: center; gap: 12px;
+  font-family: var(--font-display); font-weight: 500; font-size: 15px; color: #fff;
+  text-align: center;
+}
+.v-hero__player-play {
+  width: 54px; height: 54px; border-radius: 999px;
+  display: grid; place-items: center; color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: background 0.3s ease, transform 0.4s var(--ease-spring), border-color 0.3s ease;
+}
+.v-hero__player:hover .v-hero__player-play {
+  background: var(--viylsa-crimson); border-color: var(--viylsa-crimson);
+  transform: scale(1.08);
+}
+.v-hero__player-hint {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 2;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6); white-space: nowrap;
 }
 
 /* ── Venue-type marquee ── */
@@ -463,6 +562,15 @@ input:focus-visible, textarea:focus-visible {
 }
 .v-hero__marquee-dot { color: rgba(232, 154, 160, 0.6); padding-left: 18px; }
 
+/* Tablet/phone: single column. The player frame is hidden here — the real live
+   tour is the very next (full-width) section, so a placeholder in the hero
+   would be redundant AND would re-grow the hero past the fold. The type hero +
+   eyebrow + trust line carry it; the frame only fills the desktop right column. */
+@media (max-width: 900px) {
+  .v-hero__inner { grid-template-columns: 1fr; gap: 0; }
+  .v-hero__player { display: none; }
+  .v-hero__copy { max-width: 640px; }
+}
 @media (max-width: 560px) {
   .v-hero__cta { width: 100%; flex-direction: column; }
   .v-hero__cta .v-btn { width: 100%; justify-content: center; }
