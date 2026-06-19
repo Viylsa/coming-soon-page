@@ -560,6 +560,12 @@ input:focus-visible, textarea:focus-visible {
   background: var(--crimson-field);
   color: #fff;
   overflow: hidden;
+  /* Full-screen band, content centred. min-height (not height) lets it grow
+     past the viewport when the stacked steps are taller — so nothing is clipped
+     on small phones; on desktop it fills the screen with the steps centred. */
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
 }
 .v-band__grain {
   position: absolute; inset: 0;
