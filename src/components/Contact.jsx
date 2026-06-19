@@ -57,7 +57,7 @@ function Contact() {
     <section id="contact" className="v-contact">
       <div className="v-contact__glow"/>
       <div className="v-wrap v-contact__inner">
-        <div className="v-contact__intro" data-reveal="left">
+        <div className="v-contact__intro" data-reveal>
           <div className="v-eyebrow v-eyebrow--crimson"><IconSparkle size={14}/> Contact</div>
           <h2 className="v-contact__h">
             Let's bring your space <span className="v-serif">online.</span>
@@ -100,7 +100,7 @@ function Contact() {
           </div>
         </div>
 
-        <form className="v-contact__form" data-reveal="right" onSubmit={onSubmit}>
+        <form className="v-contact__form" data-reveal onSubmit={onSubmit}>
           {sent ? (
             <div className="v-contact__sent">
               <span className="v-contact__sent-ic"><IconCheck size={26}/></span>

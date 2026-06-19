@@ -30,9 +30,9 @@ function HowItWorks() {
           <div className="v-eyebrow v-eyebrow--onband">How it works</div>
           <h2 className="v-h2 v-h2--onband">Three steps. <span className="v-serif v-serif--onband">Usually one afternoon.</span></h2>
         </div>
-        <div className="v-rail">
-          {steps.map(({ n, Icon, h, p }, i) => (
-            <div className="v-rail__step" key={n} data-reveal="scale" data-reveal-delay={i + 1}>
+        <div className="v-rail" data-reveal-group>
+          {steps.map(({ n, Icon, h, p }) => (
+            <div className="v-rail__step" key={n} data-reveal="scale">
               <span className="v-rail__ghost" aria-hidden="true">{n}</span>
               <div className="v-rail__node"><Icon size={22}/></div>
               <div className="v-rail__n">Step {n}</div>

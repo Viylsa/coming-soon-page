@@ -551,6 +551,10 @@ input:focus-visible, textarea:focus-visible {
      seamlessly with no blank gap on wide (≥1440px) monitors. */
   to { transform: translateX(-25%); }
 }
+/* Pause on hover (lets people read the venue list) and while off-screen
+   (motion.js toggles .is-paused via an IntersectionObserver — no idle wakeups). */
+.v-hero__marquee:hover .v-hero__marquee-track,
+.v-hero__marquee.is-paused .v-hero__marquee-track { animation-play-state: paused; }
 .v-hero__marquee-item {
   font-family: var(--font-mono);
   font-size: 12.5px;
@@ -944,24 +948,23 @@ html.v-js [data-reveal="blur"] { transform: translateY(12px); filter: blur(7px);
 /* Cards: rise + a touch of scale so they feel like they settle into place. */
 html.v-js [data-reveal="scale"] { transform: translateY(20px) scale(0.975); }
 html.v-js [data-reveal="scale"].is-in { transform: translateY(0) scale(1); }
-/* Product moments (live tour, dashboards): a clip-path wipe — reads as
-   "the real thing is being revealed", distinct from body copy. */
-html.v-js [data-reveal="wipe"] { clip-path: inset(0 0 14% 0); transform: translateY(14px); }
+/* Product moments (live tour, dashboards): a clip-path wipe + a slight scale —
+   reads as the real product "powering on", distinct from body copy. Reserved
+   for product surfaces (.v-tdemo, the analytics dashboard). */
+html.v-js [data-reveal="wipe"] { clip-path: inset(0 0 16% 0); transform: translateY(14px) scale(0.986); }
 [data-reveal-delay="1"]  { transition-delay: 70ms; }
 [data-reveal-delay="2"]  { transition-delay: 140ms; }
 [data-reveal-delay="3"]  { transition-delay: 210ms; }
 [data-reveal-delay="4"]  { transition-delay: 280ms; }
 [data-reveal-delay="5"]  { transition-delay: 350ms; }
 
+/* Static dot. The pulse is reserved for genuine "live" signals only (the AI
+   status dot, the hero LIVE chip + trust dot) — a dot pulsing on all ~8 section
+   eyebrows is a classic restless-AI-landing tell. */
 .v-eyebrow::before {
   content: ""; width: 6px; height: 6px; border-radius: 999px;
   background: currentColor;
   display: inline-block;
-  animation: v-eyebrow-pulse 2.6s ease-in-out infinite;
-}
-@keyframes v-eyebrow-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%      { transform: scale(1.45); opacity: 0.55; }
 }
 
 .v-nav__links a {
@@ -995,11 +998,10 @@ html.v-js [data-reveal="wipe"] { clip-path: inset(0 0 14% 0); transform: transla
   border-color: var(--viylsa-crimson);
   box-shadow: 0 22px 44px -20px rgba(127, 20, 26, 0.30);
 }
-.v-plan--featured { animation: v-plan-glow 4s ease-in-out infinite; }
-@keyframes v-plan-glow {
-  0%, 100% { box-shadow: 0 20px 50px -22px rgba(127, 20, 26, 0.45); }
-  50%      { box-shadow: 0 28px 64px -22px rgba(127, 20, 26, 0.62); }
-}
+/* Static richer resting shadow instead of an infinite box-shadow loop (which
+   animates paint, not the compositor — costly on mid-range phones). The crimson
+   top-accent + "Most popular" tag + entrance lift carry the emphasis. */
+.v-plan--featured { box-shadow: 0 30px 66px -26px rgba(127, 20, 26, 0.5); }
 
 .v-person__avatar { transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1), background 220ms ease; }
 .v-person:hover .v-person__avatar {
@@ -1040,23 +1042,66 @@ html.v-js [data-reveal="wipe"] { clip-path: inset(0 0 14% 0); transform: transla
   border-left: 0; border-top: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  [data-reveal], [data-reveal].is-in {
-    opacity: 1; transform: none; transition: none;
+/* ── Hero load entrance ── transform-only (opacity stays 1) so the prerendered
+   then re-mounted hero never flashes; the headline "locks in" with a subtle
+   settle. Gated behind html.v-js; neutralised under reduced motion below. */
+@keyframes v-hero-rise { from { transform: translateY(15px); } to { transform: translateY(0); } }
+@keyframes v-hero-lockin { from { transform: translateY(16px) scale(1.012); } to { transform: translateY(0) scale(1); } }
+html.v-js .v-hero__eyebrow { animation: v-hero-rise 0.6s var(--ease-out) both; animation-delay: 0.04s; }
+html.v-js .v-display { transform-origin: left center; animation: v-hero-lockin 0.85s var(--ease-out) both; animation-delay: 0.12s; }
+html.v-js .v-hero__sub { animation: v-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.28s; }
+html.v-js .v-hero__cta { animation: v-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.40s; }
+html.v-js .v-hero__trust { animation: v-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.52s; }
+html.v-js .v-hero__player { animation: v-hero-rise 0.85s var(--ease-out) both; animation-delay: 0.46s; }
+
+/* ── Analytics dashboard "comes alive" ── KPI tiles stagger in, the bars grow
+   after them (see --d in Analytics.jsx), the insight lands last. tabular-nums
+   keeps figures from jittering width. */
+.v-rcpt__kpi-num, .v-rcpt__bar-val, .v-tdemo__stat-n { font-variant-numeric: tabular-nums; }
+html.v-js .v-rcpt__dash .v-rcpt__kpi,
+html.v-js .v-rcpt__dash .v-rcpt__foot {
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+html.v-js .v-rcpt__dash.is-in .v-rcpt__kpi { opacity: 1; transform: none; }
+html.v-js .v-rcpt__dash.is-in .v-rcpt__kpi:nth-child(1) { transition-delay: 0.16s; }
+html.v-js .v-rcpt__dash.is-in .v-rcpt__kpi:nth-child(2) { transition-delay: 0.28s; }
+html.v-js .v-rcpt__dash.is-in .v-rcpt__kpi:nth-child(3) { transition-delay: 0.40s; }
+html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; transition-delay: 0.95s; }
+
+/* ── Restrained native scroll-linked motion ── zero-JS progressive enhancement;
+   ignored where unsupported or when reduced motion is requested. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .v-hero__glow {
+      animation: v-glow-exit linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 92vh;
+    }
+    @keyframes v-glow-exit {
+      to { transform: translateX(-50%) translateY(-70px); opacity: 0.28; }
+    }
+    .v-truth__n {
+      animation: v-num-parallax linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
+    @keyframes v-num-parallax {
+      from { transform: translateY(20px); }
+      to   { transform: translateY(-16px); }
+    }
   }
-  .v-eyebrow::before,
-  .v-chat__msg--ai,
-  .v-chat__typing span,
-  .v-step__arrow svg,
-  .v-plan--featured,
-  .v-pan,
-  .v-hero__marquee-track,
-  .v-ai__dot,
-  .v-ai__typing span,
-  .v-ai__bubble,
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], [data-reveal].is-in { opacity: 1; transform: none; transition: none; }
+  .v-hero__eyebrow, .v-display, .v-hero__sub, .v-hero__cta, .v-hero__trust, .v-hero__player,
+  .v-hero__trust-dot, .v-hero__player-livedot,
+  .v-hero__marquee-track, .v-ai__dot, .v-ai__typing span, .v-ai__bubble,
   .v-tdemo__loading-shimmer { animation: none; }
   .v-tdemo__hint { display: none; }
   .v-rcpt__bar-fill, .v-ai__lead { transition: none; }
+  .v-rcpt__dash .v-rcpt__kpi, .v-rcpt__dash .v-rcpt__foot { opacity: 1; transform: none; transition: none; }
 }
 
 

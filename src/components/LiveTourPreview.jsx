@@ -70,20 +70,20 @@ function LiveTourPreview() {
           ))}
         </div>
 
-        <div className="v-tdemo__captions">
-          <div className="v-tdemo__cap" data-reveal data-reveal-delay="1">
+        <div className="v-tdemo__captions" data-reveal-group>
+          <div className="v-tdemo__cap" data-reveal>
             <div className="v-tdemo__cap-num">01</div>
             <div className="v-tdemo__cap-body">
               <b>Hotspots</b> let visitors read context — opening hours, room details, contact info — without leaving the scene.
             </div>
           </div>
-          <div className="v-tdemo__cap" data-reveal data-reveal-delay="2">
+          <div className="v-tdemo__cap" data-reveal>
             <div className="v-tdemo__cap-num">02</div>
             <div className="v-tdemo__cap-body">
               <b>Walking markers</b> teleport between locations the same way you'd walk them in person.
             </div>
           </div>
-          <div className="v-tdemo__cap" data-reveal data-reveal-delay="3">
+          <div className="v-tdemo__cap" data-reveal>
             <div className="v-tdemo__cap-num">03</div>
             <div className="v-tdemo__cap-body">
               <b>All Views</b> shows every location at a glance — for visitors who want to skim, not stroll.

@@ -80,9 +80,9 @@ function Pricing() {
           </div>
         </div>
 
-        <div className="v-pricing">
-          {plans.map((p, i) => (
-            <div className={'v-plan ' + (p.featured ? 'v-plan--featured' : '')} key={p.name} data-reveal data-reveal-delay={i + 1}>
+        <div className="v-pricing" data-reveal-group>
+          {plans.map((p) => (
+            <div className={'v-plan ' + (p.featured ? 'v-plan--featured' : '')} key={p.name} data-reveal="scale">
               {p.featured && <span className="v-plan__tag">Most popular</span>}
               <div className="v-plan__name">{p.name}</div>
               <div className="v-plan__blurb">{p.blurb}</div>

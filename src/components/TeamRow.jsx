@@ -16,9 +16,9 @@ function TeamRow() {
             train the AI guide, and stay reachable after launch.
           </p>
         </div>
-        <div className="v-team">
-          {team.map((m, i) => (
-            <div className="v-person" key={m.name} data-reveal data-reveal-delay={i + 1}>
+        <div className="v-team" data-reveal-group>
+          {team.map((m) => (
+            <div className="v-person" key={m.name} data-reveal>
               <div className="v-person__avatar">{m.initial}</div>
               <div className="v-person__meta">
                 <div className="v-person__name">{m.name}</div>

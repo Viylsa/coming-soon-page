@@ -24,9 +24,9 @@ function ProblemTriad() {
           <div className="v-eyebrow">The problem</div>
           <h2 className="v-h2">Why a photo gallery <span className="v-serif">isn't enough.</span></h2>
         </div>
-        <div className="v-truths">
-          {items.map((it, i) => (
-            <div className="v-truth" key={it.n} data-reveal data-reveal-delay={i + 1}>
+        <div className="v-truths" data-reveal-group>
+          {items.map((it) => (
+            <div className="v-truth" key={it.n} data-reveal>
               <span className="v-truth__n" aria-hidden="true">{it.n}</span>
               <div className="v-truth__body">
                 <h3 className="v-truth__h">{it.h}</h3>

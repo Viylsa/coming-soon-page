@@ -1,45 +1,83 @@
 import React from 'react';
 import { IconArrowRight } from '../icons.jsx';
 
+// AI guide + Analytics are intentionally NOT top-level destinations — the AI
+// guide is a supporting capability folded into the analytics section, not a
+// co-headline. These 5 links each map to a real section the visitor wants.
+const LINKS = [
+  ['Tour', '#live-tour'],
+  ['How it works', '#how'],
+  ['Pricing', '#pricing'],
+  ['FAQ', '#faq'],
+  ['Contact', '#contact'],
+];
+
 function Nav() {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false); // mobile drawer
+  const [activeHref, setActiveHref] = React.useState(null);
   const linksRef = React.useRef(null);
+  const hoveringRef = React.useRef(false);
   const [ind, setInd] = React.useState({ left: 0, width: 0, opacity: 0 });
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close mobile drawer when a link is clicked
+  // Lock scroll + close on Escape while the mobile drawer is open.
   React.useEffect(() => {
     if (!open) return;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = ''; document.removeEventListener('keydown', onKey); };
   }, [open]);
 
-  // AI guide + Analytics are intentionally NOT top-level destinations — the AI
-  // guide is a supporting capability folded into the analytics section, not a
-  // co-headline. These 5 links each map to a real section the visitor wants.
-  const links = [
-    ['Tour', '#live-tour'],
-    ['How it works', '#how'],
-    ['Pricing', '#pricing'],
-    ['FAQ', '#faq'],
-    ['Contact', '#contact'],
-  ];
+  // Scrollspy: the section in the viewport band drives the active nav link.
+  // Unified with the sliding indicator below — one system, scroll-reactive for
+  // everyone (touch included), not just a desktop hover flourish.
+  React.useEffect(() => {
+    const targets = LINKS.map(([, h]) => document.querySelector(h)).filter(Boolean);
+    if (!targets.length) return;
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) setActiveHref('#' + e.target.id);
+      }
+    }, { rootMargin: '-25% 0px -65% 0px' });
+    targets.forEach((t) => io.observe(t));
+    return () => io.disconnect();
+  }, []);
 
-  const moveIndicator = (e) => {
-    const a = e.currentTarget;
+  const positionTo = (a) => {
     const parent = linksRef.current;
-    if (!parent) return;
+    if (!parent || !a) return;
     const r = a.getBoundingClientRect();
     const pr = parent.getBoundingClientRect();
     setInd({ left: r.left - pr.left, width: r.width, opacity: 1 });
   };
-  const hideIndicator = () => setInd((s) => ({ ...s, opacity: 0 }));
+  const positionToHref = (href) => {
+    const parent = linksRef.current;
+    if (!parent) return;
+    const a = href && parent.querySelector('a[href="' + href + '"]');
+    if (a) positionTo(a); else setInd((s) => ({ ...s, opacity: 0 }));
+  };
+
+  // Park the indicator under the active link when not hovering; recompute on
+  // resize (the old code only moved it on mouseenter, so it desynced after a
+  // viewport change).
+  React.useEffect(() => {
+    if (!hoveringRef.current) positionToHref(activeHref);
+    const onResize = () => { if (!hoveringRef.current) positionToHref(activeHref); };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeHref]);
+
+  const onEnter = (e) => { hoveringRef.current = true; positionTo(e.currentTarget); };
+  const onLeaveList = () => { hoveringRef.current = false; positionToHref(activeHref); };
 
   return (
     <nav className={'v-nav' + (scrolled ? ' v-nav--scrolled' : '')}>
@@ -52,15 +90,15 @@ function Nav() {
         <ul
           ref={linksRef}
           className="v-nav__links"
-          onMouseLeave={hideIndicator}
+          onMouseLeave={onLeaveList}
         >
           <span
             className="v-nav__indicator"
             style={{ left: ind.left + 'px', width: ind.width + 'px', opacity: ind.opacity }}
           />
-          {links.map(([l, h]) => (
+          {LINKS.map(([l, h]) => (
             <li key={l}>
-              <a href={h} onMouseEnter={moveIndicator}>{l}</a>
+              <a href={h} aria-current={h === activeHref ? 'true' : undefined} onMouseEnter={onEnter}>{l}</a>
             </li>
           ))}
         </ul>
@@ -83,7 +121,7 @@ function Nav() {
       {/* Mobile drawer */}
       <div className={'v-nav__drawer' + (open ? ' v-nav__drawer--open' : '')}>
         <ul className="v-nav__drawer-links">
-          {links.map(([l, h], i) => (
+          {LINKS.map(([l, h], i) => (
             <li key={l} style={{ transitionDelay: open ? (60 + i * 50) + 'ms' : '0ms' }}>
               <a href={h} onClick={() => setOpen(false)}>
                 <span className="v-nav__drawer-num">0{i + 1}</span> {l}

@@ -41,7 +41,7 @@ function Hero() {
       <div className="v-hero__grain-spot" aria-hidden="true"/>
 
       <div className="v-hero__inner">
-        <div className="v-hero__copy" data-reveal>
+        <div className="v-hero__copy">
           <div className="v-eyebrow v-eyebrow--crimson v-hero__eyebrow">360° virtual tours · Islamabad &amp; Rawalpindi</div>
           <h1 className="v-display">
             Bringing <em>visits</em> online.

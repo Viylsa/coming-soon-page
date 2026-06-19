@@ -1,6 +1,7 @@
-/* Reveal-on-scroll, counters, CTA spotlight, nav scrollspy. Pure vanilla.
-   Survives React re-renders by re-querying on every MutationObserver tick.
-   Respects prefers-reduced-motion throughout. */
+/* Reveal-on-scroll (single + staggered groups), counters, CTA spotlight,
+   off-screen marquee pause. Pure vanilla. Survives React re-renders by
+   re-querying on every MutationObserver tick. Respects prefers-reduced-motion.
+   (Nav scrollspy + the sliding indicator now live in Nav.jsx — one system.) */
 
 (function () {
   // No-op in any non-browser (build-time prerender) context.
@@ -15,19 +16,41 @@
   // opacity:0 — it just renders fully visible. Added synchronously, first thing.
   document.documentElement.classList.add('v-js');
 
-  // ── Reveal-on-scroll ──────────────────────────────────────────────
+  const inFirstView = (el) => el.getBoundingClientRect().top < window.innerHeight * 0.95;
+
+  // Reveal one element with the will-change promote/release dance.
+  function reveal(el, delayMs) {
+    if (delayMs) el.style.transitionDelay = delayMs + 'ms';
+    el.style.willChange = 'opacity, transform';
+    el.classList.add('is-in');
+    const clear = () => {
+      el.style.willChange = '';
+      el.style.transitionDelay = '';
+      el.removeEventListener('transitionend', clear);
+    };
+    el.addEventListener('transitionend', clear);
+  }
+
+  // ── Reveal-on-scroll (single elements) ────────────────────────────
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
-      if (e.isIntersecting) {
-        const el = e.target;
-        el.style.willChange = 'opacity, transform';        // promote transiently…
-        el.classList.add('is-in');
-        const clear = () => { el.style.willChange = ''; el.removeEventListener('transitionend', clear); };
-        el.addEventListener('transitionend', clear);        // …and release after the reveal
-        io.unobserve(el);
-      }
+      if (e.isIntersecting) { reveal(e.target, 0); io.unobserve(e.target); }
     }
   }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+
+  // ── Staggered group reveal ([data-reveal-group]) ──────────────────
+  // Children cascade in sequence so a row of cards/stats reads as choreographed
+  // rather than popping as a block or via crude hand-typed delay tiers.
+  function revealGroup(group, stagger) {
+    group.querySelectorAll('[data-reveal]:not(.is-in)').forEach((el, i) => reveal(el, i * stagger));
+  }
+  const groupIo = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      revealGroup(e.target, 80);
+      groupIo.unobserve(e.target);
+    }
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
   // ── Counter (data-count="1204") ───────────────────────────────────
   function animateCount(el) {
@@ -52,55 +75,52 @@
     }
   }, { threshold: 0.6 });
 
-  // ── Primary CTA spotlight (cursor-following highlight; no magnetic
-  //    translation — it fights the :active transform and reads as gimmick) ──
+  // ── Primary CTA spotlight (cursor-following highlight) ────────────
+  // rAF-coalesced: one layout read + var write per frame, not per mousemove.
   function bindMagnetic() {
     if (REDUCE || !FINE) return;
     document.querySelectorAll('.v-btn--primary:not(.is-mag)').forEach((btn) => {
       btn.classList.add('is-mag');
+      let raf = 0, mx = 0, my = 0;
       btn.addEventListener('mousemove', (e) => {
-        const r = btn.getBoundingClientRect();
-        btn.style.setProperty('--sx', (((e.clientX - r.left) / r.width) * 100).toFixed(1) + '%');
-        btn.style.setProperty('--sy', (((e.clientY - r.top) / r.height) * 100).toFixed(1) + '%');
+        mx = e.clientX; my = e.clientY;
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const r = btn.getBoundingClientRect();
+          btn.style.setProperty('--sx', (((mx - r.left) / r.width) * 100).toFixed(1) + '%');
+          btn.style.setProperty('--sy', (((my - r.top) / r.height) * 100).toFixed(1) + '%');
+        });
       });
     });
   }
 
-  // ── Scrollspy: highlight the nav link for the section in view ──────
-  const spyIo = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (!e.isIntersecting) continue;
-      const id = '#' + e.target.id;
-      document.querySelectorAll('.v-nav__links a').forEach((a) => {
-        if (a.getAttribute('href') === id) a.setAttribute('aria-current', 'true');
-        else a.removeAttribute('aria-current');
-      });
-    }
-  }, { rootMargin: '-25% 0px -65% 0px' });
-  function bindScrollspy() {
-    document.querySelectorAll('.v-nav__links a[href^="#"]').forEach((a) => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target && !target.classList.contains('is-spied')) {
-        target.classList.add('is-spied');
-        spyIo.observe(target);
-      }
+  // ── Pause the venue marquee while it's off-screen (saves wakeups) ──
+  const marqueeIo = new IntersectionObserver((entries) => {
+    for (const e of entries) e.target.classList.toggle('is-paused', !e.isIntersecting);
+  });
+  function bindMarquee() {
+    document.querySelectorAll('.v-hero__marquee:not(.is-marq)').forEach((m) => {
+      m.classList.add('is-marq');
+      marqueeIo.observe(m);
     });
   }
 
   function scan() {
+    // Groups first so their children are claimed before the single-element pass.
+    document.querySelectorAll('[data-reveal-group]:not(.is-watched)').forEach((el) => {
+      el.classList.add('is-watched');
+      if (REDUCE) { el.querySelectorAll('[data-reveal]').forEach((k) => k.classList.add('is-in')); return; }
+      if (inFirstView(el)) { revealGroup(el, 0); return; }  // above fold: no flash, no stagger
+      groupIo.observe(el);
+    });
     document.querySelectorAll('[data-reveal]:not(.is-watched)').forEach((el) => {
       el.classList.add('is-watched');
       if (REDUCE) { el.classList.add('is-in'); return; }
-      // Kill the first-paint flash. createRoot() re-mounts the prerendered DOM
-      // without .is-in, so [data-reveal] elements blink to opacity:0 until the
-      // observer fires. This scan runs inside the MutationObserver microtask
-      // (before paint), so anything already in the first viewport is revealed
-      // synchronously — no blink, no observer round-trip. Below-fold elements
-      // still animate in on scroll via the observer.
-      if (el.getBoundingClientRect().top < window.innerHeight * 0.95) {
-        el.classList.add('is-in');
-        return;
-      }
+      if (el.closest('[data-reveal-group]')) return;   // a group owns this child
+      // Kill the first-paint flash: anything in the first viewport reveals
+      // synchronously inside the MutationObserver microtask (before paint).
+      if (inFirstView(el)) { el.classList.add('is-in'); return; }
       io.observe(el);
     });
     document.querySelectorAll('[data-count]:not(.is-watched)').forEach((el) => {
@@ -108,7 +128,7 @@
       countIo.observe(el);
     });
     bindMagnetic();
-    bindScrollspy();
+    bindMarquee();
   }
 
   // Initial pass + re-scan whenever React adds nodes

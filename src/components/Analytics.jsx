@@ -15,7 +15,7 @@ function Analytics() {
   return (
     <section id="analytics" className="v-section v-section--haze">
       <div className="v-wrap v-rcpt__grid">
-        <div className="v-rcpt__intro" data-reveal="left">
+        <div className="v-rcpt__intro" data-reveal>
           <div className="v-eyebrow v-eyebrow--crimson"><IconChart size={14}/> What you get back</div>
           <h2 className="v-h2">Every visit, <span className="v-serif">on the record.</span></h2>
           <p className="v-rcpt__lede">
@@ -62,7 +62,7 @@ function Analytics() {
                 <div className="v-rcpt__bar" key={name}>
                   <span className="v-rcpt__bar-label">{name}</span>
                   <span className="v-rcpt__bar-track">
-                    <span className="v-rcpt__bar-fill" style={{ '--w': w, '--d': (i * 90) + 'ms' }}></span>
+                    <span className="v-rcpt__bar-fill" style={{ '--w': w, '--d': (560 + i * 120) + 'ms' }}></span>
                   </span>
                   <span className="v-rcpt__bar-val">{views}</span>
                 </div>
