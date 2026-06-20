@@ -8,17 +8,18 @@
     "build": "vite build",
     "prerender": "node scripts/prerender.mjs",
     "build:static": "vite build && node scripts/prerender.mjs",
+    "subset:urdu": "node scripts/subset-urdu-font.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.9",
     "@fontsource-variable/geist-mono": "^5.2.8",
     "@fontsource/instrument-serif": "^5.2.8",
-    "@fontsource/noto-nastaliq-urdu": "^5.2.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@fontsource/noto-nastaliq-urdu": "^5.2.8",
     "@vitejs/plugin-react": "^4.3.4",
     "puppeteer": "^25.1.0",
     "sharp": "^0.34.5",

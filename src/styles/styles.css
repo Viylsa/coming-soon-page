@@ -1504,6 +1504,20 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
    URDU (Nastaliq) — applied to the AI-guide demo's Urdu bubbles only.
    Nastaliq needs generous leading; a touch larger than the Latin bubble.
    ================================================== */
+
+/* Self-hosted, subset to ONLY the demo's Urdu glyphs (~86 KB vs the full
+   ~159 KB fontsource file). Lazy by nature: no element uses this family until a
+   visitor toggles the demo to Urdu and a [lang="ur"] bubble renders, so the
+   browser never fetches it on first paint. Regenerate with `npm run subset:urdu`
+   if the demo's Urdu strings in AIGuide.jsx change. */
+@font-face {
+  font-family: 'Noto Nastaliq Urdu';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/noto-nastaliq-urdu-subset.woff2) format('woff2');
+}
+
 .v-ai__bubble[lang="ur"] {
   font-family: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', var(--font-body);
   line-height: 2.0;
