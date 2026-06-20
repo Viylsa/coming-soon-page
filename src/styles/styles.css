@@ -956,7 +956,11 @@ html.v-js [data-reveal="wipe"] { clip-path: inset(0 0 16% 0); transform: transla
 @keyframes v-hero-rise { from { transform: translateY(15px); } to { transform: translateY(0); } }
 @keyframes v-hero-lockin { from { transform: translateY(16px) scale(1.012); } to { transform: translateY(0) scale(1); } }
 html.v-js .v-hero__eyebrow { animation: v-hero-rise 0.6s var(--ease-out) both; animation-delay: 0.04s; }
-html.v-js .v-display { transform-origin: center; animation: v-hero-lockin 0.85s var(--ease-out) both; animation-delay: 0.12s; }
+/* The headline is the LCP element — it must NOT be transform/opacity-animated on
+   entrance, or its settled paint is deferred until the animation completes
+   (~1s), tanking LCP. It renders final immediately; the surrounding lines rise
+   into it, which reads as a confident "anchor". (v-hero-lockin kept for ref.) */
+html.v-js .v-display { transform-origin: center; }
 html.v-js .v-hero__sub { animation: v-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.28s; }
 html.v-js .v-hero__cta { animation: v-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.40s; }
 html.v-js .v-hero__trust { animation: v-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.52s; }
