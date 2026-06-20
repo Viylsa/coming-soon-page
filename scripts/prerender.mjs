@@ -16,7 +16,7 @@
  */
 import { preview } from 'vite';
 import puppeteer from 'puppeteer';
-import { writeFileSync, readdirSync } from 'node:fs';
+import { writeFileSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const PORT = 4317;
@@ -74,6 +74,26 @@ try {
 
     let html = '<!doctype html>\n' + rendered + '\n';
     if (preloads) html = html.replace('</head>', preloads + '\n</head>');
+
+    // Inline the built stylesheet and drop the render-blocking <link>. On a
+    // prerendered single page this removes the worst FCP/LCP blocker: the
+    // browser otherwise paints nothing until the external CSS round-trips
+    // (the whole HTML→CSS critical chain). At ~11 KB gzipped the CSS rides in
+    // with the document instead. Other (non-prerendered) pages keep their link.
+    const cssFile = assets.find((f) => /^main-.*\.css$/.test(f));
+    if (cssFile) {
+      const css = readFileSync(resolve('dist', 'assets', cssFile), 'utf8');
+      const linkRe = new RegExp(
+        `<link rel="stylesheet"[^>]*href="/assets/${cssFile}"[^>]*>`,
+      );
+      if (linkRe.test(html)) {
+        html = html.replace(linkRe, `<style>${css}</style>`);
+        console.log(`  inlined ${cssFile} (${css.length} bytes), removed render-blocking <link>`);
+      } else {
+        console.warn(`  WARNING: stylesheet <link> for ${cssFile} not found — CSS left render-blocking`);
+      }
+    }
+
     const out = resolve('dist', file);
     writeFileSync(out, html, 'utf8');
     console.log(`prerendered ${route} -> dist/${file} (${html.length} bytes)`);
