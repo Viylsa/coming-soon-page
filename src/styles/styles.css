@@ -57,8 +57,8 @@ input:focus-visible, textarea:focus-visible {
 .v-h2 {
   font-family: var(--font-display);
   font-size: clamp(30px, 4vw, 48px);
-  letter-spacing: -0.025em;
-  line-height: 1.05;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
   font-weight: 500;
   margin: 14px 0 0;
   text-wrap: balance;
@@ -76,7 +76,9 @@ input:focus-visible, textarea:focus-visible {
 
 /* ---------- buttons ---------- */
 .v-btn {
-  font-family: var(--font-display);
+  /* UI control, not a display role — stays on the sans even though the
+     brand display font is a serif */
+  font-family: var(--font-body);
   font-weight: 500;
   font-size: 15px;
   letter-spacing: -0.005em;
@@ -172,7 +174,7 @@ input:focus-visible, textarea:focus-visible {
   transition: transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .v-nav--scrolled .v-nav__mark { transform: scale(0.95); }
-.v-nav__brand-name { font-family: var(--font-logo); font-weight: 600; font-size: 16px; letter-spacing: 0.10em; }
+.v-nav__brand-name { font-family: var(--font-logo); font-weight: 600; font-size: 16px; letter-spacing: 0.02em; }
 
 /* Sliding-indicator link rail */
 .v-nav__links {
@@ -407,8 +409,8 @@ input:focus-visible, textarea:focus-visible {
   font-family: var(--font-display);
   font-weight: 500;
   font-size: clamp(48px, 8.4vw, 112px);
-  letter-spacing: -0.04em;
-  line-height: 0.98;
+  letter-spacing: -0.015em;
+  line-height: 1.06;
   margin: 20px 0 0;
   text-wrap: balance;
   color: white;
@@ -498,7 +500,7 @@ input:focus-visible, textarea:focus-visible {
 .v-kpi__grid { margin-top: 22px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-left: 1px solid var(--canvas-mist); border-radius: var(--radius-lg); overflow: hidden; }
 .v-kpi__cell { padding: 22px 24px; border-right: 1px solid var(--canvas-mist); border-top: 1px solid var(--canvas-mist); border-bottom: 1px solid var(--canvas-mist); }
 .v-kpi__label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); }
-.v-kpi__num { font-family: var(--font-display); font-size: 56px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; margin-top: 8px; }
+.v-kpi__num { font-family: var(--font-display); font-size: 56px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05; margin-top: 8px; }
 .v-kpi__num em { font-family: var(--font-mono); font-style: normal; font-size: 18px; color: var(--viylsa-crimson); margin-left: 4px; vertical-align: middle; letter-spacing: 0; }
 .v-kpi__source { margin-top: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--fg-subtle); letter-spacing: 0.04em; }
 @media (max-width: 800px) {
@@ -523,8 +525,8 @@ input:focus-visible, textarea:focus-visible {
 .v-truth__body { max-width: 62ch; }
 .v-truth__h {
   font-family: var(--font-display); font-weight: 500;
-  font-size: clamp(25px, 4vw, 42px); line-height: 1.04;
-  letter-spacing: -0.025em; color: var(--fg);
+  font-size: clamp(25px, 4vw, 42px); line-height: 1.1;
+  letter-spacing: -0.01em; color: var(--fg);
 }
 .v-truth__p {
   margin: clamp(10px, 1.5vw, 16px) 0 0;
@@ -541,7 +543,7 @@ input:focus-visible, textarea:focus-visible {
 }
 .v-audience__list { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; }
 .v-audience__list li {
-  font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--fg);
+  font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--fg);
   padding: 7px 15px; border: 1px solid var(--border-strong); border-radius: var(--radius-pill);
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
@@ -707,7 +709,7 @@ input:focus-visible, textarea:focus-visible {
 .v-cta { background: var(--ink-1000); color: white; padding: var(--pad-dark) 0; position: relative; overflow: hidden; }
 .v-cta__glow { position: absolute; top: -200px; left: -200px; width: 720px; height: 720px; background: radial-gradient(circle, rgba(127, 20, 26, 0.25) 0%, rgba(127, 20, 26, 0) 65%); pointer-events: none; }
 .v-cta__inner { position: relative; z-index: 2; text-align: center; }
-.v-cta__h { font-family: var(--font-display); font-size: clamp(40px, 6vw, 80px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.0; margin: 18px 0 0; text-wrap: balance; color: white; }
+.v-cta__h { font-family: var(--font-display); font-size: clamp(40px, 6vw, 80px); font-weight: 500; letter-spacing: -0.015em; line-height: 1.08; margin: 18px 0 0; text-wrap: balance; color: white; }
 .v-cta__h .v-serif { color: #E89AA0; }
 .v-cta__p { margin: 22px auto 0; max-width: 50ch; color: rgba(255,255,255,0.72); font-size: 17px; line-height: 1.55; }
 .v-cta__row { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
@@ -1202,8 +1204,8 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
   font-family: var(--font-display);
   font-size: clamp(34px, 4.6vw, 56px);
   font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.02;
+  letter-spacing: -0.012em;
+  line-height: 1.08;
   margin: 16px 0 0;
   text-wrap: balance;
   color: white;
@@ -1375,7 +1377,7 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 .v-rcpt__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .v-rcpt__kpi { padding: 14px; background: var(--canvas-haze); border-radius: var(--radius-md); }
 .v-rcpt__kpi-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); }
-.v-rcpt__kpi-num { font-family: var(--font-display); font-size: clamp(26px, 3.4vw, 34px); font-weight: 500; letter-spacing: -0.025em; color: var(--fg); line-height: 1.1; margin-top: 6px; }
+.v-rcpt__kpi-num { font-family: var(--font-display); font-size: clamp(26px, 3.4vw, 34px); font-weight: 500; letter-spacing: -0.01em; color: var(--fg); line-height: 1.1; margin-top: 6px; }
 .v-rcpt__kpi-trend { font-size: 11px; color: var(--fg-muted); margin-top: 4px; }
 .v-rcpt__rooms { margin-top: 22px; }
 .v-rcpt__rooms-h { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: 12px; }

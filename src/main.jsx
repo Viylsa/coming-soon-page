@@ -3,11 +3,13 @@ import { createRoot } from 'react-dom/client';
 // Self-hosted fonts (same-origin woff2, font-display: swap) — replaces the
 // render-blocking cross-origin Google Fonts request. Latin subsets download on
 // demand via unicode-range; Urdu text falls back to the system Arabic font, as
-// it always did. Upright axes only — Geist italic was never loaded.
+// it always did. Playfair Display (brand serif) carries display/headline roles;
+// Geist stays for body + UI, Geist Mono for data. Upright Geist only — its
+// italic was never loaded.
 import '@fontsource-variable/geist/wght.css';
 import '@fontsource-variable/geist-mono/wght.css';
-import '@fontsource/instrument-serif/latin-400.css';
-import '@fontsource/instrument-serif/latin-400-italic.css';
+import '@fontsource-variable/playfair-display/wght.css';
+import '@fontsource-variable/playfair-display/wght-italic.css';
 // Urdu (Nastaliq) for the bilingual AI-guide demo is self-hosted as a glyph
 // SUBSET (~86 KB vs the full ~159 KB fontsource file). Its @font-face lives in
 // styles.css next to its only consumer (.v-ai__bubble[lang="ur"]) and the woff2

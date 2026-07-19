@@ -58,15 +58,16 @@ try {
 
     const rendered = await page.evaluate(() => document.documentElement.outerHTML);
 
-    // Preload the LCP headline fonts (Geist latin + Instrument Serif latin
-    // italic, used by the hero "Bringing visits online.") so the swap lands
-    // before paint and the largest element doesn't reflow. Uses the actual
-    // build-hashed filenames so it never goes stale.
+    // Preload the LCP headline fonts (Playfair Display latin upright + italic
+    // for the hero "Bringing visits online.", plus Geist latin for body/nav)
+    // so the swap lands before paint and the largest element doesn't reflow.
+    // Uses the actual build-hashed filenames so it never goes stale.
     const assets = readdirSync(resolve('dist', 'assets'));
     const pick = (re) => assets.find((f) => re.test(f));
     const preloadFonts = [
+      pick(/^playfair-display-latin-wght-normal-.*\.woff2$/),
+      pick(/^playfair-display-latin-wght-italic-.*\.woff2$/),
       pick(/^geist-latin-wght-normal-.*\.woff2$/),
-      pick(/^instrument-serif-latin-400-italic-.*\.woff2$/),
     ].filter(Boolean);
     const preloads = preloadFonts
       .map((f) => `  <link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin>`)
