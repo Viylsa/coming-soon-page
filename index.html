@@ -30,12 +30,12 @@
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
   <!--
-    TODO (off-site step): once the social/business profiles exist, add a
-    "sameAs" array to the #org node below listing the EXACT canonical URLs
-    (Google Business Profile / Maps share link, LinkedIn company page,
-    Instagram, Facebook, YouTube, X, Crunchbase, Wikidata). A sameAs that
-    points at a 404 hurts, so add each URL only after the profile is live.
-    Likewise add each founder's real LinkedIn URL as "sameAs" on their Person.
+    The #org node below carries a "sameAs" array of the live social profiles
+    (Facebook, LinkedIn, Instagram). TODO (off-site step): extend it with more
+    canonical URLs as those profiles go live (Google Business Profile / Maps
+    share link, YouTube, X, Crunchbase, Wikidata) — add each only once the
+    profile is live, since a sameAs that points at a 404 hurts. Likewise add
+    each founder's real LinkedIn URL as "sameAs" on their Person.
   -->
   <script type="application/ld+json">
   {
@@ -54,6 +54,11 @@
           "height": 247
         },
         "image": "https://www.viylsa.app/assets/og-image.jpg",
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=61571004368984",
+          "https://www.linkedin.com/company/viylsa-tours/posts/?feedView=all",
+          "https://www.instagram.com/viylsa_virtualtours"
+        ],
         "slogan": "Bringing visits online.",
         "description": "360° virtual tours with a built-in AI guide that answers visitors in English & Urdu, visitor analytics and lead capture — built for Pakistan.",
         "email": "viylsavirtualtour@gmail.com",

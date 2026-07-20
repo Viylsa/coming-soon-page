@@ -1,3 +1,5 @@
+import { IconFacebook, IconLinkedIn, IconInstagram } from '../icons.jsx';
+
 function FooterCTA() {
   return (
     <>
@@ -23,6 +25,11 @@ function FooterCTA() {
               <div className="v-footer__col-h">Get in touch</div>
               <a href="mailto:viylsavirtualtour@gmail.com">viylsavirtualtour@gmail.com</a>
               <a href="https://www.viylsa.app">www.viylsa.app</a>
+              <div className="v-footer__social">
+                <a href="https://www.facebook.com/profile.php?id=61571004368984" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Facebook"><IconFacebook size={18}/></a>
+                <a href="https://www.linkedin.com/company/viylsa-tours/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on LinkedIn"><IconLinkedIn size={18}/></a>
+                <a href="https://www.instagram.com/viylsa_virtualtours" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Instagram"><IconInstagram size={18}/></a>
+              </div>
             </div>
           </div>
         </div>

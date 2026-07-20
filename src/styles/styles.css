@@ -725,6 +725,9 @@ input:focus-visible, textarea:focus-visible {
 .v-footer__col-h { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
 .v-footer__cols a { color: rgba(255,255,255,0.7); font-size: 14px; text-decoration: none; }
 .v-footer__cols a:hover { color: white; }
+.v-footer__social { display: flex; flex-direction: row; gap: 16px; margin-top: 6px; }
+.v-footer__social a { display: inline-flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); transition: color 200ms ease; }
+.v-footer__social a:hover { color: white; }
 .v-footer__base { max-width: 1180px; margin: 36px auto 0; padding: 22px 32px 0; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: rgba(255,255,255,0.5); }
 .v-footer__base .v-mono { color: rgba(255,255,255,0.4); }
 @media (max-width: 900px) {
