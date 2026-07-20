@@ -1012,6 +1012,8 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
 @media (prefers-reduced-motion: reduce) {
   /* !important so these resets always win over the html.v-js-gated hero/dashboard
      animation rules (which carry higher specificity). */
+  html { scroll-behavior: auto; }
+  .v-faq__item::details-content, .v-faq__a { transition: none !important; transform: none !important; }
   [data-reveal], [data-reveal].is-in { opacity: 1 !important; transform: none !important; transition: none !important; }
   .v-hero__eyebrow, .v-display, .v-hero__sub, .v-hero__cta, .v-hero__trust,
   .v-hero__trust-dot,
@@ -1107,6 +1109,20 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
   font-size: 15.5px; line-height: 1.65;
   max-width: 68ch;
 }
+/* Smooth expand/collapse. ::details-content + interpolate-size animate the
+   native <details> height; browsers without support fall back to instant. */
+.v-faq__item { interpolate-size: allow-keywords; }
+.v-faq__item::details-content {
+  height: 0; overflow: clip;
+  opacity: 0;
+  transition:
+    height 320ms var(--ease-out),
+    opacity 240ms ease,
+    content-visibility 320ms allow-discrete;
+}
+.v-faq__item[open]::details-content { height: auto; opacity: 1; }
+.v-faq__a { transform: translateY(-4px); transition: transform 320ms var(--ease-out); }
+.v-faq__item[open] .v-faq__a { transform: none; }
 
 
 /* ==================================================
@@ -1154,7 +1170,7 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
    PRODUCTION POLISH — anchor scroll + footer links
    ================================================== */
 /* Offset anchored sections so headings clear the floating nav */
-#how, #live-tour, #ai-guide, #analytics, #tours, #pricing, #team, #contact { scroll-margin-top: 90px; }
+#how, #live-tour, #ai-guide, #analytics, #tours, #pricing, #team, #faq, #contact { scroll-margin-top: 90px; }
 
 /* ── Phone-tier polish (≤560px): the layer that never existed before ── */
 @media (max-width: 560px) {
