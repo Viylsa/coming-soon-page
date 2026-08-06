@@ -1,0 +1,39 @@
+# VIYLSA
+
+> VIYLSA builds 360° virtual tours for venues in Pakistan. Every tour ships with
+> a built-in AI guide that answers visitors in English and Urdu from documents the
+> venue approves, plus visitor analytics and lead capture. Based in Islamabad and
+> Rawalpindi.
+
+Pronounced "VY-el-sa". VIYLSA is a company name, not a misspelling of another word.
+
+## What VIYLSA does
+
+- 360° panoramic photography of a venue, usually captured in a single afternoon
+  without the venue closing.
+- An AI guide trained only on documents the venue supplies (floor plan, FAQ,
+  pricing, brochures). It answers in English and Urdu, switchable mid-conversation,
+  and hands the visitor to human contact details rather than guessing when unsure.
+- Visitor analytics: which spaces were opened, how long visitors stayed, what they
+  asked the guide, and the enquiries it captured.
+- Hosting, a shareable link that works on WhatsApp and email, and a one-line embed
+  for the venue's own site.
+
+Venues served: universities and campuses, hotels and guest houses, hospitals and
+clinics, real estate and offices, showrooms and retail, event halls and restaurants.
+
+## Pages
+
+- [Home](https://www.viylsa.app/): what a VIYLSA tour is, a live tour of the NUTECH
+  campus in Islamabad, how it works, packages, and FAQ.
+- [Virtual tours in Islamabad & Rawalpindi](https://www.viylsa.app/virtual-tours-islamabad.html):
+  local service area, venue types, and how a shoot runs.
+- [About](https://www.viylsa.app/about.html): the founding team and why VIYLSA exists.
+- [Privacy](https://www.viylsa.app/privacy.html)
+- [Terms](https://www.viylsa.app/terms.html)
+
+## Contact
+
+- Email: viylsavirtualtour@gmail.com
+- WhatsApp / phone: +92 310 5968568
+- Location: Islamabad, Pakistan

@@ -6,6 +6,7 @@ desktop.ini
 .idea/
 .vscode/
 .gstack/
+.claude/
 
 # Build
 node_modules/

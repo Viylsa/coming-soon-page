@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Page not found | VIYLSA</title>
+  <meta name="robots" content="noindex,follow"/>
+  <meta name="theme-color" content="#0A0A0B"/>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <!--
+    GitHub Pages serves this file for any unresolved path. It is deliberately
+    self-contained — system fonts, inline CSS, no build-hashed assets — so it
+    renders instantly and can never break when the bundle filenames change.
+    noindex,follow: keep it out of the index, but let the links out of it count.
+  -->
+  <style>
+    :root {
+      --ink:#0A0A0B; --ink-soft:#2A2A2F; --muted:#4B4B52; --subtle:#6B6B73;
+      --canvas:#FAFAF7; --paper:#FFFFFF; --line:#E6E5E0;
+      --crimson:#7F141A; --crimson-deep:#5E0D14;
+      --serif: Georgia, 'Times New Roman', serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0; min-height:100vh; display:flex; flex-direction:column;
+      background:var(--canvas); color:var(--ink); line-height:1.6;
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing:antialiased;
+    }
+    a { color: var(--crimson); }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; width:100%; }
+    .band { background:var(--ink); color:#F7F6F2; padding:20px 0; }
+    .brand { display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:#fff; }
+    .brand img { width:26px; height:auto; }
+    .brand b { font-family:var(--serif); font-size:18px; letter-spacing:0.02em; font-weight:600; }
+
+    main { flex:1; display:flex; align-items:center; padding: clamp(56px, 10vw, 104px) 0; }
+    .code { font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--crimson); font-weight:600; margin:0 0 14px; }
+    h1 {
+      font-family:var(--serif); font-weight:600; margin:0 0 18px;
+      font-size: clamp(30px, 6vw, 52px); line-height:1.1; letter-spacing:-0.01em;
+    }
+    h1 em { font-style:italic; color:var(--crimson); }
+    .lead { font-size: clamp(16px, 2.2vw, 18px); color:var(--ink-soft); max-width:56ch; margin:0 0 32px; }
+
+    .links { border-top:1px solid var(--line); padding-top:24px; }
+    .links-h { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--subtle); margin:0 0 14px; }
+    .links ul { list-style:none; padding:0; margin:0; display:grid; gap:10px; }
+    .links a { text-decoration:none; font-weight:500; }
+    .links a:hover { text-decoration:underline; }
+    .links span { color:var(--muted); font-weight:400; }
+
+    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:36px; }
+    .btn {
+      display:inline-block; text-decoration:none; font-weight:600; font-size:15px;
+      padding:12px 24px; border-radius:999px;
+      background:var(--crimson); color:#fff; border:1px solid var(--crimson);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -10px rgba(127,20,26,0.5); }
+    .btn.ghost { background:transparent; color:var(--crimson); border-color:var(--line); }
+    .btn.ghost:hover { border-color:var(--crimson); box-shadow:none; }
+
+    footer { border-top:1px solid var(--line); padding: 24px 0 48px; color:var(--subtle); font-size:14px; }
+  </style>
+</head>
+<body>
+  <div class="band">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/assets/viylsa-mark-white-sm.png" alt="" width="256" height="247"/><b>VIYLSA</b></a>
+    </div>
+  </div>
+
+  <main>
+    <div class="wrap">
+      <p class="code">Error 404</p>
+      <h1>This page isn't <em>here.</em></h1>
+      <p class="lead">The link may be out of date, or the address slightly off. Everything VIYLSA
+      has is one click away below — including a live 360° tour you can walk right now.</p>
+
+      <div class="actions">
+        <a class="btn" href="/">Go to the homepage</a>
+        <a class="btn ghost" href="/#contact">Talk to us</a>
+      </div>
+
+      <div class="links">
+        <p class="links-h">Or try one of these</p>
+        <ul>
+          <li><a href="/#live-tour">Walk the live tour</a> <span>— the NUTECH campus in Islamabad</span></li>
+          <li><a href="/virtual-tours-islamabad.html">Virtual tours in Islamabad &amp; Rawalpindi</a> <span>— venues we shoot locally</span></li>
+          <li><a href="/#how">How it works</a> <span>— three steps, usually one afternoon</span></li>
+          <li><a href="/#pricing">Packages</a> <span>— quoted to your space</span></li>
+          <li><a href="/about.html">About VIYLSA</a> <span>— the team behind the tours</span></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      VIYLSA — 360° virtual tours with a built-in AI guide.
+      <a href="mailto:viylsavirtualtour@gmail.com">viylsavirtualtour@gmail.com</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -22,9 +22,8 @@
   <meta name="twitter:description" content="The Islamabad &amp; Rawalpindi team behind VIYLSA's 360° virtual tours with a built-in AI guide."/>
   <meta name="twitter:image" content="https://www.viylsa.app/assets/og-image.jpg"/>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+  <!-- Self-hosted fonts (same-origin woff2) — no render-blocking Google Fonts hop. -->
+  <link rel="stylesheet" href="/src/fonts-static.css"/>
   <style>
     :root {
       --ink:#0A0A0B; --ink-soft:#2A2A2F; --muted:#4B4B52; --subtle:#6B6B73;
@@ -32,9 +31,9 @@
       --crimson:#7F141A; --crimson-deep:#5E0D14; --crimson-soft:#FAE6E8;
     }
     * { box-sizing: border-box; }
-    body { margin:0; background:var(--canvas); color:var(--ink); font-family:'Geist',system-ui,-apple-system,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
+    body { margin:0; background:var(--canvas); color:var(--ink); font-family:'Geist Variable','Geist',system-ui,-apple-system,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
     a { color: var(--crimson); }
-    .serif { font-family:'Playfair Display',Georgia,serif; font-style:italic; font-weight:400; color:var(--crimson); }
+    .serif { font-family:'Playfair Display Variable','Playfair Display',Georgia,serif; font-style:italic; font-weight:400; color:var(--crimson); }
 
     /* Header band */
     .band { background:var(--ink); color:#F7F6F2; padding:18px 0; }
@@ -42,18 +41,18 @@
     .nav { display:flex; align-items:center; justify-content:space-between; gap:16px; }
     .brand { display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:#fff; }
     .brand img { width:26px; height:auto; }
-    .brand b { font-family:'Playfair Display',Georgia,serif; font-size:18px; letter-spacing:0.02em; font-weight:600; }
+    .brand b { font-family:'Playfair Display Variable','Playfair Display',Georgia,serif; font-size:18px; letter-spacing:0.02em; font-weight:600; }
     .nav a.home { color:rgba(255,255,255,0.75); text-decoration:none; font-size:14px; }
     .nav a.home:hover { color:#fff; }
 
     .hero { background:var(--ink); color:#F7F6F2; padding: 40px 0 64px; }
     .kicker { font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:#FFB7BD; margin:0 0 14px; }
-    h1 { font-family:'Playfair Display',Georgia,serif; font-size: clamp(34px, 6vw, 56px); line-height:1.1; letter-spacing:-0.01em; font-weight:600; margin:0 0 18px; }
+    h1 { font-family:'Playfair Display Variable','Playfair Display',Georgia,serif; font-size: clamp(34px, 6vw, 56px); line-height:1.1; letter-spacing:-0.01em; font-weight:600; margin:0 0 18px; }
     .hero p { font-size: clamp(17px, 2.4vw, 20px); color:rgba(247,246,242,0.82); max-width:60ch; margin:0; }
 
     main { padding: 56px 0 24px; }
     section { margin: 0 0 48px; }
-    h2 { font-family:'Playfair Display',Georgia,serif; font-size: clamp(22px, 3vw, 28px); letter-spacing:-0.01em; font-weight:600; margin:0 0 14px; }
+    h2 { font-family:'Playfair Display Variable','Playfair Display',Georgia,serif; font-size: clamp(22px, 3vw, 28px); letter-spacing:-0.01em; font-weight:600; margin:0 0 14px; }
     p { color: var(--ink-soft); font-size: 16.5px; }
     .lead { font-size: 18px; }
     ul { padding-left: 0; list-style:none; margin: 16px 0; }
@@ -182,7 +181,7 @@
         "logo": "https://www.viylsa.app/assets/viylsa-mark-sm.png",
         "sameAs": [
           "https://www.facebook.com/profile.php?id=61571004368984",
-          "https://www.linkedin.com/company/viylsa-tours/posts/?feedView=all",
+          "https://www.linkedin.com/company/viylsa-tours/",
           "https://www.instagram.com/viylsa_virtualtours"
         ],
         "email": "viylsavirtualtour@gmail.com",

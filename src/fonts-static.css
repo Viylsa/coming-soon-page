@@ -1,0 +1,21 @@
+/* Shared self-hosted webfonts for the plain static pages (about, virtual-tours-
+ * islamabad, privacy, terms). The React homepage pulls the same @fontsource
+ * packages through src/main.jsx; these pages are hand-written HTML with an
+ * inline <style> block, so they link this file instead.
+ *
+ * Replaces the cross-origin Google Fonts <link>, which was render-blocking on
+ * two of the pages we most want crawled: the browser had to resolve DNS,
+ * connect to fonts.googleapis.com, fetch a CSS file and only *then* discover
+ * the woff2 on fonts.gstatic.com — a four-hop critical chain before first
+ * paint. Self-hosted, the woff2 is same-origin and already warm.
+ *
+ * Vite resolves these bare specifiers at build time and emits a single hashed
+ * stylesheet, so the pages ship one same-origin CSS request.
+ *
+ * Family names are @fontsource's variable-font names ('Geist Variable', not
+ * 'Geist') — the static pages' font stacks name both, so a stale cache or a
+ * locally installed Geist still resolves.
+ */
+@import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/playfair-display/wght.css';
+@import '@fontsource-variable/playfair-display/wght-italic.css';

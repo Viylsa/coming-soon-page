@@ -22,18 +22,17 @@
   <meta name="twitter:description" content="VIYLSA's local crew shoots 360° virtual tours with a built-in AI guide across Islamabad &amp; Rawalpindi."/>
   <meta name="twitter:image" content="https://www.viylsa.app/assets/og-image.jpg"/>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+  <!-- Self-hosted fonts (same-origin woff2) — no render-blocking Google Fonts hop. -->
+  <link rel="stylesheet" href="/src/fonts-static.css"/>
   <style>
     :root {
       --ink:#0A0A0B; --ink-soft:#2A2A2F; --muted:#4B4B52; --subtle:#6B6B73;
       --canvas:#FAFAF7; --paper:#FFFFFF; --line:#E6E5E0; --haze:#F2F1ED;
       --crimson:#7F141A; --crimson-deep:#5E0D14; --crimson-darker:#3F080E; --crimson-soft:#FAE6E8;
-      --serif:'Playfair Display',Georgia,serif;
+      --serif:'Playfair Display Variable','Playfair Display',Georgia,serif;
     }
     * { box-sizing: border-box; }
-    body { margin:0; background:var(--canvas); color:var(--ink); font-family:'Geist',system-ui,-apple-system,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
+    body { margin:0; background:var(--canvas); color:var(--ink); font-family:'Geist Variable','Geist',system-ui,-apple-system,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
     a { color: var(--crimson); }
     .serif { font-family:var(--serif); font-style:italic; font-weight:400; color:var(--crimson); }
     .band { background:var(--ink); color:#F7F6F2; padding:20px 0; }
