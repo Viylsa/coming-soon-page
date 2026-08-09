@@ -649,14 +649,16 @@ input:focus-visible, textarea:focus-visible {
   box-shadow: 0 26px 54px -26px rgba(127, 20, 26, 0.45);
   margin-top: -10px;
   margin-bottom: 10px;
+  /* The crimson accent is a background layer clipped to the padding box, not an
+     absolutely-positioned bar. A 4px-tall bar can't hold a 16px corner radius —
+     the browser shrinks the radius and the bar's square ends overshoot the card's
+     curve. As a background it is cut by the card's own inner radius, so it starts
+     and stops exactly on the rounded edge and sits inside the crimson border. */
   background:
+    var(--crimson-field) top center / 100% 4px no-repeat,
     linear-gradient(180deg, rgba(127, 20, 26, 0.035), rgba(127, 20, 26, 0) 140px),
     var(--canvas-paper);
-}
-.v-plan--featured::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-  background: var(--crimson-field);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background-clip: padding-box, padding-box, border-box;
 }
 .v-plan__tag {
   position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
