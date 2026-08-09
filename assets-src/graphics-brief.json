@@ -1,0 +1,590 @@
+{
+  "spec_version": "1.0",
+  "project": "VIYLSA — 360° virtual tours with a built-in AI guide (viylsa.app)",
+  "purpose": "Generation brief for a full custom icon + graphic set to replace the current off-the-shelf Lucide-style icon subset in src/icons.jsx and the placeholder brand/social images in public/assets. Every entry below is a single AI image generation job: PNG, transparent background, one subject per image.",
+  "how_to_use": [
+    "Generate one image per entry in `assets` × one image per entry in that asset's `color_variants`.",
+    "Always generate at `generate_at_px` (square, or the stated aspect for wide graphics), then downscale to each size in `export_px`. Never upscale.",
+    "Feed the model: brand.global_prompt_prefix + the asset's `prompt`. Feed brand.global_negative_prompt + the asset's `negative_prompt` as the negative.",
+    "Save masters to assets-src/icons/<id>--<variant>.png, ship downscales to public/assets/icons/<id>-<variant>@<n>x.png.",
+    "Check every export against brand.acceptance_checklist before it goes in the repo."
+  ],
+  "important_engineering_notes": [
+    "The site currently renders these as inline SVG (src/icons.jsx) with stroke=currentColor. That is why one icon serves crimson, white and pink contexts, and why the contact tiles can recolour pink→white on hover with zero extra files. Moving to PNG loses that: every colour context becomes its own file, and hover states need a second file swapped in CSS. Each asset below therefore lists explicit `color_variants` — generate all of them.",
+    "PNG at 13–18px display is the risk area: raster edges soften where the SVG was pixel-crisp. Exporting @3x and letting the browser downscale (as specced here) is the mitigation. If any small glyph looks muddy after export, the honest fallback is to keep that one as SVG.",
+    "apple-touch-icon must NOT be transparent — iOS composites it onto a black or white plate and a transparent mark disappears. That entry ships opaque on purpose.",
+    "og-image is a 1200×630 opaque JPEG, not a transparent PNG. It is included because it is part of the same visual system.",
+    "public/404.html is deliberately self-contained (system fonts, inline CSS, no build-hashed assets) so it can never break. No graphic is specced for it on purpose."
+  ],
+
+  "brand": {
+    "positioning": "Editorial, restrained, premium. Reads like a design-led studio, not a SaaS template. Warm paper surfaces, deep wine-crimson, generous whitespace, real typographic craft. Nothing bubbly, nothing neon, nothing cartoon.",
+    "palette": {
+      "crimson": {
+        "hex": "#7F141A",
+        "role": "PRIMARY. Icons on light surfaces, brand mark, accent rules. Matches the live tour player."
+      },
+      "crimson_deep": { "hex": "#5E0D14", "role": "Hover / gradient mid-stop" },
+      "crimson_darker": { "hex": "#3F080E", "role": "Pressed / gradient end-stop" },
+      "crimson_soft": { "hex": "#FAE6E8", "role": "Tinted badge surfaces behind crimson icons" },
+      "crimson_bright": { "hex": "#DC143C", "role": "Sparing accent only — notification dots, hot hotspots. Never a whole icon." },
+      "pink_on_dark": { "hex": "#E89AA0", "role": "Icon colour on the dark contact/hero bands — a desaturated crimson tint that survives on near-black" },
+      "white": { "hex": "#FFFFFF", "role": "Icons on crimson fills and on the dark 'how it works' band" },
+      "ink": { "hex": "#0A0A0B", "role": "Near-black text and dark-band background" },
+      "canvas": { "hex": "#FAFAF7", "role": "Warm off-white page background" },
+      "paper": { "hex": "#FFFFFF", "role": "Card surfaces" },
+      "mist": { "hex": "#E6E5E0", "role": "Borders and dividers" },
+      "success_green": { "hex": "#1EA75A", "role": "The single non-brand colour in the system — lead-captured confirmation ticks only" },
+      "crimson_field_gradient": "radial-gradient(120% 120% at 18% 0%, #7F141A 0%, #5E0D14 55%, #3F080E 100%)"
+    },
+    "typography": {
+      "display_and_wordmark": "Playfair Display — high-contrast transitional serif, tall ascenders, sharp bracketed serifs",
+      "body_and_ui": "Geist — neutral geometric grotesque",
+      "micro_labels_and_data": "Geist Mono — uppercase, 0.14em letter-spacing",
+      "note": "No text of any kind belongs inside a generated icon. Typography is listed only so the artwork's weight and contrast sit next to it comfortably: aim for a stroke that feels as considered as a Playfair hairline, never chunky."
+    },
+    "geometry": {
+      "icon_grid": "24 × 24 units, the same grid the current icons use, so replacements drop in without re-spacing anything",
+      "stroke_weight": "1.75 of 24 units = 7.3% of canvas width. On a 1024×1024 canvas that is a 75px stroke. Uniform — the same weight on every path in every icon in the set.",
+      "terminals": "Fully rounded caps and rounded joins. No square, no mitred, no tapered ends.",
+      "live_area": "Artwork occupies the centred 83% of the canvas (20 of 24 units). Roughly 8.5% clear transparent margin on all four sides.",
+      "corner_radii_in_system": "4 / 6 / 10 / 16 / 24px — where an icon contains a rounded rectangle, keep its corners soft but not pill-shaped",
+      "fill_rule": "Outline only. No filled shapes, with one deliberate exception: a play triangle and small indicator dots are solid.",
+      "perspective": "Flat, straight-on, orthographic. No isometric, no 3D, no drop shadow — except the brand mark, which keeps its existing constructed-perspective geometry."
+    },
+    "style_dna": "The existing brand mark is the anchor: an angular crimson monogram built from straight mitred strokes — an open cube seen from the front-above, a solid dot at its centre, spokes radiating out. It reads simultaneously as a 'V', a viewpoint, and a 360° camera node. The icon set should feel like it was drawn by the same hand: confident single-weight geometry, generous internal spacing, no decorative flourish, every shape resolvable at 16px.",
+    "global_prompt_prefix": "A single minimal geometric line icon, flat 2D vector style, centred on a fully transparent background. Drawn on a 24-unit grid with one uniform stroke weight of 7.3% of the canvas width (approximately 75px on a 1024×1024 canvas), fully rounded stroke caps and rounded joins, outline only, no fill, no gradient, no shadow, no container shape, no frame. Artwork fills the centred 83% of the canvas with even transparent margin on all four sides. Precise, editorial, premium — in the spirit of Lucide or Feather icons but drawn with wider internal spacing and more confidence. One subject only, one icon per image, no variations, no grid sheet.",
+    "global_negative_prompt": "text, letters, numbers, typography, watermark, signature, logo, background colour, white background, checkerboard background, container box, rounded-rectangle badge behind icon, frame, border, drop shadow, glow, gradient, gradient mesh, 3D, bevel, emboss, skeuomorphic, photorealistic, glossy highlight, glass effect, neon, multiple colours, colour fringing, varying stroke widths, tapered strokes, square caps, hand-drawn wobble, sketchy lines, clutter, extra decorative details, multiple icons, icon sheet, grid of variations, cropped edges, off-centre composition, cartoon, emoji style, mascot, drop-shadowed duplicate, jpeg artefacts",
+    "acceptance_checklist": [
+      "Background is genuinely transparent — no white plate, no near-white halo around strokes",
+      "Stroke weight is visually identical to every other icon in the set when placed side by side at the same size",
+      "All terminals are round; no stray square cap",
+      "Subject is optically centred (not just mathematically centred) with even breathing room",
+      "Still legible and unambiguous at 16px",
+      "Exactly one colour, and it matches the variant hex exactly",
+      "No text, no numbers, no signature anywhere in the frame",
+      "Edges are clean at 100% — no colour fringing from a coloured background the model quietly assumed"
+    ]
+  },
+
+  "delivery_rules": {
+    "format": "PNG-32 with straight (non-premultiplied) alpha",
+    "colour_profile": "sRGB",
+    "master_size_default_px": 1024,
+    "export_rule": "Downscale only, Lanczos. Ship @2x and @3x for anything displayed under 24px; ship @1x/@2x for anything larger.",
+    "master_path": "assets-src/icons/<id>--<variant>.png",
+    "shipped_path": "public/assets/icons/<id>-<variant>@<n>x.png",
+    "optimise_with": "npx oxipng -o4 --strip safe  (or squoosh oxipng) before committing"
+  },
+
+  "assets": [
+    {
+      "id": "arrow-right",
+      "name": "Arrow right",
+      "category": "ui-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconArrowRight — src/icons.jsx:57",
+      "used_in": [
+        "src/components/Nav.jsx:108,134 — 'Book a demo' button, 16px, white on crimson",
+        "src/components/Hero.jsx:53 — hero CTA, 18px, white on crimson",
+        "src/components/Pricing.jsx:106 — plan CTA, 16px, crimson on white and white on crimson",
+        "src/components/LiveTourPreview.jsx:131 — founding-slot CTA, 18px",
+        "src/components/StickyCTA.jsx:30 — sticky mobile bar, 16px"
+      ],
+      "display_px": [16, 18],
+      "export_px": [16, 18, 32, 36, 48, 54],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "white", "hex": "#FFFFFF", "context": "on crimson buttons" },
+        { "name": "crimson", "hex": "#7F141A", "context": "on white / ghost buttons" }
+      ],
+      "prompt": "A single minimal geometric line icon of an arrow pointing right: one perfectly horizontal shaft spanning the full live area, meeting a clean chevron arrowhead at the right end formed by two straight strokes at a 45-degree angle. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid {{HEX}}. The shaft sits on the exact vertical centre line; the chevron is open, not a filled triangle. Generous even transparent margin on all four sides. Fully transparent background, PNG with alpha. Editorial, precise, confident — designed to sit beside a serif headline in a premium brand system.",
+      "negative_prompt": "filled triangle arrowhead, double-headed arrow, curved arrow, arrow in a circle, arrow in a box, text, background",
+      "notes": "The highest-traffic glyph on the site — it appears in five places. Get this one right first; the whole set's stroke weight is judged against it."
+    },
+    {
+      "id": "check",
+      "name": "Check / tick",
+      "category": "ui-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconCheck — src/icons.jsx:60",
+      "used_in": [
+        "src/components/Pricing.jsx:102 — plan feature list, 16px crimson",
+        "src/components/Analytics.jsx:27-30 — payoff list, 14px crimson inside a 24px #FAE6E8 circle",
+        "src/components/AIGuide.jsx:109 — lead-captured row, 13px green inside a 20px green-tinted circle",
+        "src/components/Contact.jsx:106 — form success state, 26px crimson inside a 56px #FAE6E8 circle"
+      ],
+      "display_px": [13, 14, 16, 26],
+      "export_px": [16, 26, 32, 52, 48, 78],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "crimson", "hex": "#7F141A", "context": "feature lists and the soft-pink badge circles" },
+        { "name": "green", "hex": "#1EA75A", "context": "lead-captured confirmation only" },
+        { "name": "white", "hex": "#FFFFFF", "context": "reserved, on solid crimson fills" }
+      ],
+      "prompt": "A single minimal geometric line icon of a checkmark: two straight strokes only — a short descending stroke down to the left, meeting a long ascending stroke up to the right, joined at one clean rounded vertex. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and a rounded join, no fill, no shadow, no gradient. Stroke colour solid {{HEX}}. The tick is optically centred and slightly wide rather than tall, confident and open — not cramped, not curved. Generous even transparent margin on all four sides. Fully transparent background, PNG with alpha. Precise, editorial, premium.",
+      "negative_prompt": "circle around the check, filled badge, checkbox, curved swoosh, calligraphic tick, double check, text, background",
+      "notes": "Renders inside coloured circles that the CSS draws — do NOT bake a circle into the artwork."
+    },
+    {
+      "id": "sparkle",
+      "name": "Sparkle / AI accent",
+      "category": "ui-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconSparkle — src/icons.jsx:61",
+      "used_in": [
+        "src/components/Analytics.jsx:84 and src/components/Contact.jsx:61 — crimson eyebrow label, 14px",
+        "src/components/AIGuide.jsx:72 — AI chat avatar, 15px white inside a 40px crimson-gradient rounded square"
+      ],
+      "display_px": [14, 15],
+      "export_px": [14, 15, 28, 30, 42, 45],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "crimson", "hex": "#7F141A", "context": "eyebrow labels on light" },
+        { "name": "white", "hex": "#FFFFFF", "context": "AI avatar on the crimson gradient" }
+      ],
+      "prompt": "A single minimal geometric line icon of a four-pointed sparkle: one symmetrical star with four sharp concave-sided points — long vertical axis, slightly shorter horizontal axis — the sides curving gently inward toward the centre. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient, no secondary smaller sparkles. Stroke colour solid {{HEX}}. Elegant and restrained — this stands for machine intelligence in a serious brand, so it should read as a precise star, not as magic dust. Optically centred with generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "multiple sparkles, small companion stars, magic dust, glitter, five-pointed star, filled star, glow, lens flare, wand, text, background",
+      "notes": "The 15px white variant sits on a crimson radial gradient — check contrast at 100% before shipping."
+    },
+    {
+      "id": "chart-line",
+      "name": "Analytics chart",
+      "category": "ui-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconChart — src/icons.jsx:54",
+      "used_in": ["src/components/Analytics.jsx:19 — 'What you get back' eyebrow, 14px crimson"],
+      "display_px": [14],
+      "export_px": [14, 28, 42],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "crimson", "hex": "#7F141A", "context": "eyebrow label on light" }],
+      "prompt": "A single minimal geometric line icon of a line chart: an L-shaped axis pair (one vertical stroke down the left, one horizontal stroke along the bottom, meeting at a rounded corner) with a rising zig-zag trend line inside the plot area made of three straight segments — up, down slightly, then up steeply to the top right. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no data points, no shadow, no gradient. Stroke colour solid #7F141A. Clean and analytical, with clear space between the trend line and the axes. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "bar chart, pie chart, filled area under the line, grid lines, axis tick marks, data point dots, arrowheads on axes, text, numbers, background"
+    },
+    {
+      "id": "map-pin",
+      "name": "Location pin",
+      "category": "ui-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconMapPin — src/icons.jsx:72",
+      "used_in": ["src/components/Contact.jsx:87 — studio location row, 18px, inside a 42px translucent rounded square on the near-black contact band"],
+      "display_px": [18],
+      "export_px": [18, 36, 54],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "pink", "hex": "#E89AA0", "context": "resting state on the dark contact band" },
+        { "name": "white", "hex": "#FFFFFF", "context": "hover state, when the tile fills solid crimson" }
+      ],
+      "prompt": "A single minimal geometric line icon of a map location pin: a teardrop marker built from a near-circular top that tapers to a clean point at the bottom, with one concentric open circle centred in the upper bowl. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient, no ground shadow ellipse beneath the pin. Stroke colour solid {{HEX}}. Geometric and calm rather than bulbous — the silhouette should feel drawn with a compass and a ruler. Optically centred with generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "filled pin, solid teardrop, ground shadow, map behind the pin, dashed route line, cluster of pins, GPS crosshair, text, background",
+      "notes": "This is the 'location' icon. Two variants are mandatory — the tile recolours pink→white on hover, which a single PNG cannot do."
+    },
+    {
+      "id": "mail",
+      "name": "Email envelope",
+      "category": "ui-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconMail — src/icons.jsx:68",
+      "used_in": [
+        "src/components/Contact.jsx:80 — email row, 18px in a 42px tile on the dark band",
+        "src/components/Contact.jsx:133 — 'Send by email instead' link, 16px"
+      ],
+      "display_px": [16, 18],
+      "export_px": [16, 18, 32, 36, 48, 54],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "pink", "hex": "#E89AA0", "context": "resting state on the dark contact band" },
+        { "name": "white", "hex": "#FFFFFF", "context": "hover state on solid crimson" }
+      ],
+      "prompt": "A single minimal geometric line icon of an envelope: a horizontal rectangle with softly rounded corners, slightly wider than tall, containing a shallow open V that runs from the top-left corner down to a point just above the horizontal centre and back up to the top-right corner, representing the flap. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid {{HEX}}. Restrained and geometric, with the flap V sitting well clear of the rectangle's lower edge. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "open envelope with a letter sticking out, paper plane, @ symbol, notification badge, sealed wax, filled envelope, text, background"
+    },
+    {
+      "id": "clock",
+      "name": "Clock / hours",
+      "category": "ui-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconClock — src/icons.jsx:76",
+      "used_in": ["src/components/Contact.jsx:94 — response-time row, 18px in a 42px tile on the dark band"],
+      "display_px": [18],
+      "export_px": [18, 36, 54],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "pink", "hex": "#E89AA0", "context": "resting state on the dark contact band" },
+        { "name": "white", "hex": "#FFFFFF", "context": "hover state on solid crimson" }
+      ],
+      "prompt": "A single minimal geometric line icon of a clock: one perfect open circle with two straight hands meeting at the exact centre — a long hand pointing straight up to twelve and a shorter hand pointing right and slightly up to two o'clock. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no centre dot, no hour markers, no tick marks, no shadow, no gradient. Stroke colour solid {{HEX}}. The hands must not touch the circle — leave clear space at their tips. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "hour markers, numerals, tick marks, centre pivot dot, alarm bells, stopwatch crown, second hand, filled clock face, text, background"
+    },
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp",
+      "category": "ui-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconWhatsApp — src/icons.jsx:79",
+      "used_in": [
+        "src/components/Contact.jsx:73 — WhatsApp row, 18px in a 42px tile on the dark band",
+        "src/components/Contact.jsx:130 — 'Book my demo on WhatsApp' primary button, 18px white on crimson"
+      ],
+      "display_px": [18],
+      "export_px": [18, 36, 54],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "pink", "hex": "#E89AA0", "context": "resting state on the dark contact band" },
+        { "name": "white", "hex": "#FFFFFF", "context": "on the solid crimson button and tile hover" }
+      ],
+      "prompt": "A single minimal geometric line icon of the WhatsApp glyph: a rounded speech-bubble circle with a short tail at the lower-left, containing a simplified handset shape at its centre. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient, no brand green, no circular badge plate behind it. Stroke colour solid {{HEX}}. Geometrically clean and matched in weight to a set of editorial line icons rather than copying the official filled logo. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "official WhatsApp green, filled green circle badge, glossy 3D app icon, gradient, drop shadow, text, background",
+      "notes": "Third-party marks: keep the silhouette recognisable but rendered in the site's line style and brand colour. Do not reproduce the official filled green badge — it breaks the set and the brand palette."
+    },
+    {
+      "id": "camera-360",
+      "name": "360° capture rig — How it works, step 01",
+      "category": "feature-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconCamera — src/icons.jsx:31",
+      "used_in": ["src/components/HowItWorks.jsx:37 — step 01 rail node, 22px white, centred in a 52px translucent-white rounded square on the dark crimson band"],
+      "display_px": [22],
+      "export_px": [22, 44, 66],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "white", "hex": "#FFFFFF", "context": "on the dark 'how it works' band" }],
+      "prompt": "A single minimal geometric line icon representing 360-degree panoramic capture: a compact camera body drawn as a rounded rectangle with a small raised hump on its top edge, a concentric open circle lens at its centre, and one continuous open ellipse orbiting the whole body on a slight tilt to signal a full 360-degree sweep. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid #FFFFFF. The orbit ellipse must stay clear of the lens circle so the icon still resolves at 22 pixels. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha. Editorial and precise — this represents a professional crew arriving with a real 360 rig, not a consumer snapshot.",
+      "negative_prompt": "photorealistic camera, DSLR body detail, tripod legs, flash, film reel, shutter button detail, motion blur streaks, arrows on the orbit, text, background",
+      "notes": "Sits at 22px in a 52px node — the orbit is the first thing that will collapse if it is drawn too close to the body."
+    },
+    {
+      "id": "ai-train",
+      "name": "Train the AI guide — How it works, step 02",
+      "category": "feature-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconSparkle at src/components/HowItWorks.jsx:37 (step 02) — currently reuses the generic sparkle",
+      "used_in": ["src/components/HowItWorks.jsx:37 — step 02 rail node, 22px white in a 52px node on the dark crimson band"],
+      "display_px": [22],
+      "export_px": [22, 44, 66],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "white", "hex": "#FFFFFF", "context": "on the dark 'how it works' band" }],
+      "prompt": "A single minimal geometric line icon representing training an AI assistant: a rounded-corner speech bubble with a short tail at the lower-left, and one four-pointed sparkle with concave sides sitting inside the bubble, slightly right of centre. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid #FFFFFF. Only two elements — bubble and one sparkle — with clear space between the sparkle and the bubble's inner edges. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha. Serious and precise: this represents a bilingual AI concierge, not a toy chatbot.",
+      "negative_prompt": "robot face, android head, brain, neural network node diagram, circuit board traces, multiple sparkles, three dots typing indicator, cartoon mascot, text, background",
+      "notes": "Currently step 02 shares the generic sparkle with the eyebrow labels. Giving it its own glyph is a real upgrade — the three rail nodes should read as three distinct stages."
+    },
+    {
+      "id": "go-live",
+      "name": "You go live — How it works, step 03",
+      "category": "feature-icon",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "IconBox — src/icons.jsx:27",
+      "used_in": ["src/components/HowItWorks.jsx:37 — step 03 rail node, 22px white in a 52px node on the dark crimson band"],
+      "display_px": [22],
+      "export_px": [22, 44, 66],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "white", "hex": "#FFFFFF", "context": "on the dark 'how it works' band" }],
+      "prompt": "A single minimal geometric line icon representing a tour going live on the web: an open cube drawn in clean straight-line isometric construction — a hexagonal outer silhouette with three internal edges meeting at the centre — with one short straight stroke rising from the top vertex to a small solid dot, signalling broadcast. Flat 2D vector, outline only apart from that one solid dot, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no shadow, no gradient. Stroke colour solid #FFFFFF. Strictly geometric, symmetrical, all angles at 30 or 60 degrees. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "cardboard shipping box, packing tape, delivery parcel, wifi arcs, radio waves, rocket, filled cube faces, text, background",
+      "notes": "This is the one asset in the set allowed to use isometric construction — it echoes the brand mark's own constructed geometry and closes the three-step story."
+    },
+    {
+      "id": "drag-pan",
+      "name": "Drag to look around",
+      "category": "ui-icon",
+      "status": "in-use",
+      "priority": 2,
+      "replaces": "Inline SVG — src/components/LiveTourPreview.jsx:73",
+      "used_in": ["src/components/LiveTourPreview.jsx:73 — 'Tap & drag to look around' hint overlaid on the live tour player, 14px white"],
+      "display_px": [14],
+      "export_px": [14, 28, 42],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "white", "hex": "#FFFFFF", "context": "overlaid on the live tour viewport" }],
+      "prompt": "A single minimal geometric line icon of a horizontal pan gesture: one perfectly horizontal shaft with an open chevron arrowhead at each end, one pointing left and one pointing right, both formed by two straight strokes at 45 degrees. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid #FFFFFF. Perfectly symmetrical about the vertical centre line. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "hand cursor, pointing finger, mouse device, filled triangle arrowheads, curved arrows, vertical arrows, text, background",
+      "notes": "Overlays a live video frame, so it must hold up on an unpredictable background — keep the stroke at full weight."
+    },
+    {
+      "id": "social-facebook",
+      "name": "Facebook",
+      "category": "social-icon",
+      "status": "in-use",
+      "priority": 2,
+      "replaces": "IconFacebook — src/icons.jsx:83",
+      "used_in": ["src/components/FooterCTA.jsx:29 — footer social row, 18px on the near-black footer"],
+      "display_px": [18],
+      "export_px": [18, 36, 54],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "white-muted", "hex": "#FFFFFF", "context": "footer resting state — CSS sets the opacity, so ship pure white" },
+        { "name": "pink", "hex": "#E89AA0", "context": "hover state" }
+      ],
+      "prompt": "A single minimal geometric line icon of the Facebook 'f' mark rendered as an outline glyph: the familiar lowercase f silhouette with a vertical stem, a crossbar, and a hooked top, drawn with straight segments and clean right angles. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no rounded-square badge plate, no brand blue, no shadow, no gradient. Stroke colour solid {{HEX}}. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "official Facebook blue, filled blue rounded square, 3D app icon, glossy, gradient, thumbs up, text, background",
+      "notes": "All three social marks must share one silhouette height so the footer row reads level."
+    },
+    {
+      "id": "social-linkedin",
+      "name": "LinkedIn",
+      "category": "social-icon",
+      "status": "in-use",
+      "priority": 2,
+      "replaces": "IconLinkedIn — src/icons.jsx:86",
+      "used_in": ["src/components/FooterCTA.jsx:30 — footer social row, 18px on the near-black footer"],
+      "display_px": [18],
+      "export_px": [18, 36, 54],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "white-muted", "hex": "#FFFFFF", "context": "footer resting state" },
+        { "name": "pink", "hex": "#E89AA0", "context": "hover state" }
+      ],
+      "prompt": "A single minimal geometric line icon of the LinkedIn mark rendered as an outline glyph: a short vertical bar with a separate small circle floating above it on the left, and to the right a taller shape formed by a vertical stem rising into a rounded shoulder that turns down into a second vertical stem. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no rounded-square badge plate, no brand blue, no shadow, no gradient. Stroke colour solid {{HEX}}. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "official LinkedIn blue, filled blue rounded square, 3D app icon, glossy, gradient, 'in' lettering rendered as type, text, background"
+    },
+    {
+      "id": "social-instagram",
+      "name": "Instagram",
+      "category": "social-icon",
+      "status": "in-use",
+      "priority": 2,
+      "replaces": "IconInstagram — src/icons.jsx:90",
+      "used_in": ["src/components/FooterCTA.jsx:31 — footer social row, 18px on the near-black footer"],
+      "display_px": [18],
+      "export_px": [18, 36, 54],
+      "generate_at_px": 1024,
+      "color_variants": [
+        { "name": "white-muted", "hex": "#FFFFFF", "context": "footer resting state" },
+        { "name": "pink", "hex": "#E89AA0", "context": "hover state" }
+      ],
+      "prompt": "A single minimal geometric line icon of the Instagram mark: a square with generously rounded corners, one concentric open circle centred inside it, and one small solid dot in the upper-right area between the circle and the square's corner. Flat 2D vector, outline only apart from that single dot, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient, no rainbow gradient. Stroke colour solid {{HEX}}. Clear even space between the circle and all four sides of the square. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "rainbow gradient, purple orange pink gradient, filled app tile, 3D icon, glossy, camera lens realism, text, background"
+    },
+
+    {
+      "id": "sector-university",
+      "name": "Universities",
+      "category": "sector-icon",
+      "status": "proposed",
+      "priority": 3,
+      "replaces": "IconCap — src/icons.jsx:43 (defined but currently unused)",
+      "used_in": ["src/components/ProblemTriad.jsx:19 — 'Built for' audience row, currently text-only chips"],
+      "display_px": [20],
+      "export_px": [20, 40, 60],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "crimson", "hex": "#7F141A", "context": "audience chips on the warm off-white canvas" }],
+      "prompt": "A single minimal geometric line icon of a graduation cap seen from a low front angle: a flat rhombus mortarboard sitting on a shallow trapezoid cap base, with one short straight tassel cord hanging from the right corner of the board. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid #7F141A. Strictly geometric — straight edges, no soft fabric drape. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "diploma scroll, books, owl, laurel wreath, tassel with a fluffy end, filled cap, text, background",
+      "notes": "Proposed, not currently rendered. The 'Built for' row is text-only today; adding a six-icon sector row is a design change to approve separately."
+    },
+    {
+      "id": "sector-real-estate",
+      "name": "Real estate",
+      "category": "sector-icon",
+      "status": "proposed",
+      "priority": 3,
+      "replaces": "IconBuilding / IconHome — src/icons.jsx:35,39 (defined but currently unused)",
+      "used_in": ["src/components/ProblemTriad.jsx:19 — 'Built for' audience row"],
+      "display_px": [20],
+      "export_px": [20, 40, 60],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "crimson", "hex": "#7F141A", "context": "audience chips on the warm off-white canvas" }],
+      "prompt": "A single minimal geometric line icon of a house: a simple pitched-roof silhouette formed by two straight roof strokes meeting at an apex, sitting on a rectangular body, with one smaller rectangle centred at the base representing a door. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid #7F141A. Perfectly symmetrical, geometric and calm. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "chimney smoke, garden, trees, fence, sold sign, key, magnifying glass, filled house, text, background"
+    },
+    {
+      "id": "sector-hotel",
+      "name": "Hotels",
+      "category": "sector-icon",
+      "status": "proposed",
+      "priority": 3,
+      "replaces": "IconHotel — src/icons.jsx:47 (defined but currently unused)",
+      "used_in": ["src/components/ProblemTriad.jsx:19 — 'Built for' audience row"],
+      "display_px": [20],
+      "export_px": [20, 40, 60],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "crimson", "hex": "#7F141A", "context": "audience chips on the warm off-white canvas" }],
+      "prompt": "A single minimal geometric line icon of a hotel bed seen from the side: one long horizontal base stroke, a low rectangular mattress, a square pillow at the left end, and a taller straight headboard rising at the far left. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid #7F141A. Clean parallel horizontals, generous space between the mattress and the base. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "person sleeping, blanket folds, star rating, bell, luggage, filled bed, text, background"
+    },
+    {
+      "id": "sector-hospital",
+      "name": "Hospitals",
+      "category": "sector-icon",
+      "status": "proposed",
+      "priority": 3,
+      "replaces": "New — no equivalent exists in src/icons.jsx",
+      "used_in": ["src/components/ProblemTriad.jsx:19 — 'Built for' audience row"],
+      "display_px": [20],
+      "export_px": [20, 40, 60],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "crimson", "hex": "#7F141A", "context": "audience chips on the warm off-white canvas" }],
+      "prompt": "A single minimal geometric line icon of a hospital building: a tall rectangle with a flat roof, and a plus sign centred in its upper half formed by two crossing straight strokes with clear space around them, plus one smaller rectangle centred at the base as an entrance. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid #7F141A. Restrained and institutional, strictly orthogonal. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "red cross emblem, ambulance, stethoscope, heartbeat line, filled plus badge, windows grid clutter, text, background",
+      "notes": "Use a plain plus, not a Red Cross emblem — that mark is legally protected."
+    },
+    {
+      "id": "sector-event-hall",
+      "name": "Event halls",
+      "category": "sector-icon",
+      "status": "proposed",
+      "priority": 3,
+      "replaces": "New — no equivalent exists in src/icons.jsx",
+      "used_in": ["src/components/ProblemTriad.jsx:19 — 'Built for' audience row"],
+      "display_px": [20],
+      "export_px": [20, 40, 60],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "crimson", "hex": "#7F141A", "context": "audience chips on the warm off-white canvas" }],
+      "prompt": "A single minimal geometric line icon of an event venue: a wide classical portico — one horizontal roof beam supported by three evenly spaced vertical columns standing on a horizontal base stroke, with a shallow triangular pediment above the beam. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid #7F141A. Symmetrical, evenly spaced, architectural. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "wedding rings, confetti, balloons, champagne glasses, stage lights, bunting, filled columns, text, background"
+    },
+    {
+      "id": "sector-retail",
+      "name": "Retail",
+      "category": "sector-icon",
+      "status": "proposed",
+      "priority": 3,
+      "replaces": "New — no equivalent exists in src/icons.jsx",
+      "used_in": ["src/components/ProblemTriad.jsx:19 — 'Built for' audience row"],
+      "display_px": [20],
+      "export_px": [20, 40, 60],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "crimson", "hex": "#7F141A", "context": "audience chips on the warm off-white canvas" }],
+      "prompt": "A single minimal geometric line icon of a shopfront: a rectangular building body with a horizontal band across its top representing an awning, drawn as a straight strip divided by two short vertical strokes, and a wide rectangular window opening centred in the lower half. Flat 2D vector, outline only, uniform stroke weight of 7.3% of the canvas width, fully rounded caps and rounded joins, no fill, no shadow, no gradient. Stroke colour solid #7F141A. Geometric and symmetrical, awning drawn flat rather than scalloped. Optically centred, generous even transparent margin. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "scalloped awning, shopping bag, shopping cart, price tag, sale sign, filled storefront, text, background"
+    },
+
+    {
+      "id": "brand-mark-crimson",
+      "name": "VIYLSA brand mark — crimson",
+      "category": "brand",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "public/assets/viylsa-mark-sm.png (currently 256×247)",
+      "used_in": ["src/components/Nav.jsx:86 — nav brand lockup, displayed at 26×26, with a drop-shadow filter applied in CSS"],
+      "display_px": [26],
+      "export_px": [52, 78, 256, 512],
+      "generate_at_px": 2048,
+      "color_variants": [{ "name": "crimson", "hex": "#7F141A", "context": "nav lockup" }],
+      "prompt": "A single flat 2D geometric brand mark in solid #7F141A on a fully transparent background. Construction: an open cube or viewing frustum seen from the front and slightly above, drawn as thick straight bars with sharp mitred corners — two vertical bars descending on the left and right, each ending in a pointed chevron tip at the top, angling inward and downward to meet at a low central vertex, forming an open V-shaped basket. A solid filled circle sits at the optical centre. A vertical bar rises from the circle to a pointed tip at the top of the composition, and two diagonal bars run from the circle down to the lower left and lower right, echoing the outer edges. Every stroke is a solid filled bar of consistent thickness, roughly 9% of the canvas width, with flat mitred ends — NOT rounded, NOT outlined. Strictly symmetrical about the vertical axis. No gradient, no shadow, no outline, no container, no text. Reads simultaneously as a letter V, a viewpoint, and a 360-degree camera node. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "rounded stroke ends, outline-only construction, gradient fill, 3D rendering, bevel, drop shadow, glow, letters, wordmark, company name, container circle, badge, asymmetry, background",
+      "notes": "This regenerates the EXISTING mark. Keep the current silhouette recognisable — it is already on the live site, the favicon and the OG image. Any redraw must stay symmetrical, flat-filled and mitred; do not convert it to the rounded outline language of the icon set."
+    },
+    {
+      "id": "brand-mark-white",
+      "name": "VIYLSA brand mark — white",
+      "category": "brand",
+      "status": "in-use",
+      "priority": 1,
+      "replaces": "public/assets/viylsa-mark-white-sm.png (currently 256×247)",
+      "used_in": ["src/components/FooterCTA.jsx:9 — footer brand link, displayed at 36×36 on the near-black footer"],
+      "display_px": [36],
+      "export_px": [72, 108, 256, 512],
+      "generate_at_px": 2048,
+      "color_variants": [{ "name": "white", "hex": "#FFFFFF", "context": "footer on near-black #0A0A0B" }],
+      "prompt": "Identical geometry to the VIYLSA crimson brand mark, rendered in solid #FFFFFF on a fully transparent background: an open cube or viewing frustum seen from the front and slightly above, built from thick straight bars with sharp mitred corners — two vertical bars on the left and right ending in pointed chevron tips at the top, angling inward and down to a low central vertex to form an open V basket; a solid filled circle at the optical centre; a vertical bar rising from the circle to a pointed tip; two diagonal bars running from the circle down to the lower left and lower right. Bar thickness roughly 9% of the canvas width, flat mitred ends, no rounding. Strictly symmetrical, flat 2D, no gradient, no shadow, no outline, no text. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "off-white or grey tint, rounded stroke ends, gradient, 3D, bevel, glow, letters, wordmark, container, background",
+      "notes": "Must be pixel-identical in geometry to brand-mark-crimson — generate once, recolour, or generate both from the same prompt seed."
+    },
+    {
+      "id": "favicon",
+      "name": "Favicon",
+      "category": "platform-icon",
+      "status": "in-use",
+      "priority": 2,
+      "replaces": "public/favicon.png (currently 64×64)",
+      "used_in": ["index.html:10 — <link rel=\"icon\">, also referenced by public/404.html"],
+      "display_px": [16, 32],
+      "export_px": [16, 32, 48, 64],
+      "generate_at_px": 1024,
+      "color_variants": [{ "name": "crimson", "hex": "#7F141A", "context": "browser tab, transparent so it works in light and dark tab bars" }],
+      "prompt": "The VIYLSA brand mark simplified for a 16-pixel favicon, in solid #7F141A on a fully transparent background: the open V-shaped cube basket built from thick straight mitred bars with a solid circle at its centre and a single vertical bar rising to a point above. Compared to the full mark, thicken every bar to roughly 12% of the canvas width, drop the two lower diagonal bars entirely, and reduce the internal gaps so the silhouette stays solid and readable when scaled to 16×16. Strictly symmetrical, flat 2D, no gradient, no shadow, no outline, no container plate, no text. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "fine hairline details, thin strokes, small gaps, gradient, 3D, drop shadow, coloured background plate, rounded-square app tile, text, background",
+      "notes": "Test it at literal 16×16 in a real browser tab before accepting. Favicons fail by being too faithful to the full mark — simplify aggressively."
+    },
+    {
+      "id": "apple-touch-icon",
+      "name": "Apple touch icon",
+      "category": "platform-icon",
+      "status": "in-use",
+      "priority": 2,
+      "replaces": "public/apple-touch-icon.png (currently 180×180)",
+      "used_in": ["index.html:11 — <link rel=\"apple-touch-icon\">, also referenced by public/404.html"],
+      "display_px": [180],
+      "export_px": [180],
+      "generate_at_px": 1024,
+      "transparent": false,
+      "color_variants": [{ "name": "on-crimson", "hex": "#FFFFFF", "context": "white mark on the crimson field" }],
+      "prompt": "A square app icon, fully opaque, no transparency. Background: a rich radial gradient field reading from #7F141A at the upper-left, through #5E0D14, to #3F080E at the lower-right, filling the entire square edge to edge with no border and no rounded corners. Centred on it, the VIYLSA brand mark in solid #FFFFFF: an open V-shaped cube basket built from thick straight bars with sharp mitred corners, a solid filled circle at its centre, a vertical bar rising to a pointed tip, and two diagonal bars running down to the lower left and lower right. The mark occupies about 62% of the square, optically centred with even margin. Flat 2D, no shadow, no bevel, no gloss, no text. Square corners — the operating system applies its own mask.",
+      "negative_prompt": "transparent background, rounded corners baked in, glossy highlight, 3D bevel, drop shadow, border, text, wordmark, safe-area guides",
+      "notes": "The one asset in this brief that must be OPAQUE. iOS composites transparent touch icons onto black and the mark vanishes. Do not pre-round the corners."
+    },
+    {
+      "id": "og-image",
+      "name": "Open Graph share card",
+      "category": "big-graphic",
+      "status": "in-use",
+      "priority": 2,
+      "replaces": "public/assets/og-image.jpg (currently 1200×630 JPEG)",
+      "used_in": ["index.html:19-21 — og:image, and the Twitter card. This is the image that renders in WhatsApp, LinkedIn and Facebook previews."],
+      "display_px": [1200],
+      "export_px": [1200],
+      "aspect": "1200×630 (1.91:1)",
+      "generate_at_px": 2400,
+      "transparent": false,
+      "color_variants": [{ "name": "dark", "hex": "#0A0A0B", "context": "opaque share card" }],
+      "prompt": "A wide 1.91:1 opaque social share card, 2400×1260, editorial and premium. Background: near-black #0A0A0B with a deep wine-crimson radial glow bleeding in from the upper-left corner (#7F141A fading to transparent across about half the frame) and a second darker crimson pool in the lower right, plus an extremely subtle fine dot texture across the whole surface at very low opacity. Centred slightly left of middle, the VIYLSA brand mark in solid #FFFFFF at roughly 18% of the frame height: an open V-shaped cube basket of thick mitred bars with a solid circle at its centre and a vertical bar rising to a point. Leave the right half comparatively open and uncluttered. No text, no wordmark, no lettering anywhere — the headline is composited separately. Cinematic, restrained, no lens flare, no stock-photo elements, no UI mockups. Flat graphic treatment, not 3D.",
+      "negative_prompt": "text, letters, wordmark, headline, tagline, URL, watermark, people, office photography, laptop mockup, screenshot, lens flare, bokeh, neon, 3D render, glossy reflections, stock photo look, transparent background",
+      "notes": "Opaque JPEG, not PNG. Any text must be composited in a design tool afterwards — AI image models still garble type, and this is the asset every WhatsApp share renders."
+    },
+    {
+      "id": "hero-sphere",
+      "name": "Hero decorative 360 sphere",
+      "category": "big-graphic",
+      "status": "proposed",
+      "priority": 4,
+      "replaces": "New — the hero is currently type-only on a dark band",
+      "used_in": ["src/components/Hero.jsx — proposed decorative element behind or beside the headline"],
+      "display_px": [520],
+      "export_px": [520, 1040],
+      "generate_at_px": 2048,
+      "color_variants": [{ "name": "crimson-on-dark", "hex": "#7F141A", "context": "sits on the near-black hero band" }],
+      "prompt": "A large decorative wireframe sphere on a fully transparent background: a globe drawn only as thin latitude and longitude lines — roughly nine evenly spaced vertical meridians and six horizontal parallels — in solid #7F141A, with the line weight tapering to lower opacity toward the lower right so the sphere appears to fade out. Line weight approximately 0.5% of the canvas width, far finer than an icon stroke. Two or three small solid crimson dots sit on the surface at irregular positions, suggesting tour hotspots, each with a single thin connecting line. No fill inside the sphere — the lines alone describe the volume. No shadow, no glow, no gradient mesh, no continents, no landmasses, no stars, no text. Strictly flat graphic linework, elegant and architectural. Fully transparent background, PNG with alpha.",
+      "negative_prompt": "solid globe, earth continents, land masses, oceans, atmosphere glow, stars, space background, 3D render, glass sphere, reflections, neon, wireframe with heavy strokes, text, background",
+      "notes": "Proposed only — the hero currently carries no imagery by design. Worth mocking up before committing; a decorative graphic can easily cheapen a type-led hero."
+    },
+    {
+      "id": "tour-fallback",
+      "name": "Tour player fallback plate",
+      "category": "big-graphic",
+      "status": "proposed",
+      "priority": 4,
+      "replaces": "The CSS-drawn gradient at .v-tdemo__shot — src/styles/styles.css:1491",
+      "used_in": ["src/components/LiveTourPreview.jsx:78 — shown when the embedded live tour fails to load within 12 seconds"],
+      "display_px": [1200],
+      "export_px": [1200, 2400],
+      "aspect": "16:9",
+      "generate_at_px": 2048,
+      "transparent": false,
+      "color_variants": [{ "name": "dark", "hex": "#0A0A0B", "context": "fills the player viewport behind the fallback message" }],
+      "prompt": "A wide 16:9 opaque abstract plate suggesting a darkened panoramic interior, heavily stylised, not photographic. Deep near-black base #0A0A0B with a wine-crimson radial bloom entering from the upper-left (#7F141A fading out across the upper third) and a darker crimson pool in the lower right. Over it, a very subtle geometric suggestion of architectural space: a few long straight perspective lines converging toward a vanishing point left of centre, drawn at very low opacity in warm white, plus a fine dot texture across the whole frame. Extremely restrained — the message text sits on top of this, so nothing may compete with it. No people, no furniture, no recognisable building, no text, no UI, no logos. Flat graphic treatment.",
+      "negative_prompt": "photorealistic interior, furniture, people, windows with view, text, UI overlay, buttons, loading spinner, watermark, bright areas, high contrast detail, transparent background",
+      "notes": "Only ever seen when the live embed fails. Keep it quiet — the fallback's job is the message and the link, not the artwork."
+    }
+  ],
+
+  "generation_order": [
+    "1. arrow-right (both variants) — sets the stroke weight everyone else matches",
+    "2. check, sparkle, chart-line — the remaining small crimson glyphs",
+    "3. map-pin, mail, clock, whatsapp — contact tiles, two colour variants each",
+    "4. camera-360, ai-train, go-live — the three rail nodes, white on dark, judged as a trio",
+    "5. drag-pan, socials — low-traffic finishers",
+    "6. brand-mark-crimson, brand-mark-white, favicon, apple-touch-icon, og-image — brand layer, hardest to change later",
+    "7. sector-* and the big graphics — only after the design change that would use them is approved"
+  ],
+  "variant_placeholder": "{{HEX}} in a prompt means: substitute the hex from the colour variant you are currently generating, and generate that prompt once per variant."
+}
