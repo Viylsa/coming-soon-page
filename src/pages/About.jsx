@@ -2,6 +2,7 @@ import React from 'react';
 import Nav from '../components/Nav.jsx';
 import FooterCTA from '../components/FooterCTA.jsx';
 import { IconArrowRight, IconLinkedIn, IconWhatsApp, IconMail } from '../icons.jsx';
+import useSpotlight from '../useSpotlight.js';
 
 /* ---------------------------------------------------------------------------
    EDIT THIS BLOCK — everything the founders have to supply lives here.
@@ -153,6 +154,7 @@ function FounderCard({ f }) {
 }
 
 export default function About() {
+  const spotlight = useSpotlight();
   return (
     <>
       <a className="v-skip" href="#main">Skip to content</a>
@@ -160,9 +162,18 @@ export default function About() {
 
       <main id="main">
         {/* ---------- Hero ---------- */}
-        <header id="top" className="va-hero">
+        {/* Grain + cursor spotlight reuse the homepage hero's own classes, so
+            there is one definition of that texture rather than a copy that
+            drifts. See src/useSpotlight.js. */}
+        <header
+          id="top"
+          className="va-hero"
+          ref={spotlight.ref}
+          onMouseMove={spotlight.onMouseMove}
+        >
           <div className="va-hero__glow" aria-hidden="true"></div>
-          <div className="va-hero__grain" aria-hidden="true"></div>
+          <div className="v-hero__grain" aria-hidden="true"></div>
+          <div className="v-hero__grain-spot" aria-hidden="true"></div>
           <div className="v-wrap va-hero__inner">
             <h1 className="va-hero__h">
               Built in Islamabad,<br/>

@@ -32,11 +32,8 @@
   pointer-events: none;
   filter: blur(8px);
 }
-.va-hero__grain {
-  position: absolute; inset: 0; pointer-events: none;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 3px 3px;
-}
+/* The grain and its cursor spotlight are .v-hero__grain / .v-hero__grain-spot
+   from styles.css, reused verbatim rather than copied here. */
 .va-hero__inner { position: relative; z-index: 1; }
 .va-hero__h {
   font-family: var(--font-display);

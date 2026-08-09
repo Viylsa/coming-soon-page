@@ -376,8 +376,9 @@ input:focus-visible, textarea:focus-visible {
   pointer-events: none;
   opacity: 0.55;
 }
-/* Crimson copy of the grain, revealed through a soft radial mask that
-   follows the cursor (--mx/--my set from Hero.jsx). Hover devices only. */
+/* Crimson copy of the grain, revealed through a soft radial mask that follows
+   the cursor (--mx/--my set by useSpotlight.js, used by both hero components).
+   Hover devices only. */
 .v-hero__grain-spot {
   position: absolute; inset: 0;
   background-image: radial-gradient(rgba(232, 154, 160, 0.8) 1px, transparent 1px);
@@ -389,7 +390,8 @@ input:focus-visible, textarea:focus-visible {
   mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), black 0%, rgba(0,0,0,0.35) 50%, transparent 78%);
 }
 @media (hover: hover) and (pointer: fine) {
-  .v-hero:hover .v-hero__grain-spot { opacity: 1; }
+  .v-hero:hover .v-hero__grain-spot,
+  .va-hero:hover .v-hero__grain-spot { opacity: 1; }
 }
 .v-hero__inner {
   position: relative; z-index: 2;

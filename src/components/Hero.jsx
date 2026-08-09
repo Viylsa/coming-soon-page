@@ -1,5 +1,5 @@
-import { useRef } from 'react';
 import { IconArrowRight } from '../icons.jsx';
+import useSpotlight from '../useSpotlight.js';
 
 /* Type-led editorial hero — the brand carries it, centred. Deep ink, a soft
    crimson glow + film grain, big type; a small eyebrow + live trust line add
@@ -10,31 +10,12 @@ import { IconArrowRight } from '../icons.jsx';
 const VENUES = ['Universities', 'Hotels', 'Hospitals', 'Event halls', 'Real estate', 'Showrooms', 'Restaurants', 'Schools'];
 
 function Hero() {
-  const heroRef = useRef(null);
-  const raf = useRef(0);
-  const pos = useRef({ x: 0, y: 0 });
-  // Only fine pointers get the cursor-following grain spotlight — no work on
-  // touch — and updates are coalesced to one per animation frame (the old code
-  // wrote two CSS vars + read layout on every mousemove event: an INP risk).
-  const fine = useRef(typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches);
-
-  const handleMouseMove = (e) => {
-    if (!fine.current) return;
-    pos.current.x = e.clientX;
-    pos.current.y = e.clientY;
-    if (raf.current) return;
-    raf.current = requestAnimationFrame(() => {
-      raf.current = 0;
-      const el = heroRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      el.style.setProperty('--mx', `${pos.current.x - rect.left}px`);
-      el.style.setProperty('--my', `${pos.current.y - rect.top}px`);
-    });
-  };
+  // Cursor-following grain spotlight — see src/useSpotlight.js. Shared with the
+  // About hero so the two openings stay identical.
+  const spotlight = useSpotlight();
 
   return (
-    <header id="top" className="v-hero" ref={heroRef} onMouseMove={handleMouseMove}>
+    <header id="top" className="v-hero" ref={spotlight.ref} onMouseMove={spotlight.onMouseMove}>
       <div className="v-hero__glow" aria-hidden="true"/>
       <div className="v-hero__grain" aria-hidden="true"/>
       <div className="v-hero__grain-spot" aria-hidden="true"/>
