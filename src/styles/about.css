@@ -6,21 +6,36 @@
    ============================================================= */
 
 /* ---------- Hero ---------- */
-/* The homepage hero is a full-height statement. This one is deliberately
-   shorter: an About page's job is to get you reading, not to re-pitch. */
+/* Full-screen, like the homepage hero: same svh-first height rule (svh keeps
+   the whole hero inside the visible area while a mobile toolbar is showing,
+   with vh as the fallback), same vertical centring, same grain + crimson glow.
+   The two page openings should feel like one site. */
 .va-hero {
   position: relative;
-  background: var(--dark-bg);
+  background:
+    radial-gradient(110% 90% at 50% 115%, #2A0C10 0%, rgba(42, 12, 16, 0) 60%),
+    var(--dark-bg);
   color: var(--dark-fg);
-  padding: calc(var(--pad-dark) + 64px) 0 var(--pad-dark);
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  /* Top padding clears the floating nav (~88px). */
+  padding: clamp(88px, 11vw, 118px) 0 clamp(56px, 8vw, 88px);
   overflow: hidden;
   isolation: isolate;
 }
 .va-hero__glow {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(90% 70% at 12% -10%, rgba(127, 20, 26, 0.55) 0%, rgba(127, 20, 26, 0) 60%),
-    radial-gradient(70% 90% at 100% 110%, rgba(63, 8, 14, 0.9) 0%, rgba(10, 10, 11, 0) 62%);
+  position: absolute; left: 50%; bottom: -38%;
+  width: min(1100px, 130vw); aspect-ratio: 1.6;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(127, 20, 26, 0.42) 0%, rgba(127, 20, 26, 0.10) 45%, transparent 70%);
+  pointer-events: none;
+  filter: blur(8px);
+}
+.va-hero__grain {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 3px 3px;
 }
 .va-hero__inner { position: relative; z-index: 1; }
 .va-hero__h {
@@ -29,7 +44,7 @@
   line-height: var(--lh-tight);
   letter-spacing: var(--tracking-tight);
   font-weight: 500;
-  margin: 14px 0 0;
+  margin: 0;
   color: #fff;
   max-width: 20ch;
 }
@@ -54,6 +69,31 @@
   font-size: 10.5px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
   color: rgba(255, 255, 255, 0.42);
   margin-bottom: 4px;
+}
+
+/* ── Hero load entrance ──
+   Mirrors the homepage rule exactly, including why the headline is excluded:
+   it is the LCP element, and transform/opacity-animating it defers its settled
+   paint until the animation ends. The lines around it rise into it instead.
+   Gated behind html.v-js so a failed bundle can never leave content hidden;
+   neutralised under reduced motion at the foot of this file. */
+@keyframes va-hero-rise { from { transform: translateY(15px); } to { transform: translateY(0); } }
+html.v-js .va-hero__lede { animation: va-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.28s; }
+html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.40s; }
+
+/* The glow drifts off as you scroll away, same as the homepage. Progressive
+   enhancement: ignored where scroll-linked animation is unsupported. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .va-hero__glow {
+      animation: va-glow-exit linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 92vh;
+    }
+    @keyframes va-glow-exit {
+      to { transform: translateX(-50%) translateY(-70px); opacity: 0.28; }
+    }
+  }
 }
 
 /* ---------- Story ---------- */
@@ -295,8 +335,13 @@
   .va-founders__note { max-width: none; }
   .va-cta__inner { flex-direction: column; align-items: flex-start; }
 }
+/* !important so it wins over the html.v-js-gated entrance rules above, which
+   carry higher specificity — same pattern as the homepage's reduced-motion block. */
+@media (prefers-reduced-motion: reduce) {
+  .va-hero__lede, .va-hero__meta { animation: none !important; transform: none !important; }
+}
+
 @media (max-width: 620px) {
-  .va-hero { padding-top: calc(var(--pad-dark) + 48px); }
   .va-hero__meta { gap: 18px 28px; }
   /* Number moves above the heading — a 96px column is dead weight at this width */
   .va-chapter { grid-template-columns: 1fr; gap: 10px; }

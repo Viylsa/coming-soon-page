@@ -36,10 +36,9 @@
   <!--
     Person entities carry the founders as real, linkable identities rather than
     bare name strings — the entity signal a new domain needs, and the same
-    sameAs play already used for the Organization. When each founder supplies a
-    LinkedIn (and GitHub where relevant), add it to that Person's "sameAs" here
-    AND to the matching entry in src/pages/About.jsx so the page and the markup
-    never disagree.
+    sameAs play already used for the Organization. Each Person's "sameAs" must
+    stay in step with the matching entry in src/pages/About.jsx, so the markup
+    and the visible links never disagree.
   -->
   <script type="application/ld+json">
   {
@@ -88,7 +87,11 @@
         "name": "Aleena Tahir",
         "jobTitle": "Co-Founder & CEO",
         "worksFor": { "@id": "https://www.viylsa.app/#org" },
-        "mainEntityOfPage": { "@id": "https://www.viylsa.app/about.html#webpage" }
+        "mainEntityOfPage": { "@id": "https://www.viylsa.app/about.html#webpage" },
+        "sameAs": [
+          "https://www.linkedin.com/in/aleenatahir/",
+          "https://github.com/AleenaTahir1"
+        ]
       },
       {
         "@type": "Person",
@@ -98,6 +101,7 @@
         "worksFor": { "@id": "https://www.viylsa.app/#org" },
         "mainEntityOfPage": { "@id": "https://www.viylsa.app/about.html#webpage" },
         "sameAs": [
+          "https://www.linkedin.com/in/saqlainrazee/",
           "https://github.com/Razee4315"
         ]
       },
@@ -107,7 +111,11 @@
         "name": "Aena Habib",
         "jobTitle": "Co-Founder & CMO",
         "worksFor": { "@id": "https://www.viylsa.app/#org" },
-        "mainEntityOfPage": { "@id": "https://www.viylsa.app/about.html#webpage" }
+        "mainEntityOfPage": { "@id": "https://www.viylsa.app/about.html#webpage" },
+        "sameAs": [
+          "https://www.linkedin.com/in/aena-habib-260947354/",
+          "https://github.com/EN-AenaHabib"
+        ]
       }
     ]
   }

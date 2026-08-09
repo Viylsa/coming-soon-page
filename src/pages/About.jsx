@@ -24,27 +24,27 @@ const FOUNDERS = [
     role: 'Co-Founder & CEO',
     initial: 'AT',
     photo: '',
-    linkedin: '',
-    github: '',
-    bio: 'Runs the client side of VIYLSA end to end — the first call, the walkthrough of your venue, the scope and the fixed quote that follows it. She is on the shoot, and she is who you reach after launch.',
+    linkedin: 'https://www.linkedin.com/in/aleenatahir/',
+    github: 'https://github.com/AleenaTahir1',
+    bio: 'Runs the client side of VIYLSA end to end: the first call, the walkthrough of your venue, the scope, and the fixed quote that follows it. She is on the shoot, and she is who you reach after launch.',
   },
   {
     name: 'Saqlain Abbas',
     role: 'Co-Founder & CTO',
     initial: 'SA',
     photo: '',
-    linkedin: '',
+    linkedin: 'https://www.linkedin.com/in/saqlainrazee/',
     github: 'https://github.com/Razee4315',
-    bio: 'Builds the tour player, the bilingual AI guide and the analytics behind them. Everything that happens after the camera is packed away — stitching, hotspots, training the guide on your documents, the dashboard — is his.',
+    bio: 'Builds the tour player, the bilingual AI guide and the analytics behind them. Everything that happens after the camera is packed away is his: stitching, hotspots, training the guide on your documents, and the dashboard.',
   },
   {
     name: 'Aena Habib',
     role: 'Co-Founder & CMO',
     initial: 'AH',
     photo: '',
-    linkedin: '',
-    github: '',
-    bio: 'Shapes how a tour is presented once it goes live — the loading screen, the brand fit, the story a venue tells its visitors, and how it reaches them on WhatsApp, search and social.',
+    linkedin: 'https://www.linkedin.com/in/aena-habib-260947354/',
+    github: 'https://github.com/EN-AenaHabib',
+    bio: 'Shapes how a tour is presented once it goes live: the loading screen, the brand fit, the story a venue tells its visitors, and how it reaches them on WhatsApp, search and social.',
   },
 ];
 
@@ -67,12 +67,12 @@ const PRINCIPLES = [
   {
     n: '01',
     h: 'The people who sell it, shoot it.',
-    p: 'There is no account layer between you and the work. The person who scopes your venue is holding the camera on the day and answering your message six months later.',
+    p: 'There is no account layer between you and the work. The person who scopes your venue is holding the camera on the day, and answering your message six months later.',
   },
   {
     n: '02',
     h: 'A fixed price before we shoot.',
-    p: 'Every venue is different, so every tour is quoted to the space. You get that number after one call and before anyone turns up — not as a surprise at the end.',
+    p: 'Every venue is different, so every tour is quoted to the space. You get that number after one call and before anyone turns up, never as a surprise at the end.',
   },
   {
     n: '03',
@@ -135,24 +135,24 @@ export default function About() {
 
       <main id="main">
         {/* ---------- Hero ---------- */}
-        <header className="va-hero">
+        <header id="top" className="va-hero">
           <div className="va-hero__glow" aria-hidden="true"></div>
+          <div className="va-hero__grain" aria-hidden="true"></div>
           <div className="v-wrap va-hero__inner">
-            <div className="v-eyebrow v-eyebrow--onband">About VIYLSA</div>
             <h1 className="va-hero__h">
               Three founders in Islamabad,<br/>
               bringing venues <span className="v-serif v-serif--onband">online.</span>
             </h1>
             <p className="va-hero__lede">
               VIYLSA turns universities, hotels, hospitals, real estate and showrooms
-              into 360° virtual tours — each one with a built-in AI guide that answers
+              into 360° virtual tours, each one with a built-in AI guide that answers
               visitors in English and Urdu, captures enquiries, and shows you exactly
               who came and what they cared about.
             </p>
             <div className="va-hero__meta">
               <div><span className="va-hero__k">Based in</span> Islamabad &amp; Rawalpindi</div>
-              <div><span className="va-hero__k">Founded by</span> Three co-founders</div>
-              <div><span className="va-hero__k">Live product</span> A real client tour, embedded</div>
+              <div><span className="va-hero__k">Started as</span> An ICAT project</div>
+              <div><span className="va-hero__k">Backed by</span> Ourselves, so far</div>
             </div>
           </div>
         </header>
@@ -171,19 +171,26 @@ export default function About() {
               <article className="va-chapter" data-reveal>
                 <span className="va-chapter__n" aria-hidden="true">01</span>
                 <div className="va-chapter__body">
-                  <h3 className="va-chapter__h">We kept noticing the same blind spot.</h3>
+                  <h3 className="va-chapter__h">It began as a project, not a company.</h3>
                   <p>
-                    A walk-in is a black box. Someone visits your campus, your hotel, your
-                    showroom — they look around, they leave, and you never learn their name,
-                    the path they took, or the question they were about to ask. Meanwhile
-                    almost everyone now decides whether a place is worth visiting from their
-                    phone, hours or weeks before they turn up at the gate.
+                    VIYLSA started at ICAT. We had an idea we wanted to build properly, so
+                    we picked one: a virtual tour of a university campus. None of us set out
+                    to start a business. We set out to make the thing work.
                   </p>
                   <p>
-                    The tools most venues had for that first impression were a photo gallery
-                    and a phone number that only works between nine and six. A wide-angle
-                    lens makes a small room look palatial; a closed office makes an
-                    interested visitor go somewhere else.
+                    Building it taught us the craft the hard way. How to shoot a space so it
+                    reads honestly. How to link scenes so walking through them feels like
+                    walking through the building. How much of a visitor's question a tour can
+                    answer on its own, and where it still needs someone to speak up.
+                  </p>
+                  <p>
+                    Somewhere in that work the real discovery arrived, and it was not
+                    technical. Almost every venue around us had the same gap: people decide
+                    whether a place is worth visiting from their phone, long before they turn
+                    up at the gate, and almost nobody was giving them anything to decide
+                    with. A photo gallery and a phone number that only works between nine and
+                    six. We had just built the missing piece by accident, and we knew we
+                    could build it for anyone.
                   </p>
                 </div>
               </article>
@@ -191,23 +198,21 @@ export default function About() {
               <article className="va-chapter" data-reveal>
                 <span className="va-chapter__n" aria-hidden="true">02</span>
                 <div className="va-chapter__body">
-                  <h3 className="va-chapter__h">So we built the first one, properly.</h3>
+                  <h3 className="va-chapter__h">We won ICAT, and then we tested it on strangers.</h3>
                   <p>
-                    Our first full build was a university campus in Islamabad: fourteen
-                    panoramic scenes, twenty-eight interactive hotspots, three buildings
-                    linked so you can walk between them the way you would in person — with
-                    an AI guide trained on the campus's own material, answering in English
-                    and Urdu.
+                    The project won. That was the first signal that we were not the only
+                    people who found this interesting.
                   </p>
                   <p>
-                    It is still live, and it is embedded on our homepage rather than filmed
-                    for a showreel. That was deliberate. A new company asking a venue to
-                    trust it with its front door should be able to hand over the real thing
-                    and let it be judged.
+                    The second signal mattered more. We started showing the tour to friends,
+                    then to their friends, then to people who had no reason to be kind to us.
+                    The reaction kept coming back the same way, from people who owed us
+                    nothing. That is a different kind of feedback from a grade, and it is the
+                    one that made us take the idea seriously.
                   </p>
                   <p className="va-chapter__link">
                     <a href="/#live-tour" className="v-btn v-btn--link">
-                      See the live tour on the homepage <IconArrowRight size={15}/>
+                      See that tour, still live, on the homepage <IconArrowRight size={15}/>
                     </a>
                   </p>
                 </div>
@@ -216,17 +221,41 @@ export default function About() {
               <article className="va-chapter" data-reveal>
                 <span className="va-chapter__n" aria-hidden="true">03</span>
                 <div className="va-chapter__body">
-                  <h3 className="va-chapter__h">Now we're doing it for a first group of venues.</h3>
+                  <h3 className="va-chapter__h">Then we said it out loud, in front of experts.</h3>
                   <p>
-                    VIYLSA is taking on a small number of founding venues: locked-in early
-                    pricing, priority shooting dates, and a tour built hand-in-hand with the
-                    founders who stay on call after launch. Small enough that every venue
-                    gets all three of us; deliberately so.
+                    We took VIYLSA to NEIC and pitched it to a panel of judges and industry
+                    experts. Standing in front of people whose job is to find the hole in
+                    your reasoning forces a certain honesty: what exactly is the product, who
+                    exactly pays for it, and why now.
                   </p>
                   <p>
-                    The name is the whole promise. Bringing visits online — making the first
-                    visit to a place something that can happen from a phone in Lahore or a
-                    laptop abroad, and still be walkable, answerable and measurable.
+                    We were selected. What we walked away with was worth more than the
+                    result, which was the confidence that this holds up outside the room we
+                    built it in.
+                  </p>
+                </div>
+              </article>
+
+              <article className="va-chapter" data-reveal>
+                <span className="va-chapter__n" aria-hidden="true">04</span>
+                <div className="va-chapter__body">
+                  <h3 className="va-chapter__h">Now we're bootstrapping it, on our own money.</h3>
+                  <p>
+                    VIYLSA is self-funded. Every rupee that has gone into the hardware came
+                    out of our own pockets, deliberately, because we would rather own the
+                    decisions while the product is still finding its shape.
+                  </p>
+                  <p>
+                    So we are doing the unglamorous version: buying the kit, shooting the
+                    venues ourselves, and taking on a first group of founding businesses at
+                    locked-in early pricing. Small enough that every venue gets all three of
+                    us on it.
+                  </p>
+                  <p>
+                    The name is the whole promise. Bringing visits online, so that the first
+                    visit to a place can happen from a phone in Lahore or a laptop abroad and
+                    still be walkable, answerable and measurable. We want to build that for
+                    businesses right across Pakistan.
                   </p>
                 </div>
               </article>
@@ -330,7 +359,7 @@ export default function About() {
               <h2 className="va-cta__h">Let's bring your space <span className="v-serif v-serif--onband">online.</span></h2>
               <p className="va-cta__p">
                 Tell us about your venue and we'll show you what it looks like as a
-                360° tour — and exactly what it takes to get there.
+                360° tour, and exactly what it takes to get there.
               </p>
             </div>
             <div className="va-cta__actions">
