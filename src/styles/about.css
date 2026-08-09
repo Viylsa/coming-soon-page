@@ -171,13 +171,6 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
 }
 
 /* ---------- Founders ---------- */
-.va-founders__note {
-  font-size: var(--fs-body-sm);
-  color: var(--fg-muted);
-  max-width: 34ch;
-  line-height: var(--lh-normal);
-  margin: 0;
-}
 .va-founders {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -332,7 +325,6 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
   .va-founders { grid-template-columns: 1fr; }
   .va-principles { grid-template-columns: 1fr; gap: 26px; }
   .va-facts { grid-template-columns: repeat(2, 1fr); }
-  .va-founders__note { max-width: none; }
   .va-cta__inner { flex-direction: column; align-items: flex-start; }
 }
 /* !important so it wins over the html.v-js-gated entrance rules above, which

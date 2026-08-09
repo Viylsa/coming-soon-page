@@ -67,7 +67,7 @@ const PRINCIPLES = [
   {
     n: '01',
     h: 'The people who sell it, shoot it.',
-    p: 'There is no account layer between you and the work. The person who scopes your venue is holding the camera on the day, and answering your message six months later.',
+    p: 'The person who scopes your venue is holding the camera on the day, and answering your message six months later. You deal with the same faces from the first call onward.',
   },
   {
     n: '02',
@@ -296,11 +296,6 @@ export default function About() {
                 <div className="v-eyebrow">The founders</div>
                 <h2 className="v-h2">The three people who <span className="v-serif">turn up.</span></h2>
               </div>
-              <p className="va-founders__note">
-                No account managers, no subcontracted crew. The same three people
-                scope the venue, shoot it, train the AI guide and answer you after
-                launch.
-              </p>
             </div>
             <div className="va-founders" data-reveal-group>
               {FOUNDERS.map((f) => <FounderCard f={f} key={f.name}/>)}
