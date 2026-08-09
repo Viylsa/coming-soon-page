@@ -12,7 +12,13 @@ const LINKS = [
   ['Contact', '#contact'],
 ];
 
-function Nav() {
+/* `base` prefixes every in-page href so the same nav serves a sub-page. On the
+   homepage it stays '' and the links are plain fragments (smooth-scrolled by
+   motion.js, which only intercepts href^="#"). On /about.html it is '/', so the
+   links become '/#pricing' and navigate home first. The scrollspy below still
+   queries the bare fragment, finds nothing off-homepage, and bails — which is
+   exactly right: no section here, no indicator. */
+function Nav({ base = '' }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false); // mobile drawer
   const [activeHref, setActiveHref] = React.useState(null);
@@ -82,7 +88,7 @@ function Nav() {
   return (
     <nav className={'v-nav' + (scrolled ? ' v-nav--scrolled' : '')}>
       <div className="v-nav__pill">
-        <a href="#top" className="v-nav__brand">
+        <a href={base + '#top'} className="v-nav__brand">
           <img src="/assets/viylsa-mark-sm.png" alt="" className="v-nav__mark" width="256" height="247"/>
           <span className="v-nav__brand-name">VIYLSA</span>
         </a>
@@ -98,13 +104,13 @@ function Nav() {
           />
           {LINKS.map(([l, h]) => (
             <li key={l}>
-              <a href={h} aria-current={h === activeHref ? 'true' : undefined} onMouseEnter={onEnter}>{l}</a>
+              <a href={base + h} aria-current={h === activeHref ? 'true' : undefined} onMouseEnter={onEnter}>{l}</a>
             </li>
           ))}
         </ul>
 
         <div className="v-nav__cta">
-          <a href="#contact" className="v-btn v-btn--primary v-btn--sm">
+          <a href={base + '#contact'} className="v-btn v-btn--primary v-btn--sm">
             Book a demo <IconArrowRight size={16}/>
           </a>
           <button
@@ -123,14 +129,14 @@ function Nav() {
         <ul className="v-nav__drawer-links">
           {LINKS.map(([l, h], i) => (
             <li key={l} style={{ transitionDelay: open ? (60 + i * 50) + 'ms' : '0ms' }}>
-              <a href={h} onClick={() => setOpen(false)}>
+              <a href={base + h} onClick={() => setOpen(false)}>
                 <span className="v-nav__drawer-num">0{i + 1}</span> {l}
               </a>
             </li>
           ))}
         </ul>
         <div className="v-nav__drawer-cta">
-          <a href="#contact" className="v-btn v-btn--primary v-btn--lg" onClick={() => setOpen(false)}>
+          <a href={base + '#contact'} className="v-btn v-btn--primary v-btn--lg" onClick={() => setOpen(false)}>
             Book a demo <IconArrowRight size={16}/>
           </a>
         </div>

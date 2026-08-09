@@ -1,12 +1,16 @@
 import { IconFacebook, IconLinkedIn, IconInstagram } from '../icons.jsx';
 
-function FooterCTA() {
+/* `base` prefixes the in-page fragments so this footer also serves sub-pages —
+   see the note in Nav.jsx. "Back to top" stays a bare '#top': with no element
+   of that id, browsers special-case the fragment and scroll to the document
+   top, which is what it should do on every page. */
+function FooterCTA({ base = '' }) {
   return (
     <>
       <footer className="v-footer">
         <div className="v-wrap v-footer__inner">
             <div className="v-footer__brand">
-            <a href="#top" className="v-footer__brand-link"><img src="/assets/viylsa-mark-white-sm.png" alt="" className="v-footer__mark" width="256" height="247" loading="lazy"/>
+            <a href={base ? '/' : '#top'} className="v-footer__brand-link"><img src="/assets/viylsa-mark-white-sm.png" alt="" className="v-footer__mark" width="256" height="247" loading="lazy"/>
             <div>
               <div className="v-footer__name">VIYLSA</div>
               <div className="v-footer__tag">Bringing visits online.</div>
@@ -15,11 +19,11 @@ function FooterCTA() {
           <div className="v-footer__cols">
             <div>
               <div className="v-footer__col-h">Product</div>
-              <a href="#live-tour">Live tour</a><a href="#analytics">What you get back</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+              <a href={base + '#live-tour'}>Live tour</a><a href={base + '#analytics'}>What you get back</a><a href={base + '#how'}>How it works</a><a href={base + '#pricing'}>Pricing</a><a href={base + '#faq'}>FAQ</a>
             </div>
             <div>
               <div className="v-footer__col-h">Company</div>
-              <a href="/about.html">About</a><a href="/virtual-tours-islamabad.html">Virtual tours in Islamabad</a><a href="#founding">Founding venues</a><a href="#team">Team</a><a href="#contact">Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
+              <a href="/about.html">About</a><a href="/virtual-tours-islamabad.html">Virtual tours in Islamabad</a><a href={base + '#founding'}>Founding venues</a><a href={base + '#team'}>Team</a><a href={base + '#contact'}>Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
             </div>
             <div>
               <div className="v-footer__col-h">Get in touch</div>
