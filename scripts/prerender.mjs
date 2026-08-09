@@ -66,6 +66,22 @@ try {
       document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-in'));
     });
 
+    // Strip the section-stacking state before snapshotting. It is measured
+    // against THIS viewport (1280×1800), so baking it in would ship pin
+    // positions computed for a window nobody is using — and html.v-stack in the
+    // static HTML would turn sticky on for a no-JS visitor with no measurements
+    // at all, collapsing every --stack-top to 0 and pinning tall sections by
+    // their top with the rest unreachable. stackSections.js re-adds all of it on
+    // load, correctly, for the real viewport.
+    await page.evaluate(() => {
+      document.documentElement.classList.remove('v-stack');
+      document.querySelectorAll('[style]').forEach((el) => {
+        el.style.removeProperty('--stack-top');
+        el.style.removeProperty('--seam');
+        if (!el.getAttribute('style')) el.removeAttribute('style');
+      });
+    });
+
     const rendered = await page.evaluate(() => document.documentElement.outerHTML);
 
     // Preload the LCP headline fonts (Playfair Display latin upright + italic

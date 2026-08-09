@@ -82,27 +82,44 @@
     if (!frame) frame = requestAnimationFrame(measure);
   }
 
-  function init() {
-    // This module is imported before createRoot().render(), so on first run
-    // #main does not exist yet — React has not painted it. Same reason motion.js
-    // re-queries instead of grabbing nodes once at import time.
-    const main = document.getElementById('main');
-    if (!main) return false;
+  let mainEl = null;
+  let ro = null;
 
-    items = Array.from(main.children);
-    if (items.length < 2) return false;
+  /* Have the nodes we measured been thrown away?
+   *
+   * This is not hypothetical. The prerendered HTML already contains a full
+   * #main, so on a real visit this module finds it and measures it at import
+   * time — and then createRoot().render() (NOT hydrate) discards that entire
+   * tree and builds a fresh one. Every element we measured is detached, our
+   * ResizeObserver is watching orphans, and the live sections have no
+   * --stack-top at all, so they all fall back to top:0. That is precisely the
+   * broken case this module exists to avoid: tall sections pinned by the top
+   * with their lower half unreachable. It shipped to production exactly once. */
+  function isStale() {
+    const m = document.getElementById('main');
+    if (!m || m !== mainEl) return true;
+    if (items.length !== m.children.length) return true;
+    return items.length > 0 && !items[0].isConnected;
+  }
+
+  function init() {
+    const m = document.getElementById('main');
+    if (!m) return false;
+
+    const kids = Array.from(m.children);
+    if (kids.length < 2) return false;
+
+    if (ro) ro.disconnect();
+    mainEl = m;
+    items = kids;
 
     measure();
     document.documentElement.classList.add('v-stack');
 
     if ('ResizeObserver' in window) {
-      const ro = new ResizeObserver(schedule);
+      ro = new ResizeObserver(schedule);
       items.forEach((el) => ro.observe(el));
     }
-    window.addEventListener('resize', schedule, { passive: true });
-    window.addEventListener('scroll', onScroll, { passive: true });
-    seam();
-    interceptAnchors(main);
     return true;
   }
 
@@ -146,7 +163,7 @@
    * and scroll there, honouring the target's own scroll-margin-top (90px, which
    * clears the floating nav).
    */
-  function interceptAnchors(main) {
+  function interceptAnchors() {
     document.addEventListener('click', (e) => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const a = e.target.closest && e.target.closest('a[href^="#"]');
@@ -154,7 +171,9 @@
       const id = a.getAttribute('href').slice(1);
       if (!id) return;
       const el = document.getElementById(id);
-      if (!el || !main.contains(el)) return;
+      // Resolved at click time, not captured at init: #main is replaced when
+      // React renders over the prerendered tree.
+      if (!el || !mainEl || !mainEl.contains(el)) return;
 
       const flowTop = flowTopOf(el);
       if (flowTop == null) return;   // not in a stacked section: let the browser do it
@@ -168,10 +187,21 @@
     });
   }
 
-  if (!init()) {
-    const mo = new MutationObserver(() => {
-      if (init()) mo.disconnect();
-    });
-    mo.observe(document.documentElement, { childList: true, subtree: true });
-  }
+  // Registered once, never torn down: they read `items` at call time, so they
+  // keep working across a re-init.
+  window.addEventListener('resize', schedule, { passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  interceptAnchors();
+
+  init();
+
+  /* Stays connected for the life of the page rather than disconnecting on first
+   * success. #main arrives late on a fresh render, and is REPLACED on a
+   * prerendered one — so "it worked once" is not the end of the story. The
+   * staleness check is a getElementById and two property reads, cheap enough to
+   * run on a mutation batch. */
+  const mo = new MutationObserver(() => {
+    if (isStale()) init();
+  });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
 })();
