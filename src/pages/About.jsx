@@ -1,3 +1,4 @@
+import React from 'react';
 import Nav from '../components/Nav.jsx';
 import FooterCTA from '../components/FooterCTA.jsx';
 import { IconArrowRight, IconLinkedIn, IconWhatsApp, IconMail } from '../icons.jsx';
@@ -5,18 +6,22 @@ import { IconArrowRight, IconLinkedIn, IconWhatsApp, IconMail } from '../icons.j
 /* ---------------------------------------------------------------------------
    EDIT THIS BLOCK — everything the founders have to supply lives here.
 
-   Nothing below invents biography. Roles, the story beats and the numbers are
-   all things the site already states or the live NUTECH tour already proves.
-   The three fields that are intentionally blank (photo, linkedin, github) are
-   the ones only you can fill; each renders gracefully while empty:
+   Nothing below invents biography, and nothing claims work VIYLSA has not done
+   yet. There are no clients on the books, so no bio may describe running one.
 
-     photo    ''  -> the monogram avatar renders instead (looks deliberate)
+   Fields, and how each behaves while empty:
+
+     photo    ''  -> the monogram avatar renders instead (looks deliberate).
+                     A path that 404s falls back to the monogram too, so it is
+                     safe to set this before the file is in the repo.
+     photoPos ''  -> CSS object-position for the 4:5 crop, e.g. 'center 34%'.
+                     Use it when a face sits high or low in the frame.
      linkedin ''  -> that link is simply not rendered
      github   ''  -> same
 
-   Drop portraits in public/assets/team/ and set `photo` to e.g.
-   '/assets/team/aleena.jpg'. Shoot all three the same way — same wall, same
-   light, same crop, 4:5 portrait, 1200×1500 or better.
+   Portraits go in public/assets/team/ as <firstname>.jpg. Shoot all three the
+   same way where you can (same light, same crop, 4:5, 1200x1500 or better);
+   where you cannot, photoPos is there to rescue the framing.
 --------------------------------------------------------------------------- */
 const FOUNDERS = [
   {
@@ -25,19 +30,21 @@ const FOUNDERS = [
     tag: 'The brain of the operation.',
     initial: 'AT',
     photo: '',
+    photoPos: '',
     linkedin: 'https://www.linkedin.com/in/aleenatahir/',
     github: 'https://github.com/AleenaTahir1',
-    bio: 'Deep in the tech with Saqlain by morning, planning the next post with Aena by afternoon, and the reason both of them have something to do tomorrow. She also runs the client side end to end: the first call, the walkthrough of your venue, the scope, the fixed quote. Whatever the day happens to need, that is her job title.',
+    bio: 'Deep in the tech with Saqlain by morning, planning the next post with Aena by afternoon, and the reason both of them have something to do tomorrow. She carries the plan for where VIYLSA goes next, and a habit of picking up whichever role the week turns out to be missing.',
   },
   {
     name: 'Saqlain Abbas',
     role: 'Co-Founder & CTO',
-    tag: 'The resident philosopher.',
+    tag: 'The philosopher, allegedly.',
     initial: 'SA',
-    photo: '',
+    photo: '/assets/team/saqlain.jpg',
+    photoPos: 'center 34%',
     linkedin: 'https://www.linkedin.com/in/saqlainrazee/',
     github: 'https://github.com/Razee4315',
-    bio: 'Will argue anything from first principles, at length, with total conviction, and lose to Aleena in under a minute. Somewhere between the debates he builds the tour player, the bilingual AI guide and the analytics behind them. Knows every layer of the stack cold. The logic is a work in progress.',
+    bio: 'Will turn anything into a conversation about logic, and is the first to tell you he runs on the least of it. Self-declared resident ignoramus. Also the one who builds the tour player, the bilingual AI guide and the analytics behind them, and who knows every layer of the stack cold. The theory is negotiable. The code ships.',
   },
   {
     name: 'Aena Habib',
@@ -45,6 +52,7 @@ const FOUNDERS = [
     tag: 'The one with the ideas.',
     initial: 'AH',
     photo: '',
+    photoPos: '',
     linkedin: 'https://www.linkedin.com/in/aena-habib-260947354/',
     github: 'https://github.com/EN-AenaHabib',
     bio: 'Every post, every frame and every “what if we did it like this” starts with her, and her eye is the reason a VIYLSA tour looks like VIYLSA. Put her and Aleena on the same problem and something ships. They are best friends, which at work almost never survives contact, and here somehow keeps producing.',
@@ -95,11 +103,24 @@ const FACTS = [
 
 function FounderCard({ f }) {
   const hasLinks = f.linkedin || f.github;
+  // A missing, renamed or not-yet-added portrait falls back to the monogram
+  // rather than leaving a broken image on a live page. This is what makes it
+  // safe to point `photo` at a file before the file is in the repo.
+  const [imgFailed, setImgFailed] = React.useState(false);
+  const showPhoto = f.photo && !imgFailed;
   return (
     <article className="va-founder" data-reveal="scale">
       <div className="va-founder__portrait">
-        {f.photo ? (
-          <img src={f.photo} alt={f.name} width="600" height="750" loading="lazy" />
+        {showPhoto ? (
+          <img
+            src={f.photo}
+            alt={f.name}
+            width="600"
+            height="750"
+            loading="lazy"
+            style={f.photoPos ? { objectPosition: f.photoPos } : undefined}
+            onError={() => setImgFailed(true)}
+          />
         ) : (
           <span className="va-founder__monogram" aria-hidden="true">{f.initial}</span>
         )}
