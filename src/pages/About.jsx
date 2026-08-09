@@ -22,29 +22,32 @@ const FOUNDERS = [
   {
     name: 'Aleena Tahir',
     role: 'Co-Founder & CEO',
+    tag: 'The brain of the operation.',
     initial: 'AT',
     photo: '',
     linkedin: 'https://www.linkedin.com/in/aleenatahir/',
     github: 'https://github.com/AleenaTahir1',
-    bio: 'Runs the client side of VIYLSA end to end: the first call, the walkthrough of your venue, the scope, and the fixed quote that follows it. She is on the shoot, and she is who you reach after launch.',
+    bio: 'Deep in the tech with Saqlain by morning, planning the next post with Aena by afternoon, and the reason both of them have something to do tomorrow. She also runs the client side end to end: the first call, the walkthrough of your venue, the scope, the fixed quote. Whatever the day happens to need, that is her job title.',
   },
   {
     name: 'Saqlain Abbas',
     role: 'Co-Founder & CTO',
+    tag: 'The resident philosopher.',
     initial: 'SA',
     photo: '',
     linkedin: 'https://www.linkedin.com/in/saqlainrazee/',
     github: 'https://github.com/Razee4315',
-    bio: 'Builds the tour player, the bilingual AI guide and the analytics behind them. Everything that happens after the camera is packed away is his: stitching, hotspots, training the guide on your documents, and the dashboard.',
+    bio: 'Will argue anything from first principles, at length, with total conviction, and lose to Aleena in under a minute. Somewhere between the debates he builds the tour player, the bilingual AI guide and the analytics behind them. Knows every layer of the stack cold. The logic is a work in progress.',
   },
   {
     name: 'Aena Habib',
     role: 'Co-Founder & CMO',
+    tag: 'The one with the ideas.',
     initial: 'AH',
     photo: '',
     linkedin: 'https://www.linkedin.com/in/aena-habib-260947354/',
     github: 'https://github.com/EN-AenaHabib',
-    bio: 'Shapes how a tour is presented once it goes live: the loading screen, the brand fit, the story a venue tells its visitors, and how it reaches them on WhatsApp, search and social.',
+    bio: 'Every post, every frame and every “what if we did it like this” starts with her, and her eye is the reason a VIYLSA tour looks like VIYLSA. Put her and Aleena on the same problem and something ships. They are best friends, which at work almost never survives contact, and here somehow keeps producing.',
   },
 ];
 
@@ -103,6 +106,7 @@ function FounderCard({ f }) {
       </div>
       <div className="va-founder__name">{f.name}</div>
       <div className="va-founder__role">{f.role}</div>
+      {f.tag && <div className="va-founder__tag">{f.tag}</div>}
       <p className="va-founder__bio">{f.bio}</p>
       {hasLinks && (
         <div className="va-founder__links">

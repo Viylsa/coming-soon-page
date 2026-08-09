@@ -217,8 +217,19 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
   color: var(--viylsa-crimson);
   margin-top: 6px;
 }
+/* The epithet. Playfair italic is the brand's accent voice (it carries every
+   headline's emphasis), so it is what makes each card read as a person rather
+   than a job title. */
+.va-founder__tag {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: var(--lh-snug);
+  color: var(--viylsa-crimson);
+  margin-top: 10px;
+}
 .va-founder__bio {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   font-size: 14px; line-height: var(--lh-normal);
   color: var(--fg-soft);
 }
