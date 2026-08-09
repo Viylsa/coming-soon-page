@@ -55,6 +55,7 @@
       const top = Math.min(0, vh - el.offsetHeight);
       el.style.setProperty('--stack-top', Math.round(top) + 'px');
     }
+    seam();   // stick points just moved, so the lip progress is stale
   }
 
   /* Where would `el` be if nothing were pinned?
@@ -99,8 +100,37 @@
       items.forEach((el) => ro.observe(el));
     }
     window.addEventListener('resize', schedule, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    seam();
     interceptAnchors(main);
     return true;
+  }
+
+  /* Flatten each section's rounded lip as it arrives at its pinned position.
+   *
+   * A section held at the top of the viewport keeps its rounded top corners on
+   * screen for as long as it is pinned, and the previous section shows through
+   * them — two notches in the top corners for the whole time you are reading it.
+   * So the radius is driven by how far the section still has to travel: full
+   * radius while it is sliding up, zero the moment it locks.
+   *
+   * Cheap enough to run on scroll: one rAF per frame, eight rects, and the only
+   * writes are two custom properties that affect paint, not layout.
+   */
+  let seamFrame = 0;
+  function seam() {
+    seamFrame = 0;
+    const r = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stack-radius')) || 0;
+    if (!r) return;
+    for (const el of items) {
+      const stick = parseFloat(el.style.getPropertyValue('--stack-top')) || 0;
+      const travel = el.getBoundingClientRect().top - stick;   // 0 == pinned
+      const t = travel <= 0 ? 0 : travel >= r ? 1 : travel / r;
+      el.style.setProperty('--seam', t.toFixed(3));
+    }
+  }
+  function onScroll() {
+    if (!seamFrame) seamFrame = requestAnimationFrame(seam);
   }
 
   /* Anchor jumps have to be taken over once sections pin.

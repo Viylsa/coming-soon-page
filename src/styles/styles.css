@@ -354,8 +354,13 @@ input:focus-visible, textarea:focus-visible {
   /* Full-screen hero. svh (smallest viewport height) keeps the whole hero —
      marquee included — within the visible area even while a mobile toolbar is
      shown; the vh line is the fallback for browsers without svh. */
-  min-height: 100vh;
-  min-height: 100svh;
+  /* Full-screen hero, PLUS the seam depth. The next section overlaps upward by
+     --stack-radius, so without this the first thing on screen would be a strip
+     of the following section peeking in at the bottom of the very first
+     viewport. The extra height pushes that overlap exactly to the fold: the
+     first screen is pure hero, and the seam appears the moment you scroll. */
+  min-height: calc(100vh + var(--stack-radius));
+  min-height: calc(100svh + var(--stack-radius));
   display: flex; flex-direction: column;
   justify-content: center;
   /* Top padding clears the floating nav (~88px); bottom padding reserves room
@@ -708,13 +713,19 @@ input:focus-visible, textarea:focus-visible {
    so later siblings paint over earlier ones without creating a stacking context
    that would trap the glows and grains inside each section.
    ================================================== */
+/* --seam runs 1 (fully rounded, mid-slide) to 0 (flat, fully pinned).
+   stackSections.js drives it; it stays at 1 for anything that never pins, which
+   is the footer and every section when the stacking is off. Rounding away to
+   nothing on arrival is what stops the lip sitting on screen as a pair of
+   notches the whole time a section is held at the top of the viewport. */
 #main > * + *,
 .v-footer {
+  --seam: 1;
   position: relative;
-  border-top-left-radius: var(--stack-radius);
-  border-top-right-radius: var(--stack-radius);
+  border-top-left-radius: calc(var(--stack-radius) * var(--seam));
+  border-top-right-radius: calc(var(--stack-radius) * var(--seam));
   margin-top: calc(var(--stack-radius) * -1);
-  box-shadow: 0 -20px 48px -18px rgba(10, 10, 11, 0.26);
+  box-shadow: 0 -20px 48px -18px rgba(10, 10, 11, calc(0.26 * var(--seam)));
 }
 /* The pin. Each section holds its place while the next rides up over it; the
    stacking order is DOM order, since these are all positioned with z-index auto,

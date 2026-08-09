@@ -16,8 +16,11 @@
     radial-gradient(110% 90% at 50% 115%, #2A0C10 0%, rgba(42, 12, 16, 0) 60%),
     var(--dark-bg);
   color: var(--dark-fg);
-  min-height: 100vh;
-  min-height: 100svh;
+  /* + the seam depth, for the same reason as the homepage hero: the following
+     section overlaps upward by --stack-radius and would otherwise show a strip
+     of itself at the bottom of the first viewport. */
+  min-height: calc(100vh + var(--stack-radius));
+  min-height: calc(100svh + var(--stack-radius));
   display: flex; flex-direction: column; justify-content: center;
   /* Top padding clears the floating nav (~88px). */
   padding: clamp(88px, 11vw, 118px) 0 clamp(56px, 8vw, 88px);
