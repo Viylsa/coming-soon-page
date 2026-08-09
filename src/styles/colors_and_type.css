@@ -101,6 +101,9 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-pill: 999px;
+  /* Depth of the seam where one section slides over the one before it. Also the
+     amount each section overlaps its predecessor, so the two always match. */
+  --stack-radius: 34px;
 
   /* ===== Spacing (4pt base) ===== */
   --space-1:  4px;

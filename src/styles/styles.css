@@ -68,7 +68,10 @@ input:focus-visible, textarea:focus-visible {
 .v-muted { color: var(--fg-muted); }
 .v-mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; }
 
-.v-section { padding: var(--pad-section) 0; }
+/* Sections carry their own opaque background rather than letting the body show
+   through. They overlap each other now (see "Stacked section seams"), so a
+   transparent section would let the previous one bleed through the overlap. */
+.v-section { padding: var(--pad-section) 0; background: var(--canvas); }
 .v-section--haze { background: var(--canvas-haze); }
 /* invisible scroll anchor (e.g. #ai-guide alias inside #analytics) */
 .v-anchor { display: block; height: 0; width: 0; }
@@ -675,6 +678,51 @@ input:focus-visible, textarea:focus-visible {
 .v-plan .v-btn { margin-top: auto; justify-content: center; }
 @media (max-width: 900px) {
   .v-pricing { grid-template-columns: 1fr; }
+}
+
+/* ==================================================
+   Stacked section seams
+   --------------------------------------------------
+   Every section after the first slides UP OVER the one before it: a rounded top
+   lip, a shadow cast upward, and a negative margin equal to the radius so the
+   overlap and the curve are always the same depth. Scrolling then reads as one
+   panel taking the place of the last rather than a flat ribbon of blocks.
+
+   Deliberately layout, not motion: no JS, no scroll listener, nothing to
+   disable under reduced motion, and no cost to LCP.
+
+   Why not position:sticky (true pinning)? A sticky section taller than the
+   viewport pins its top at 0 and its lower half can never be scrolled into
+   view. Pricing, the live tour and the FAQ accordion are all taller than a
+   viewport, and the FAQ changes height as items open. Overlapping seams give
+   the same read without trapping content — and without putting two sections
+   inside the nav scrollspy's band at once, which would make the active link
+   flicker between them.
+
+   Stacking order is DOM order: these are position:relative with z-index auto,
+   so later siblings paint over earlier ones without creating a stacking context
+   that would trap the glows and grains inside each section.
+   ================================================== */
+#main > * + *,
+.v-footer {
+  position: relative;
+  border-top-left-radius: var(--stack-radius);
+  border-top-right-radius: var(--stack-radius);
+  margin-top: calc(var(--stack-radius) * -1);
+  box-shadow: 0 -20px 48px -18px rgba(10, 10, 11, 0.26);
+}
+/* The hero's marquee is pinned to its bottom edge, so the first section's
+   overlap would sit right on top of it. Lift it clear, and give the hero back
+   the same amount of bottom padding so the centred copy keeps its distance. */
+.v-hero__marquee { bottom: var(--stack-radius); }
+.v-hero { padding-bottom: calc(78px + var(--stack-radius)); }
+@media (max-height: 760px) {
+  .v-hero { padding-bottom: calc(56px + var(--stack-radius)); }
+}
+/* Shallower seam on phones: a 34px lip against a 375px-wide section reads as a
+   mistake rather than a deliberate edge. */
+@media (max-width: 620px) {
+  :root { --stack-radius: 22px; }
 }
 
 /* ---------- Team — editorial row (no cards) ---------- */
