@@ -1,0 +1,307 @@
+/* =============================================================
+   About page — /about.html
+   Layers on top of styles.css. Everything here is prefixed .va-
+   so it can never collide with the homepage's .v- components,
+   and it uses the same tokens, rhythm and reveal hooks as they do.
+   ============================================================= */
+
+/* ---------- Hero ---------- */
+/* The homepage hero is a full-height statement. This one is deliberately
+   shorter: an About page's job is to get you reading, not to re-pitch. */
+.va-hero {
+  position: relative;
+  background: var(--dark-bg);
+  color: var(--dark-fg);
+  padding: calc(var(--pad-dark) + 64px) 0 var(--pad-dark);
+  overflow: hidden;
+  isolation: isolate;
+}
+.va-hero__glow {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(90% 70% at 12% -10%, rgba(127, 20, 26, 0.55) 0%, rgba(127, 20, 26, 0) 60%),
+    radial-gradient(70% 90% at 100% 110%, rgba(63, 8, 14, 0.9) 0%, rgba(10, 10, 11, 0) 62%);
+}
+.va-hero__inner { position: relative; z-index: 1; }
+.va-hero__h {
+  font-family: var(--font-display);
+  font-size: var(--fs-display-md);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 500;
+  margin: 14px 0 0;
+  color: #fff;
+  max-width: 20ch;
+}
+.va-hero__lede {
+  margin: 22px 0 0;
+  max-width: 62ch;
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-relaxed);
+  color: rgba(255, 255, 255, 0.76);
+}
+.va-hero__meta {
+  margin-top: 36px;
+  display: flex; flex-wrap: wrap; gap: 12px 42px;
+  padding-top: 24px;
+  border-top: 1px solid var(--dark-border);
+  font-size: var(--fs-body-sm);
+  color: rgba(255, 255, 255, 0.82);
+}
+.va-hero__k {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+  margin-bottom: 4px;
+}
+
+/* ---------- Story ---------- */
+/* A hanging number in the left column, prose in the right. At narrow widths the
+   number moves inline above the heading rather than stealing a column. */
+.va-story { display: flex; flex-direction: column; gap: clamp(36px, 5vw, 56px); }
+.va-chapter {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: clamp(16px, 3vw, 34px);
+  align-items: start;
+  max-width: 900px;
+}
+.va-chapter__n {
+  font-family: var(--font-mono);
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  color: var(--canvas-line);
+  padding-top: 4px;
+}
+.va-chapter__h {
+  font-family: var(--font-display);
+  font-size: clamp(21px, 2.6vw, 27px);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: var(--lh-snug);
+  margin: 0 0 12px;
+}
+.va-chapter__body p {
+  margin: 0 0 14px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-soft);
+  max-width: 68ch;
+}
+.va-chapter__body p:last-child { margin-bottom: 0; }
+.va-chapter__link { margin-top: 4px !important; }
+.va-chapter__link .v-btn { padding-left: 0; }
+
+/* ---------- MoU / proof figure ---------- */
+.va-figure { margin: 0; }
+.va-figure__frame {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--canvas-mist);
+  background: var(--canvas-paper);
+  box-shadow: var(--shadow-lg);
+  /* The crimson hairline reads as the same accent the featured pricing card
+     uses — painted as a clipped background layer so it follows the radius. */
+  background-image: var(--crimson-field);
+  background-repeat: no-repeat;
+  background-size: 100% 4px;
+  background-position: top center;
+  padding-top: 4px;
+}
+.va-figure__frame img {
+  display: block; width: 100%; height: auto;
+  border-radius: 0 0 calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px);
+}
+.va-figure__cap {
+  margin-top: 16px;
+  font-size: var(--fs-body-sm);
+  color: var(--fg-muted);
+  line-height: var(--lh-normal);
+  max-width: 60ch;
+}
+.va-figure__cap-k {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: var(--viylsa-crimson);
+  margin-bottom: 6px;
+}
+
+/* ---------- Founders ---------- */
+.va-founders__note {
+  font-size: var(--fs-body-sm);
+  color: var(--fg-muted);
+  max-width: 34ch;
+  line-height: var(--lh-normal);
+  margin: 0;
+}
+.va-founders {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.4vw, 28px);
+}
+.va-founder {
+  background: var(--canvas-paper);
+  border: 1px solid var(--canvas-mist);
+  border-radius: var(--radius-lg);
+  padding: 20px 20px 24px;
+  display: flex; flex-direction: column;
+  transition: transform 280ms var(--ease-out), box-shadow 280ms ease, border-color 280ms ease;
+}
+.va-founder:hover {
+  transform: translateY(-4px);
+  border-color: var(--viylsa-crimson);
+  box-shadow: 0 22px 44px -20px rgba(127, 20, 26, 0.30);
+}
+/* 4:5 portrait window. With no photo yet it holds a monogram on the brand
+   field — a deliberate-looking placeholder rather than an empty box. */
+.va-founder__portrait {
+  aspect-ratio: 4 / 5;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--crimson-field);
+  display: grid; place-items: center;
+  margin-bottom: 18px;
+}
+.va-founder__portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.va-founder__monogram {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 56px);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+}
+.va-founder__name {
+  font-family: var(--font-display);
+  font-size: 21px; font-weight: 500; letter-spacing: -0.015em;
+}
+.va-founder__role {
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: var(--viylsa-crimson);
+  margin-top: 6px;
+}
+.va-founder__bio {
+  margin: 12px 0 0;
+  font-size: 14px; line-height: var(--lh-normal);
+  color: var(--fg-soft);
+}
+.va-founder__links {
+  margin-top: auto; padding-top: 18px;
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.va-founder__links a {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--fg-muted); text-decoration: none;
+  padding: 7px 12px;
+  border: 1px solid var(--canvas-mist);
+  border-radius: var(--radius-pill);
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+.va-founder__links a:hover {
+  color: var(--viylsa-crimson);
+  border-color: var(--viylsa-crimson);
+  background: var(--viylsa-crimson-soft);
+}
+
+/* ---------- Principles (dark band) ---------- */
+.va-principles {
+  margin-top: clamp(32px, 4vw, 46px);
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.4vw, 30px);
+  position: relative; z-index: 1;
+}
+.va-principle {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 20px;
+}
+.va-principle__n {
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #FFB7BD;
+}
+.va-principle__h {
+  font-family: var(--font-display);
+  font-size: clamp(19px, 2.2vw, 23px);
+  font-weight: 500; letter-spacing: -0.02em; line-height: var(--lh-snug);
+  margin: 10px 0 0; color: #fff;
+}
+.va-principle__p {
+  margin: 10px 0 0;
+  font-size: 14.5px; line-height: 1.62;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* ---------- Facts ---------- */
+.va-facts {
+  margin: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--canvas-mist);
+  border-left: 1px solid var(--canvas-mist);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.va-fact {
+  padding: 22px 24px;
+  border-right: 1px solid var(--canvas-mist);
+  border-bottom: 1px solid var(--canvas-mist);
+  background: var(--canvas-paper);
+}
+.va-fact dt {
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.va-fact dd {
+  margin: 8px 0 0;
+  font-size: 15px; font-weight: 500; line-height: var(--lh-normal);
+  color: var(--fg);
+}
+
+/* ---------- Closing CTA ---------- */
+.va-cta {
+  background: var(--dark-bg);
+  color: var(--dark-fg);
+  padding: var(--pad-dark) 0;
+  position: relative; overflow: hidden;
+}
+.va-cta__inner {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: clamp(24px, 4vw, 48px); flex-wrap: wrap;
+}
+.va-cta__h {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1); line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight); font-weight: 500;
+  margin: 14px 0 0; color: #fff; max-width: 18ch;
+}
+.va-cta__p {
+  margin: 14px 0 0; max-width: 52ch;
+  font-size: var(--fs-body); line-height: var(--lh-relaxed);
+  color: rgba(255, 255, 255, 0.72);
+}
+.va-cta__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .va-founders { grid-template-columns: 1fr; }
+  .va-principles { grid-template-columns: 1fr; gap: 26px; }
+  .va-facts { grid-template-columns: repeat(2, 1fr); }
+  .va-founders__note { max-width: none; }
+  .va-cta__inner { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 620px) {
+  .va-hero { padding-top: calc(var(--pad-dark) + 48px); }
+  .va-hero__meta { gap: 18px 28px; }
+  /* Number moves above the heading — a 96px column is dead weight at this width */
+  .va-chapter { grid-template-columns: 1fr; gap: 10px; }
+  .va-chapter__n { font-size: 26px; padding-top: 0; }
+  .va-facts { grid-template-columns: 1fr; }
+  .va-cta__actions { width: 100%; }
+  .va-cta__actions .v-btn { flex: 1 1 auto; justify-content: center; }
+}
