@@ -23,7 +23,7 @@ function FooterCTA({ base = '' }) {
             </div>
             <div>
               <div className="v-footer__col-h">Company</div>
-              <a href="/about.html">About</a><a href="/virtual-tours-islamabad.html">Virtual tours in Islamabad</a><a href={base + '#founding'}>Founding venues</a><a href={base + '#team'}>Team</a><a href={base + '#contact'}>Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
+              <a href="/about.html">About</a><a href="/about.html#founders">Founders</a><a href="/virtual-tours-islamabad.html">Virtual tours in Islamabad</a><a href={base + '#founding'}>Founding venues</a><a href={base + '#contact'}>Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
             </div>
             <div>
               <div className="v-footer__col-h">Get in touch</div>

@@ -3,14 +3,24 @@ import { IconArrowRight } from '../icons.jsx';
 
 // AI guide + Analytics are intentionally NOT top-level destinations — the AI
 // guide is a supporting capability folded into the analytics section, not a
-// co-headline. These 5 links each map to a real section the visitor wants.
+// co-headline. Each link maps to a real destination the visitor wants.
+// About is the one cross-page entry: it is a whole page, not a section, and it
+// carries the founders and the story, so it earns a nav slot rather than being
+// reachable only from the footer.
 const LINKS = [
   ['Tour', '#live-tour'],
   ['How it works', '#how'],
   ['Pricing', '#pricing'],
   ['FAQ', '#faq'],
+  ['About', '/about.html'],
   ['Contact', '#contact'],
 ];
+
+const isFragment = (href) => href.startsWith('#');
+/* Fragments get the page prefix (see `base` below); real paths are used as-is,
+   otherwise base='/' would turn '/about.html' into '//about.html', which the
+   browser reads as a protocol-relative URL and sends to another host. */
+const resolve = (base, href) => (isFragment(href) ? base + href : href);
 
 /* `base` prefixes every in-page href so the same nav serves a sub-page. On the
    homepage it stays '' and the links are plain fragments (smooth-scrolled by
@@ -18,10 +28,13 @@ const LINKS = [
    links become '/#pricing' and navigate home first. The scrollspy below still
    queries the bare fragment, finds nothing off-homepage, and bails — which is
    exactly right: no section here, no indicator. */
-function Nav({ base = '' }) {
+function Nav({ base = '', current = null }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false); // mobile drawer
-  const [activeHref, setActiveHref] = React.useState(null);
+  // `current` seeds the active link on a sub-page, where there are no sections
+  // for the scrollspy to observe, so the sliding indicator still parks somewhere
+  // meaningful instead of hiding.
+  const [activeHref, setActiveHref] = React.useState(current);
   const linksRef = React.useRef(null);
   const hoveringRef = React.useRef(false);
   const [ind, setInd] = React.useState({ left: 0, width: 0, opacity: 0 });
@@ -46,7 +59,11 @@ function Nav({ base = '' }) {
   // Unified with the sliding indicator below — one system, scroll-reactive for
   // everyone (touch included), not just a desktop hover flourish.
   React.useEffect(() => {
-    const targets = LINKS.map(([, h]) => document.querySelector(h)).filter(Boolean);
+    // Fragments only — querySelector('/about.html') is not a valid selector and
+    // would throw, taking the whole nav down with it.
+    const targets = LINKS.filter(([, h]) => isFragment(h))
+      .map(([, h]) => document.querySelector(h))
+      .filter(Boolean);
     if (!targets.length) return;
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
@@ -104,7 +121,11 @@ function Nav({ base = '' }) {
           />
           {LINKS.map(([l, h]) => (
             <li key={l}>
-              <a href={base + h} aria-current={h === activeHref ? 'true' : undefined} onMouseEnter={onEnter}>{l}</a>
+              <a
+                href={resolve(base, h)}
+                aria-current={h === activeHref ? 'true' : undefined}
+                onMouseEnter={onEnter}
+              >{l}</a>
             </li>
           ))}
         </ul>
@@ -129,7 +150,7 @@ function Nav({ base = '' }) {
         <ul className="v-nav__drawer-links">
           {LINKS.map(([l, h], i) => (
             <li key={l} style={{ transitionDelay: open ? (60 + i * 50) + 'ms' : '0ms' }}>
-              <a href={base + h} onClick={() => setOpen(false)}>
+              <a href={resolve(base, h)} onClick={() => setOpen(false)}>
                 <span className="v-nav__drawer-num">0{i + 1}</span> {l}
               </a>
             </li>

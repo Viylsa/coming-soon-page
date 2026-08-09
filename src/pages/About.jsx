@@ -156,7 +156,7 @@ export default function About() {
   return (
     <>
       <a className="v-skip" href="#main">Skip to content</a>
-      <Nav base="/"/>
+      <Nav base="/" current="/about.html"/>
 
       <main id="main">
         {/* ---------- Hero ---------- */}

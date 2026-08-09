@@ -6,7 +6,6 @@ import Analytics from './components/Analytics.jsx';
 import HowItWorks from './components/HowItWorks.jsx';
 import Pricing from './components/Pricing.jsx';
 import FAQ from './components/FAQ.jsx';
-import TeamRow from './components/TeamRow.jsx';
 import Contact from './components/Contact.jsx';
 import FooterCTA from './components/FooterCTA.jsx';
 import StickyCTA from './components/StickyCTA.jsx';
@@ -29,7 +28,6 @@ export default function App() {
         <HowItWorks/>
         <Pricing/>
         <FAQ/>
-        <TeamRow/>
         <Contact/>
       </main>
       <FooterCTA/>
