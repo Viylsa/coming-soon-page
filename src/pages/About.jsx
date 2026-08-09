@@ -41,7 +41,7 @@ const FOUNDERS = [
     tag: 'The philosopher, allegedly.',
     initial: 'SA',
     photo: '/assets/team/saqlain.jpg',
-    photoPos: 'center 34%',
+    photoPos: '',   // file is pre-cropped to 4:5, so the default centre crop is exact
     linkedin: 'https://www.linkedin.com/in/saqlainrazee/',
     github: 'https://github.com/Razee4315',
     bio: 'Will turn anything into a conversation about logic, and is the first to tell you he runs on the least of it. Self-declared resident ignoramus. Also the one who builds the tour player, the bilingual AI guide and the analytics behind them, and who knows every layer of the stack cold. The theory is negotiable. The code ships.',
