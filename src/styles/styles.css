@@ -636,13 +636,19 @@ input:focus-visible, textarea:focus-visible {
 /* ---------- Pricing ---------- */
 /* padding-top gives the raised featured card + its "Most popular" tag room so
    they never crowd the section head between 901–1180px. */
-.v-pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; padding-top: 18px; }
+/* align-items: stretch (the default) is deliberate — all three cards share the
+   tallest card's height so the row reads as one block, whatever the copy does. */
+.v-pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding-top: 18px; }
 .v-plan { background: var(--canvas-paper); border: 1px solid var(--canvas-mist); border-radius: var(--radius-lg); padding: 30px 28px; display: flex; flex-direction: column; position: relative; }
-/* The popular plan sits raised, with a crimson top-accent + halo */
+/* The popular plan sits raised, with a crimson top-accent + halo.
+   The raise is a matched -10px/+10px margin pair, not a transform: it shifts the
+   card up without changing its stretched height (transform is off-limits here —
+   the [data-reveal].is-in rule owns transform on these cards). */
 .v-plan--featured {
   border-color: var(--viylsa-crimson);
   box-shadow: 0 26px 54px -26px rgba(127, 20, 26, 0.45);
   margin-top: -10px;
+  margin-bottom: 10px;
   background:
     linear-gradient(180deg, rgba(127, 20, 26, 0.035), rgba(127, 20, 26, 0) 140px),
     var(--canvas-paper);
@@ -668,7 +674,7 @@ input:focus-visible, textarea:focus-visible {
 .v-plan .v-btn { margin-top: auto; justify-content: center; }
 @media (max-width: 900px) {
   .v-pricing { grid-template-columns: 1fr; }
-  .v-plan--featured { margin-top: 0; }
+  .v-plan--featured { margin-top: 0; margin-bottom: 0; }
 }
 
 /* ---------- Team — editorial row (no cards) ---------- */
