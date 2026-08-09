@@ -144,8 +144,8 @@ export default function About() {
           <div className="va-hero__grain" aria-hidden="true"></div>
           <div className="v-wrap va-hero__inner">
             <h1 className="va-hero__h">
-              Three founders in Islamabad,<br/>
-              bringing venues <span className="v-serif v-serif--onband">online.</span>
+              Built in Islamabad,<br/>
+              for venues <span className="v-serif v-serif--onband">across Pakistan.</span>
             </h1>
             <p className="va-hero__lede">
               VIYLSA turns universities, hotels, hospitals, real estate and showrooms
@@ -154,15 +154,33 @@ export default function About() {
               who came and what they cared about.
             </p>
             <div className="va-hero__meta">
-              <div><span className="va-hero__k">Based in</span> Islamabad &amp; Rawalpindi</div>
+              <div><span className="va-hero__k">Studio</span> Islamabad &amp; Rawalpindi</div>
               <div><span className="va-hero__k">Started as</span> An ICAT project</div>
               <div><span className="va-hero__k">Backed by</span> Ourselves, so far</div>
             </div>
           </div>
         </header>
 
+        {/* ---------- Founders ----------
+             Ahead of the story on purpose: on an About page the first question
+             is "who are these people", and the story reads better once you know
+             whose story it is. */}
+        <section id="founders" className="v-section">
+          <div className="v-wrap">
+            <div className="v-section__head" data-reveal="blur">
+              <div>
+                <div className="v-eyebrow">The founders</div>
+                <h2 className="v-h2">The three people who <span className="v-serif">turn up.</span></h2>
+              </div>
+            </div>
+            <div className="va-founders" data-reveal-group>
+              {FOUNDERS.map((f) => <FounderCard f={f} key={f.name}/>)}
+            </div>
+          </div>
+        </section>
+
         {/* ---------- Story ---------- */}
-        <section className="v-section">
+        <section className="v-section v-section--haze">
           <div className="v-wrap">
             <div className="v-section__head" data-reveal="blur">
               <div>
@@ -269,7 +287,7 @@ export default function About() {
 
         {/* ---------- Proof / MoU — renders only once a photo exists ---------- */}
         {MOU.image && (
-          <section className="v-section v-section--haze">
+          <section className="v-section">
             <div className="v-wrap">
               <div className="v-section__head" data-reveal="blur">
                 <div>
@@ -291,21 +309,6 @@ export default function About() {
             </div>
           </section>
         )}
-
-        {/* ---------- Founders ---------- */}
-        <section id="founders" className="v-section">
-          <div className="v-wrap">
-            <div className="v-section__head" data-reveal="blur">
-              <div>
-                <div className="v-eyebrow">The founders</div>
-                <h2 className="v-h2">The three people who <span className="v-serif">turn up.</span></h2>
-              </div>
-            </div>
-            <div className="va-founders" data-reveal-group>
-              {FOUNDERS.map((f) => <FounderCard f={f} key={f.name}/>)}
-            </div>
-          </div>
-        </section>
 
         {/* ---------- Principles — dark band ---------- */}
         <section className="v-section v-band">
