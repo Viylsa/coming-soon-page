@@ -9,7 +9,12 @@ html, body { margin: 0; padding: 0; }
 /* Global guards: nothing may push horizontal scroll on a phone, and media
    never overflows its column. These two rules alone kill most "mobile is
    broken" symptoms (the hero's rotated floating cards used to cause scroll). */
-html, body { overflow-x: hidden; max-width: 100%; }
+/* clip, NOT hidden. overflow-x:hidden makes the element a scroll container, and
+   a scroll container between the viewport and a position:sticky element stops
+   that element ever sticking — it is the single most common reason sticky
+   "silently does nothing". clip contains the same overflow (the band glows and
+   the marquee still cannot cause a horizontal scrollbar) without creating one. */
+html, body { overflow-x: clip; max-width: 100%; }
 html { scroll-behavior: smooth; }
 img, svg, iframe, video { max-width: 100%; }
 body {
@@ -711,6 +716,20 @@ input:focus-visible, textarea:focus-visible {
   margin-top: calc(var(--stack-radius) * -1);
   box-shadow: 0 -20px 48px -18px rgba(10, 10, 11, 0.26);
 }
+/* The pin. Each section holds its place while the next rides up over it; the
+   stacking order is DOM order, since these are all positioned with z-index auto,
+   so a later sibling paints over an earlier one without either of them creating
+   a stacking context that would trap the glows and grains inside.
+   --stack-top is measured per section by stackSections.js — see the note there
+   for why it cannot be a constant. The 0px fallback is never used in practice:
+   html.v-stack is only added once the first measure has run. */
+html.v-stack #main > * {
+  position: sticky;
+  top: var(--stack-top, 0px);
+}
+/* The footer is deliberately NOT sticky: it is the last thing on the page and
+   should slide over the pinned contact band and stay there. It keeps
+   position:relative from the rule above so it still paints on top of it. */
 /* The hero's marquee is pinned to its bottom edge, so the first section's
    overlap would sit right on top of it. Lift it clear, and give the hero back
    the same amount of bottom padding so the centred copy keeps its distance. */

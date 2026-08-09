@@ -18,6 +18,7 @@ import '@fontsource-variable/playfair-display/wght-italic.css';
 import './styles/colors_and_type.css';
 import './styles/styles.css';
 import './motion.js';
+import './stackSections.js';
 import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(<App/>);

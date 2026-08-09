@@ -55,23 +55,50 @@ function Nav({ base = '', current = null }) {
     return () => { document.body.style.overflow = ''; document.removeEventListener('keydown', onKey); };
   }, [open]);
 
-  // Scrollspy: the section in the viewport band drives the active nav link.
-  // Unified with the sliding indicator below — one system, scroll-reactive for
-  // everyone (touch included), not just a desktop hover flourish.
+  // Scrollspy: whichever section is actually ON TOP at the probe line drives the
+  // active nav link. Unified with the sliding indicator below — one system,
+  // scroll-reactive for everyone (touch included), not a desktop hover flourish.
+  //
+  // This used to be an IntersectionObserver over a -25%/-65% band, taking the
+  // last entry that reported intersecting. That broke the moment sections became
+  // sticky: pinned sections keep occupying the band after you have scrolled past
+  // them, so several intersect at once and the "winner" was whichever fired last
+  // — which parked Contact as active while you were still on the live tour.
+  //
+  // Sections stack in DOM order (later paints over earlier), so the section a
+  // visitor is actually looking at is the LAST one whose box spans the probe
+  // line. That is true whether or not the stacking is active, so there is one
+  // code path for both.
   React.useEffect(() => {
     // Fragments only — querySelector('/about.html') is not a valid selector and
     // would throw, taking the whole nav down with it.
-    const targets = LINKS.filter(([, h]) => isFragment(h))
-      .map(([, h]) => document.querySelector(h))
-      .filter(Boolean);
-    if (!targets.length) return;
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) setActiveHref('#' + e.target.id);
+    const linked = LINKS.filter(([, h]) => isFragment(h))
+      .map(([, h]) => [h, document.querySelector(h)])
+      .filter(([, el]) => el);
+    if (!linked.length) return;   // sub-page: `current` already seeded the state
+
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const probe = window.innerHeight * 0.38;
+      let active = null;
+      for (const [href, el] of linked) {
+        const r = el.getBoundingClientRect();
+        if (r.top <= probe && r.bottom > probe) active = href;
       }
-    }, { rootMargin: '-25% 0px -65% 0px' });
-    targets.forEach((t) => io.observe(t));
-    return () => io.disconnect();
+      setActiveHref(active);
+    };
+    const onScroll = () => {
+      if (!queued) { queued = true; requestAnimationFrame(update); }
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, []);
 
   const positionTo = (a) => {

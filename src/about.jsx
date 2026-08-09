@@ -17,6 +17,7 @@ import './styles/colors_and_type.css';
 import './styles/styles.css';
 import './styles/about.css';
 import './motion.js';
+import './stackSections.js';
 import About from './pages/About.jsx';
 
 createRoot(document.getElementById('root')).render(<About/>);
