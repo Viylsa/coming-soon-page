@@ -20,8 +20,16 @@ import { writeFileSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const PORT = 4317;
-// Only the SPA route needs this. privacy.html / terms.html are already real HTML.
-const ROUTES = { '/': 'index.html' };
+// The React-rendered routes. privacy.html / terms.html /
+// virtual-tours-islamabad.html are hand-written HTML and already crawlable, so
+// they are not listed. about.html is a React entry (src/about.jsx) and needs the
+// same snapshot treatment as the homepage.
+// `awaitAI` is homepage-only: About has no AI-guide demo, and waiting for a
+// selector that will never appear costs a 30-second timeout on every build.
+const ROUTES = {
+  '/':           { file: 'index.html', awaitAI: true },
+  '/about.html': { file: 'about.html', awaitAI: false },
+};
 
 const server = await preview({ preview: { port: PORT, strictPort: true } });
 const origin = `http://localhost:${PORT}`;
@@ -31,7 +39,7 @@ const browser = await puppeteer.launch({
 });
 
 try {
-  for (const [route, file] of Object.entries(ROUTES)) {
+  for (const [route, { file, awaitAI }] of Object.entries(ROUTES)) {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 1800 });
     // Reduced motion makes the build deterministic: the AI-guide demo settles on
@@ -44,9 +52,11 @@ try {
     // Hero rendered…
     await page.waitForSelector('h1', { timeout: 30000 });
     // …and the AI-guide answer present (reduced-motion lands straight on it).
-    await page
-      .waitForSelector('.v-ai__bubble--ai:not(.v-ai__typing)', { timeout: 30000 })
-      .catch(() => {});
+    if (awaitAI) {
+      await page
+        .waitForSelector('.v-ai__bubble--ai:not(.v-ai__typing)', { timeout: 30000 })
+        .catch(() => {});
+    }
     await page.evaluate(() => (document.fonts ? document.fonts.ready : null));
 
     // Scroll-reveal hides below-fold sections at opacity:0 until they enter the
@@ -76,23 +86,32 @@ try {
     let html = '<!doctype html>\n' + rendered + '\n';
     if (preloads) html = html.replace('</head>', preloads + '\n</head>');
 
-    // Inline the built stylesheet and drop the render-blocking <link>. On a
-    // prerendered single page this removes the worst FCP/LCP blocker: the
-    // browser otherwise paints nothing until the external CSS round-trips
-    // (the whole HTML→CSS critical chain). At ~11 KB gzipped the CSS rides in
-    // with the document instead. Other (non-prerendered) pages keep their link.
-    const cssFile = assets.find((f) => /^main-.*\.css$/.test(f));
-    if (cssFile) {
-      const css = readFileSync(resolve('dist', 'assets', cssFile), 'utf8');
-      const linkRe = new RegExp(
-        `<link rel="stylesheet"[^>]*href="/assets/${cssFile}"[^>]*>`,
-      );
-      if (linkRe.test(html)) {
-        html = html.replace(linkRe, `<style>${css}</style>`);
-        console.log(`  inlined ${cssFile} (${css.length} bytes), removed render-blocking <link>`);
-      } else {
-        console.warn(`  WARNING: stylesheet <link> for ${cssFile} not found — CSS left render-blocking`);
+    // Inline every built stylesheet and drop the render-blocking <link>s. On a
+    // prerendered page this removes the worst FCP/LCP blocker: the browser
+    // otherwise paints nothing until the external CSS round-trips (the whole
+    // HTML→CSS critical chain). At ~12 KB gzipped the CSS rides in with the
+    // document instead. Other (non-prerendered) pages keep their link.
+    //
+    // This matches on the rendered <link>s rather than a filename pattern, and
+    // that is deliberate: once About started importing the same styles.css,
+    // Vite hoisted the shared CSS into a chunk named after a common module
+    // (FooterCTA-*.css) and `main-*.css` stopped existing. A regex keyed to the
+    // entry name would have silently stopped matching and left the homepage
+    // render-blocking again — so the loop below takes whatever the page links.
+    const linkRe = /<link rel="stylesheet"[^>]*href="\/assets\/([^"]+\.css)"[^>]*>/g;
+    const linked = [...html.matchAll(linkRe)];
+    if (!linked.length) {
+      console.warn(`  WARNING: no stylesheet <link> found on ${route} — nothing inlined`);
+    }
+    for (const [tag, cssFile] of linked) {
+      const cssPath = resolve('dist', 'assets', cssFile);
+      if (!assets.includes(cssFile)) {
+        console.warn(`  WARNING: ${cssFile} linked but not in dist/assets — left render-blocking`);
+        continue;
       }
+      const css = readFileSync(cssPath, 'utf8');
+      html = html.replace(tag, `<style>${css}</style>`);
+      console.log(`  inlined ${cssFile} (${css.length} bytes), removed render-blocking <link>`);
     }
 
     const out = resolve('dist', file);
