@@ -1212,12 +1212,6 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
 /* ==================================================
    PRICING v2 — coverage block, comparison table
    ================================================== */
-.v-pricing__note {
-  font-size: 13.5px; color: var(--fg-muted);
-  max-width: 28ch; text-align: right;
-  font-family: var(--font-mono); letter-spacing: 0.01em; line-height: 1.5;
-}
-
 .v-plan__coverage {
   margin-top: 18px;
   display: flex; flex-direction: column; gap: 8px;
@@ -1244,10 +1238,6 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
   color: var(--viylsa-crimson);
 }
 .v-plan__plus + .v-plan__features { margin-top: 12px; }
-
-@media (max-width: 900px) {
-  .v-pricing__note { text-align: left; max-width: none; }
-}
 
 
 /* ==================================================

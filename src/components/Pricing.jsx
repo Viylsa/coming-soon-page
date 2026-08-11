@@ -74,10 +74,6 @@ function Pricing() {
             <div className="v-eyebrow">Packages</div>
             <h2 className="v-h2">Three ways to bring your space <span className="v-serif">online.</span></h2>
           </div>
-          <div className="v-pricing__note">
-            Every venue is different, so every package is quoted to your space.
-            One call to scope it, a fixed price before we shoot.
-          </div>
         </div>
 
         <div className="v-pricing" data-reveal-group>
