@@ -30,8 +30,8 @@ const FOUNDERS = [
     role: 'Co-Founder & CEO',
     tag: 'The brain of the operation.',
     initial: 'AT',
-    photo: '',
-    photoPos: '',
+    photo: '/assets/team/aleena.jpg',
+    photoPos: '',   // pre-cropped to 4:5 around the face, so centre crop is exact
     linkedin: 'https://www.linkedin.com/in/aleenatahir/',
     github: 'https://github.com/AleenaTahir1',
     bio: 'Deep in the tech with Saqlain by morning, planning the next post with Aena by afternoon, and the reason both of them have something to do tomorrow. She carries the plan for where VIYLSA goes next, and a habit of picking up whichever role the week turns out to be missing.',
@@ -52,8 +52,8 @@ const FOUNDERS = [
     role: 'Co-Founder & CMO',
     tag: 'The one with the ideas.',
     initial: 'AH',
-    photo: '',
-    photoPos: '',
+    photo: '/assets/team/aena.jpg',
+    photoPos: '',   // pre-cropped to 4:5 around the face, so centre crop is exact
     linkedin: 'https://www.linkedin.com/in/aena-habib-260947354/',
     github: 'https://github.com/EN-AenaHabib',
     bio: 'Every post, every frame and every “what if we did it like this” starts with her, and her eye is the reason a VIYLSA tour looks like VIYLSA. Put her and Aleena on the same problem and something ships. They are best friends, which at work almost never survives contact, and here somehow keeps producing.',
