@@ -43,7 +43,7 @@
   font-size: var(--fs-display-md);
   line-height: var(--lh-tight);
   letter-spacing: var(--tracking-tight);
-  font-weight: 500;
+  font-weight: 400;
   margin: 0;
   color: #fff;
   max-width: 20ch;
@@ -119,7 +119,7 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
 .va-chapter__h {
   font-family: var(--font-display);
   font-size: clamp(21px, 2.6vw, 27px);
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -0.015em;
   line-height: var(--lh-snug);
   margin: 0 0 12px;
@@ -203,13 +203,13 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
 .va-founder__monogram {
   font-family: var(--font-display);
   font-size: clamp(40px, 5vw, 56px);
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.02em;
   color: rgba(255, 255, 255, 0.92);
 }
 .va-founder__name {
   font-family: var(--font-display);
-  font-size: 21px; font-weight: 500; letter-spacing: -0.015em;
+  font-size: 21px; font-weight: 400; letter-spacing: -0.015em;
 }
 .va-founder__role {
   font-family: var(--font-mono);
@@ -271,7 +271,7 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
 .va-principle__h {
   font-family: var(--font-display);
   font-size: clamp(19px, 2.2vw, 23px);
-  font-weight: 500; letter-spacing: -0.02em; line-height: var(--lh-snug);
+  font-weight: 400; letter-spacing: -0.02em; line-height: var(--lh-snug);
   margin: 10px 0 0; color: #fff;
 }
 .va-principle__p {
@@ -321,7 +321,7 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
 .va-cta__h {
   font-family: var(--font-display);
   font-size: var(--fs-h1); line-height: var(--lh-tight);
-  letter-spacing: var(--tracking-tight); font-weight: 500;
+  letter-spacing: var(--tracking-tight); font-weight: 400;
   margin: 14px 0 0; color: #fff; max-width: 18ch;
 }
 .va-cta__p {
@@ -352,4 +352,55 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
   .va-facts { grid-template-columns: 1fr; }
   .va-cta__actions { width: 100%; }
   .va-cta__actions .v-btn { flex: 1 1 auto; justify-content: center; }
+}
+
+/* ── Coverage map ──
+   A schematic of the twin cities, drawn inline (see CoverageMap in About.jsx).
+   Sits between the section head and the facts list: the facts say "Islamabad &
+   Rawalpindi", this shows what that means for someone deciding whether we can
+   reach them. Strokes are currentColor-derived so it stays legible if the
+   section's background ever changes band. */
+.va-map {
+  margin: clamp(28px, 4vw, 44px) 0 clamp(34px, 5vw, 52px);
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: center; gap: clamp(24px, 4vw, 56px);
+}
+.va-map__svg {
+  width: 100%; height: auto; display: block;
+  overflow: visible;
+}
+.va-map__ridge { stroke: var(--viylsa-crimson); stroke-width: 1.6; opacity: 0.5; }
+.va-map__road {
+  fill: none; stroke: var(--fg); stroke-width: 1.4;
+  stroke-dasharray: 5 5; opacity: 0.45;
+}
+.va-map__ring {
+  fill: none; stroke: var(--viylsa-crimson);
+  stroke-width: 1; stroke-dasharray: 3 7; opacity: 0.42;
+}
+.va-map__ring--inner { opacity: 0.22; stroke-dasharray: 2 6; }
+.va-map__dot { fill: var(--viylsa-crimson); }
+.va-map__dot-halo { fill: var(--viylsa-crimson); opacity: 0.12; }
+.va-map__city {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 19px; fill: var(--fg);
+}
+.va-map__city--end, .va-map__label--end { text-anchor: end; }
+.va-map__label {
+  font-family: var(--font-mono); font-size: 9.5px;
+  letter-spacing: 0.14em; fill: var(--fg-muted);
+}
+.va-map__label--faint { fill: var(--fg-subtle); }
+.va-map__cap {
+  font-size: 15px; line-height: 1.65; color: var(--fg-muted);
+  max-width: 46ch;
+}
+.va-map__cap-k {
+  display: block;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--viylsa-crimson); margin-bottom: 8px;
+}
+@media (max-width: 760px) {
+  .va-map { grid-template-columns: 1fr; gap: 22px; }
 }

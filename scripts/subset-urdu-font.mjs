@@ -1,11 +1,13 @@
-/* Subset the Noto Nastaliq Urdu font down to ONLY the glyphs the AI-guide demo
- * actually renders. The full fontsource file is ~159 KB woff2 and was loading on
- * first paint (Urdu text is baked into the prerendered demo). The demo uses a
+/* Subset the Noto Nastaliq Urdu font down to ONLY the glyphs the site actually
+ * renders. The full fontsource file is ~159 KB woff2 and was loading on
+ * first paint (Urdu text is baked into the prerendered demo). The site uses a
  * few dozen characters, so a subset is ~10–20× smaller.
  *
- * The kept character set is extracted live from AIGuide.jsx, so this never goes
- * stale: if you change the demo's Urdu strings, just re-run `npm run subset:urdu`
- * and commit the regenerated public/fonts/noto-nastaliq-urdu-subset.woff2.
+ * The kept character set is extracted live from the SOURCES list below, so this
+ * never goes stale: if you change or add Urdu text anywhere, add the file here
+ * if it is new, re-run `npm run subset:urdu`, and commit the regenerated
+ * public/fonts/noto-nastaliq-urdu-subset.woff2. Urdu that renders from a file
+ * NOT in this list will show as blank boxes — that is the one failure mode.
  *
  * Uses fonttools (pyftsubset) via `python -m fontTools.subset` — it does the
  * full GSUB/GPOS glyph closure, so Nastaliq's contextual forms, ligatures and
@@ -25,8 +27,13 @@ const OUT_DIR = resolve(root, 'public/fonts');
 const OUT = resolve(OUT_DIR, 'noto-nastaliq-urdu-subset.woff2');
 const GLYPH_FILE = resolve(import.meta.dirname, '.urdu-glyphs.txt');
 
-// ── Collect every character the demo can render ──────────────────────────────
-const source = readFileSync(resolve(root, 'src/components/AIGuide.jsx'), 'utf8');
+// ── Collect every character the site can render ──────────────────────────────
+const SOURCES = [
+  'src/components/AIGuide.jsx',   // the bilingual demo's scripted exchanges
+  'src/components/Analytics.jsx', // the AI-guide block's Urdu display line
+  'src/components/Contact.jsx',   // "you can write in Urdu too"
+];
+const source = SOURCES.map((f) => readFileSync(resolve(root, f), 'utf8')).join('\n');
 // Arabic blocks + ZWNJ/ZWJ joiners. Plus the Latin digits/comma/space that
 // appear inside Urdu sentences (e.g. "45,000") so they shape in-family if the
 // font has them (else they fall back, harmlessly).

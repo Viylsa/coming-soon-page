@@ -95,12 +95,12 @@
     });
   }
 
-  // ── Pause the venue marquee while it's off-screen (saves wakeups) ──
+  // ── Pause the hero panorama pan while it's off-screen (saves wakeups) ──
   const marqueeIo = new IntersectionObserver((entries) => {
     for (const e of entries) e.target.classList.toggle('is-paused', !e.isIntersecting);
   });
   function bindMarquee() {
-    document.querySelectorAll('.v-hero__marquee:not(.is-marq)').forEach((m) => {
+    document.querySelectorAll('.v-hero__pano:not(.is-marq)').forEach((m) => {
       m.classList.add('is-marq');
       marqueeIo.observe(m);
     });

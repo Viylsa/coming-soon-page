@@ -69,17 +69,22 @@ function Pricing() {
   return (
     <section id="pricing" className="v-section v-section--haze">
       <div className="v-wrap">
+        {/* Default head, not --aside: the plan cards below run the full measure,
+            so an indented headline would hang off nothing. The old headline was
+            "Three ways to bring your space online" — the third use of "bring
+            your space online" on one page. */}
         <div className="v-section__head" data-reveal>
-          <div>
-            <div className="v-eyebrow">Packages</div>
-            <h2 className="v-h2">Three ways to bring your space <span className="v-serif">online.</span></h2>
-          </div>
+          <div className="v-eyebrow">Packages</div>
+          <h2 className="v-h2">Three packages, sized to your space.</h2>
         </div>
 
         <div className="v-pricing" data-reveal-group>
           {plans.map((p) => (
             <div className={'v-plan ' + (p.featured ? 'v-plan--featured' : '')} key={p.name} data-reveal="scale">
-              {p.featured && <span className="v-plan__tag">Most popular</span>}
+              {/* Was "Most popular" — a ranking claim a studio with one live
+                  client cannot back, and the most template-shaped pixel on the
+                  page. This says the same thing without inventing a league. */}
+              {p.featured && <span className="v-plan__tag">Most venues start here</span>}
               <div className="v-plan__name">{p.name}</div>
               <div className="v-plan__blurb">{p.blurb}</div>
 

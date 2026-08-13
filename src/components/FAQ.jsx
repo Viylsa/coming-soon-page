@@ -40,9 +40,10 @@ function FAQ() {
   return (
     <section id="faq" className="v-section">
       <div className="v-wrap v-faq__wrap">
-        <div data-reveal>
+        {/* rule head */}
+        <div className="v-section__head v-section__head--rule" data-reveal>
           <div className="v-eyebrow">FAQ</div>
-          <h2 className="v-h2">Before you <span className="v-serif">book the call.</span></h2>
+          <h2 className="v-h2">Before you book the call.</h2>
         </div>
         <div className="v-faq" data-reveal>
           {FAQ_ITEMS.map(({ q, a }) => (

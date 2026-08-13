@@ -102,6 +102,66 @@ const FACTS = [
   ['Response', 'Within one business day'],
 ];
 
+/* The twin cities, drawn.
+   "Islamabad & Rawalpindi" is stated four times across the site as text and was
+   never once shown. This is a schematic, not a survey map — the Margallas along
+   the top, the two cities, the corridor between them — and it says so, because
+   a diagram that implies survey accuracy it doesn't have is worse than no map.
+   Inline SVG so it costs no request and inherits the section's colours. */
+function CoverageMap() {
+  return (
+    <figure className="va-map" data-reveal="wipe">
+      <svg className="va-map__svg" viewBox="0 0 520 344" role="img"
+           aria-labelledby="va-map-t va-map-d">
+        <title id="va-map-t">Where VIYLSA shoots</title>
+        <desc id="va-map-d">
+          A schematic of the Islamabad–Rawalpindi corridor: the Margalla Hills
+          across the north, Islamabad below them, Rawalpindi to the south, and a
+          ring showing the area the crew reaches within about an hour.
+        </desc>
+
+        {/* Margalla ridge — three offset strokes read as hills without pretending
+            to be a contour survey */}
+        <g className="va-map__ridge" fill="none" strokeLinecap="round">
+          <path d="M18 66 Q 96 30 168 58 T 320 44 T 502 62"/>
+          <path d="M18 84 Q 104 50 170 76 T 322 62 T 502 80" opacity="0.66"/>
+          <path d="M18 102 Q 112 72 172 94 T 324 82 T 502 98" opacity="0.36"/>
+        </g>
+        <text className="va-map__label va-map__label--faint" x="18" y="126">MARGALLA HILLS</text>
+
+        {/* The corridor: Islamabad sits north-east of Rawalpindi, joined by the
+            road the crew actually drives */}
+        <path className="va-map__road" d="M196 232 C 236 214, 268 196, 318 170"/>
+
+        {/* Reach ring */}
+        <circle className="va-map__ring" cx="262" cy="196" r="118"/>
+        <circle className="va-map__ring va-map__ring--inner" cx="262" cy="196" r="72"/>
+
+        {/* Cities */}
+        <g>
+          <circle className="va-map__dot" cx="318" cy="170" r="7"/>
+          <circle className="va-map__dot-halo" cx="318" cy="170" r="15"/>
+          <text className="va-map__city" x="336" y="167">Islamabad</text>
+        </g>
+        <g>
+          <circle className="va-map__dot" cx="196" cy="232" r="7"/>
+          <circle className="va-map__dot-halo" cx="196" cy="232" r="15"/>
+          <text className="va-map__city va-map__city--end" x="178" y="229">Rawalpindi</text>
+        </g>
+
+        <text className="va-map__label va-map__label--faint" x="262" y="336"
+              textAnchor="middle">WITHIN ABOUT AN HOUR&apos;S DRIVE</text>
+      </svg>
+      <figcaption className="va-map__cap">
+        <span className="va-map__cap-k">Schematic · not to scale</span>
+        Both founders live here, so a shoot inside the twin cities is a drive,
+        not a trip. Beyond it we travel: tell us where the venue is and we&apos;ll
+        quote the travel honestly rather than pretend distance is free.
+      </figcaption>
+    </figure>
+  );
+}
+
 function FounderCard({ f }) {
   const hasLinks = f.linkedin || f.github;
   // A missing, renamed or not-yet-added portrait falls back to the monogram
@@ -199,11 +259,9 @@ export default function About() {
              whose story it is. */}
         <section id="founders" className="v-section">
           <div className="v-wrap">
-            <div className="v-section__head" data-reveal="blur">
-              <div>
-                <div className="v-eyebrow">The founders</div>
-                <h2 className="v-h2">The three people who <span className="v-serif">turn up.</span></h2>
-              </div>
+            <div className="v-section__head v-section__head--rule" data-reveal="blur">
+              <div className="v-eyebrow">The founders</div>
+              <h2 className="v-h2">The three people who turn up.</h2>
             </div>
             <div className="va-founders" data-reveal-group>
               {FOUNDERS.map((f) => <FounderCard f={f} key={f.name}/>)}
@@ -215,10 +273,8 @@ export default function About() {
         <section className="v-section v-section--haze">
           <div className="v-wrap">
             <div className="v-section__head" data-reveal="blur">
-              <div>
-                <div className="v-eyebrow">The story</div>
-                <h2 className="v-h2">How VIYLSA <span className="v-serif">started.</span></h2>
-              </div>
+              <div className="v-eyebrow">The story</div>
+              <h2 className="v-h2">How VIYLSA started.</h2>
             </div>
 
             <div className="va-story" data-reveal-group>
@@ -321,11 +377,11 @@ export default function About() {
         {MOU.image && (
           <section className="v-section">
             <div className="v-wrap">
-              <div className="v-section__head" data-reveal="blur">
-                <div>
-                  <div className="v-eyebrow v-eyebrow--crimson">Partnerships</div>
-                  <h2 className="v-h2">Signed, and on <span className="v-serif">the record.</span></h2>
-                </div>
+              <div className="v-section__head v-section__head--rule" data-reveal="blur">
+                <div className="v-eyebrow v-eyebrow--crimson">Partnerships</div>
+                {/* "on the record" was also the analytics headline on the
+                    homepage — same phrase doing two different jobs. */}
+                <h2 className="v-h2">The first one on paper.</h2>
               </div>
               <figure className="va-figure" data-reveal="wipe">
                 <div className="va-figure__frame">
@@ -347,11 +403,8 @@ export default function About() {
           <div className="v-band__grain" aria-hidden="true"></div>
           <div className="v-band__glow" aria-hidden="true"></div>
           <div className="v-wrap">
-            <div data-reveal="blur">
-              <div className="v-eyebrow v-eyebrow--onband">How we work</div>
-              <h2 className="v-h2 v-h2--onband">
-                Three rules we don't <span className="v-serif v-serif--onband">bend.</span>
-              </h2>
+            <div className="v-section__head v-section__head--bare" data-reveal="blur">
+              <h2 className="v-h2 v-h2--onband">Three rules we don't bend.</h2>
             </div>
             <div className="va-principles" data-reveal-group>
               {PRINCIPLES.map((p) => (
@@ -368,12 +421,11 @@ export default function About() {
         {/* ---------- Facts ---------- */}
         <section className="v-section">
           <div className="v-wrap">
-            <div className="v-section__head" data-reveal="blur">
-              <div>
-                <div className="v-eyebrow">The details</div>
-                <h2 className="v-h2">Where we work, and <span className="v-serif">how fast.</span></h2>
-              </div>
+            <div className="v-section__head v-section__head--rule" data-reveal="blur">
+              <div className="v-eyebrow">The details</div>
+              <h2 className="v-h2">Where we work, and how fast.</h2>
             </div>
+            <CoverageMap/>
             <dl className="va-facts" data-reveal-group>
               {FACTS.map(([k, v]) => (
                 <div className="va-fact" key={k} data-reveal>
@@ -390,7 +442,9 @@ export default function About() {
           <div className="v-wrap va-cta__inner" data-reveal="scale">
             <div>
               <div className="v-eyebrow v-eyebrow--onband">Next step</div>
-              <h2 className="va-cta__h">Let's bring your space <span className="v-serif v-serif--onband">online.</span></h2>
+              {/* Was word-for-word the homepage's closing headline. This one is
+                  the founders' page, so it closes on the founders. */}
+              <h2 className="va-cta__h">Talk to the three of us.</h2>
               <p className="va-cta__p">
                 Tell us about your venue and we'll show you what it looks like as a
                 360° tour, and exactly what it takes to get there.

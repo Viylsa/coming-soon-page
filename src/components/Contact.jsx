@@ -123,7 +123,14 @@ function Contact() {
                 <input id="c-org" name="org" type="text" placeholder="University, hotel, property…" value={form.org} onChange={update('org')}/>
               </div>
               <div className="v-field">
-                <label htmlFor="c-msg">What would you like to bring online?</label>
+                <label htmlFor="c-msg">
+                  What would you like to bring online?
+                  {/* Functional, not decorative: it tells a visitor which
+                      language they may write in. Re-run `npm run subset:urdu`
+                      if this line changes — the webfont is subset to its
+                      glyphs. "You can write in Urdu too." */}
+                  <span className="v-field__ur" lang="ur" dir="rtl">اردو میں بھی لکھ سکتے ہیں</span>
+                </label>
                 <textarea id="c-msg" name="message" rows="4" required placeholder="Tell us about your space…" value={form.message} onChange={update('message')}></textarea>
               </div>
               <a ref={waRef} href={waHref} target="_blank" rel="noopener" className="v-btn v-btn--primary v-btn--lg v-contact__submit" onClick={onWaClick}>

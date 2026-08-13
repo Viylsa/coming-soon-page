@@ -26,14 +26,17 @@ function HowItWorks() {
       <div className="v-band__grain" aria-hidden="true"></div>
       <div className="v-band__glow" aria-hidden="true"></div>
       <div className="v-wrap">
-        <div data-reveal="blur">
-          <div className="v-eyebrow v-eyebrow--onband">How it works</div>
-          <h2 className="v-h2 v-h2--onband">Three steps. <span className="v-serif v-serif--onband">Usually one afternoon.</span></h2>
+        {/* bare head — the brand band is announcement enough; no eyebrow label */}
+        <div className="v-section__head v-section__head--bare" data-reveal="blur">
+          <h2 className="v-h2 v-h2--onband">Three steps. Usually one afternoon.</h2>
         </div>
+        {/* Each card used to carry a big ghost numeral AND a "Step 01" label —
+            the same number twice, and the third separate 01/02/03 treatment on
+            the page. The Problem section keeps the big numerals; the steps keep
+            the small mono label. */}
         <div className="v-rail" data-reveal-group>
           {steps.map(({ n, Icon, h, p }) => (
             <div className="v-rail__step" key={n} data-reveal="scale">
-              <span className="v-rail__ghost" aria-hidden="true">{n}</span>
               <div className="v-rail__node"><Icon size={22}/></div>
               <div className="v-rail__n">Step {n}</div>
               <h3 className="v-rail__h">{h}</h3>

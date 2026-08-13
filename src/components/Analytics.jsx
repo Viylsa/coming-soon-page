@@ -13,11 +13,14 @@ function Analytics() {
     ['Cafeteria', 51, '36%'],
   ];
   return (
-    <section id="analytics" className="v-section v-section--haze">
+    <section id="analytics" className="v-section v-section--haze v-section--tailroom">
       <div className="v-wrap v-rcpt__grid">
         <div className="v-rcpt__intro" data-reveal>
-          <div className="v-eyebrow v-eyebrow--crimson"><IconChart size={14}/> What you get back</div>
-          <h2 className="v-h2">Every visit, <span className="v-serif">on the record.</span></h2>
+          {/* rule head — the label heads a hairline that runs out to the measure */}
+          <div className="v-section__head v-section__head--rule">
+            <div className="v-eyebrow v-eyebrow--crimson"><IconChart size={14}/> What you get back</div>
+            <h2 className="v-h2">Every visit, on the record.</h2>
+          </div>
           <p className="v-rcpt__lede">
             You stop guessing. A VIYLSA tour shows who came, which spaces they
             lingered in, and what they asked the AI guide while your office was
@@ -82,6 +85,14 @@ function Analytics() {
       <div className="v-wrap v-ai__embed" data-reveal>
         <div className="v-ai__embed-head">
           <div className="v-eyebrow v-eyebrow--crimson"><IconSparkle size={14}/> The AI guide</div>
+          {/* The product answers in Urdu, so the promise is made in Urdu — set
+              in Nastaliq at display size rather than described in English and
+              demonstrated only inside a chat bubble. "Ask in Urdu, and the
+              answer comes in Urdu." If you edit this line, re-run
+              `npm run subset:urdu` — the webfont is subset to these glyphs. */}
+          <p className="v-ai__embed-ur" lang="ur" dir="rtl">
+            سوال اردو میں پوچھیں، جواب اردو میں ملے گا۔
+          </p>
           <p className="v-ai__embed-p">
             Trained on your venue's own documents, it answers visitors in English
             and Urdu around the clock, and logs every enquiry straight to the

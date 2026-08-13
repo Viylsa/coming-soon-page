@@ -21,11 +21,13 @@ function LiveTourPreview() {
     return () => clearTimeout(t);
   }, [loaded]);
 
+  // 'EN · UR' used to sit here as a fourth stat — the AI guide's own language
+  // toggle says the same thing two sections down, and it was the only stat that
+  // wasn't a count of something in this tour.
   const stats = [
     ['14', 'panoramic scenes'],
     ['28', 'interactive hotspots'],
     ['3', 'buildings linked'],
-    ['EN · UR', 'AI guide languages'],
   ];
 
   return (
@@ -96,21 +98,21 @@ function LiveTourPreview() {
           ))}
         </div>
 
+        {/* These three used to be numbered 01/02/03 — the page's third separate
+            numeral system, and misleading here: they are parallel features of
+            the player, not an ordered sequence. */}
         <div className="v-tdemo__captions" data-reveal-group>
           <div className="v-tdemo__cap" data-reveal>
-            <div className="v-tdemo__cap-num">01</div>
             <div className="v-tdemo__cap-body">
               <b>Hotspots</b> let visitors read context like opening hours, room details and contact info, without leaving the scene.
             </div>
           </div>
           <div className="v-tdemo__cap" data-reveal>
-            <div className="v-tdemo__cap-num">02</div>
             <div className="v-tdemo__cap-body">
               <b>Walking markers</b> teleport between locations the same way you'd walk them in person.
             </div>
           </div>
           <div className="v-tdemo__cap" data-reveal>
-            <div className="v-tdemo__cap-num">03</div>
             <div className="v-tdemo__cap-body">
               <b>All Views</b> shows every location at a glance, for visitors who want to skim, not stroll.
             </div>
