@@ -10,9 +10,8 @@ import { createRoot } from 'react-dom/client';
 
 import '@fontsource-variable/geist/wght.css';
 import '@fontsource-variable/geist-mono/wght.css';
-// Instrument Serif is a single-weight (400) family — see colors_and_type.css.
-import '@fontsource/instrument-serif/400.css';
-import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource-variable/playfair-display/wght.css';
+import '@fontsource-variable/playfair-display/wght-italic.css';
 
 import './styles/colors_and_type.css';
 import './styles/styles.css';
