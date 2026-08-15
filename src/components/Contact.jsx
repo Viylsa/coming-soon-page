@@ -72,7 +72,6 @@ function Contact() {
       <div className="v-contact__glow"/>
       <div className="v-wrap v-contact__inner">
         <div className="v-contact__intro" data-reveal>
-          <div className="v-eyebrow v-eyebrow--crimson"><IconSparkle size={14}/> Contact</div>
           <h2 className="v-contact__h">
             Let's bring your space <span className="v-serif">online.</span>
           </h2>

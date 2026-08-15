@@ -21,8 +21,7 @@ function ProblemTriad() {
     <section className="v-section">
       <div className="v-wrap">
         {/* aside head — label in a left margin column, like a printed report */}
-        <div className="v-section__head v-section__head--aside" data-reveal="blur">
-          <div className="v-eyebrow">The problem</div>
+        <div className="v-section__head" data-reveal="blur">
           <h2 className="v-h2">Why a photo gallery isn't enough.</h2>
         </div>
         {/* The section argues "static photos lie" and then asks you to take

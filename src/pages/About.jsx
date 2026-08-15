@@ -191,8 +191,7 @@ export default function About() {
              whose story it is. */}
         <section id="founders" className="v-section">
           <div className="v-wrap">
-            <div className="v-section__head v-section__head--rule" data-reveal="blur">
-              <div className="v-eyebrow">The founders</div>
+            <div className="v-section__head" data-reveal="blur">
               <h2 className="v-h2">The three people who turn up.</h2>
             </div>
             <div className="va-founders" data-reveal-group>
@@ -205,7 +204,6 @@ export default function About() {
         <section className="v-section v-section--haze">
           <div className="v-wrap">
             <div className="v-section__head" data-reveal="blur">
-              <div className="v-eyebrow">The story</div>
               <h2 className="v-h2">How VIYLSA started.</h2>
             </div>
 
@@ -309,8 +307,7 @@ export default function About() {
         {MOU.image && (
           <section className="v-section">
             <div className="v-wrap">
-              <div className="v-section__head v-section__head--rule" data-reveal="blur">
-                <div className="v-eyebrow v-eyebrow--crimson">Partnerships</div>
+              <div className="v-section__head" data-reveal="blur">
                 {/* "on the record" was also the analytics headline on the
                     homepage — same phrase doing two different jobs. */}
                 <h2 className="v-h2">The first one on paper.</h2>
@@ -335,7 +332,7 @@ export default function About() {
           <div className="v-band__grain" aria-hidden="true"></div>
           <div className="v-band__glow" aria-hidden="true"></div>
           <div className="v-wrap">
-            <div className="v-section__head v-section__head--bare" data-reveal="blur">
+            <div className="v-section__head" data-reveal="blur">
               <h2 className="v-h2 v-h2--onband">Three rules we don't bend.</h2>
             </div>
             <div className="va-principles" data-reveal-group>
@@ -354,7 +351,6 @@ export default function About() {
         <section className="va-cta">
           <div className="v-wrap va-cta__inner" data-reveal="scale">
             <div>
-              <div className="v-eyebrow v-eyebrow--onband">Next step</div>
               {/* Was word-for-word the homepage's closing headline. This one is
                   the founders' page, so it closes on the founders. */}
               <h2 className="va-cta__h">Talk to the three of us.</h2>

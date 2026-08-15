@@ -17,9 +17,8 @@ function Analytics() {
       <div className="v-wrap v-rcpt__grid">
         <div className="v-rcpt__intro" data-reveal>
           {/* rule head — the label heads a hairline that runs out to the measure */}
-          <div className="v-section__head v-section__head--rule">
-            <div className="v-eyebrow v-eyebrow--crimson"><IconChart size={14}/> What you get back</div>
-            <h2 className="v-h2">Every visit, on the record.</h2>
+          <div className="v-section__head">
+            <h2 className="v-h2">Every visit, <span className="v-nowrap">on the record.</span></h2>
           </div>
           <p className="v-rcpt__lede">
             You stop guessing. A VIYLSA tour shows who came, which spaces they
@@ -84,7 +83,6 @@ function Analytics() {
       <span id="ai-guide" className="v-anchor" aria-hidden="true"></span>
       <div className="v-wrap v-ai__embed" data-reveal>
         <div className="v-ai__embed-head">
-          <div className="v-eyebrow v-eyebrow--crimson"><IconSparkle size={14}/> The AI guide</div>
           <p className="v-ai__embed-p">
             Trained on your venue's own documents, it answers visitors in English
             and Urdu around the clock, and logs every enquiry straight to the

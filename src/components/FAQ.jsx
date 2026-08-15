@@ -41,8 +41,7 @@ function FAQ() {
     <section id="faq" className="v-section">
       <div className="v-wrap v-faq__wrap">
         {/* rule head */}
-        <div className="v-section__head v-section__head--rule" data-reveal>
-          <div className="v-eyebrow">FAQ</div>
+        <div className="v-section__head" data-reveal>
           <h2 className="v-h2">Before you book the call.</h2>
         </div>
         <div className="v-faq" data-reveal>

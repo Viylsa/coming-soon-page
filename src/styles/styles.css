@@ -66,11 +66,21 @@ input:focus-visible, textarea:focus-visible {
   line-height: 1.1;
   font-weight: 500;
   margin: 14px 0 0;
+  /* Only balances the headlines that genuinely need two lines; the ones that
+     fit now stay on one, so no break is arbitrary. */
   text-wrap: balance;
-  max-width: 22ch;
+  /* Was 22ch — which computes to ~650px inside a 1180px container, so every
+     headline between 700 and 900px wide was forced to wrap with a third of the
+     measure still empty, and balance then split it into two even halves at
+     whatever word fell nearest the middle. That is what read as headlines
+     breaking at random. At 32ch (~940px) every headline on the site sits on one
+     line at desktop and wraps only when the viewport actually requires it. */
+  max-width: 32ch;
 }
 .v-serif { font-family: var(--font-serif); font-style: italic; color: var(--viylsa-crimson); letter-spacing: -0.01em; font-weight: 400; }
 .v-muted { color: var(--fg-muted); }
+/* Keeps a phrase together so a narrow column cannot break it at a bad word. */
+.v-nowrap { white-space: nowrap; }
 .v-mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; }
 
 /* Sections carry their own opaque background rather than letting the body show
@@ -90,51 +100,9 @@ input:focus-visible, textarea:focus-visible {
 .v-anchor { display: block; height: 0; width: 0; }
 .v-section__head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom: var(--head-gap); flex-wrap: wrap; }
 
-/* ── Section-head architectures ──
-   Every section used to open the same way: dot-eyebrow, headline, lede. Eight
-   sections of that in a row is a metronome — you can predict each screen before
-   you read it. Three alternates below break the meter. They are deliberately
-   assigned so no two neighbouring sections share one; see App.jsx for the order.
-
-   --rule   label sits ON a full-width hairline, headline hangs beneath it
-   --aside  label occupies a left margin column, headline in the right column
-   --bare   no label at all — for sections whose context already announces them */
-
-/* --rule: the label sits at the head of a hairline that runs out to the measure. */
-.v-section__head--rule { display: block; }
-.v-section__head--rule .v-eyebrow {
-  display: flex; width: 100%; align-items: center; gap: 16px;
-}
-/* currentColor so the rule adapts to whichever band it lands on — crimson on
-   cream, white on the brand band, muted on dark — without a variant per band. */
-.v-section__head--rule .v-eyebrow::after {
-  content: ''; flex: 1; height: 1px; background: currentColor; opacity: 0.28;
-}
-.v-section__head--rule .v-h2 { margin-top: 22px; }
-
-/* --aside: label in a left column, like a margin note in a printed report.
-   --aside-col is shared with the Problem section's numeral column so the head
-   and the body below it hang off one grid rather than two near-misses. */
+/* --aside kept its measure token: the Problem section's numeral column still
+   hangs off it. */
 :root { --aside-col: clamp(112px, 12vw, 172px); }
-.v-section__head--aside {
-  display: grid; grid-template-columns: var(--aside-col) minmax(0, 1fr);
-  align-items: start; gap: 0;
-}
-.v-section__head--aside .v-eyebrow { padding-top: 12px; }
-.v-section__head--aside .v-h2 { margin-top: 0; }
-.v-section__head--aside > :not(.v-eyebrow):not(.v-h2) { grid-column: 2; }
-
-/* --bare: the headline carries itself. */
-.v-section__head--bare .v-h2 { margin-top: 0; }
-
-@media (max-width: 560px) {
-  /* The label column is dead weight on a phone — the label moves above the
-     headline and the head collapses back to the default stack. Same breakpoint
-     as .v-truth so the head and the rows below it collapse together. */
-  .v-section__head--aside { grid-template-columns: 1fr; gap: 12px; }
-  .v-section__head--aside > :not(.v-eyebrow):not(.v-h2) { grid-column: 1; }
-  .v-section__head--rule .v-eyebrow { padding-bottom: 10px; }
-}
 
 /* ---------- buttons ---------- */
 .v-btn {

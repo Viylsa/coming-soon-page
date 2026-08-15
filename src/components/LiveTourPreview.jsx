@@ -35,7 +35,6 @@ function LiveTourPreview() {
       <div className="v-wrap">
         <div className="v-section__head" data-reveal>
           <div>
-            <div className="v-eyebrow v-eyebrow--crimson">Live client tour</div>
             <h2 className="v-h2">This is exactly what your visitors <span className="v-serif">walk into.</span></h2>
             <p className="v-tdemo__lede">
               Built for NUTECH, a university campus in Islamabad. Drag, click
@@ -121,7 +120,6 @@ function LiveTourPreview() {
 
         <div id="founding" className="v-founding" data-reveal="scale">
           <div className="v-founding__body">
-            <div className="v-eyebrow v-eyebrow--crimson">Founding venues · 2026</div>
             <h3 className="v-founding__h">Become a founding venue.</h3>
             <p className="v-founding__p">
               We're taking on a small group of founding venues this year: locked-in

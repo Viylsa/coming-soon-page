@@ -74,7 +74,6 @@ function Pricing() {
             "Three ways to bring your space online" — the third use of "bring
             your space online" on one page. */}
         <div className="v-section__head" data-reveal>
-          <div className="v-eyebrow">Packages</div>
           <h2 className="v-h2">Three packages, sized to your space.</h2>
         </div>
 
