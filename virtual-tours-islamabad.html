@@ -24,165 +24,332 @@
 
   <!-- Self-hosted fonts (same-origin woff2) — no render-blocking Google Fonts hop. -->
   <link rel="stylesheet" href="/src/fonts-static.css"/>
+  <!-- The real design system, not a copy of it.
+       This page used to carry its own ~90-line stylesheet: its own scale, its
+       own card, its own nav, its own button. It was a second website wearing the
+       same colours, and it drifted every time the main site changed. It is a
+       Vite entry (see vite.config.js), so these are bundled and hashed exactly
+       as they are for the app — same tokens, same components, one source.
+       No JS runs here by design (this page exists to be crawled), and the
+       reveal/stacking rules are gated behind html.v-js / html.v-stack, so
+       everything simply renders in its final state. -->
+  <link rel="stylesheet" href="/src/styles/colors_and_type.css"/>
+  <link rel="stylesheet" href="/src/styles/styles.css"/>
   <style>
-    :root {
-      --ink:#0A0A0B; --ink-soft:#2A2A2F; --muted:#4B4B52; --subtle:#6B6B73;
-      --canvas:#FAFAF7; --paper:#FFFFFF; --line:#E6E5E0; --haze:#F2F1ED;
-      --crimson:#7F141A; --crimson-deep:#5E0D14; --crimson-darker:#3F080E; --crimson-soft:#FAE6E8;
-      --serif:'Playfair Display Variable','Playfair Display',Georgia,serif;
+    /* Page-local only: the two blocks that have no equivalent in the app. */
+
+    /* Static nav: the app's pill without the scrollspy indicator it cannot have
+       without JS. v-nav--scrolled is applied permanently, since the pill's
+       at-rest state is designed to firm up on scroll and nothing here scrolls it.
+
+       The hero headline here is three times the length of the app's ("Bringing
+       visits online."), and --fs-display-xl is tuned for that one. At 112px this
+       ran to four lines and pushed the buttons off a laptop screen. */
+    .v-hero .v-display { font-size: clamp(38px, 5.4vw, 78px); }
+
+    /* Venue grid. Not the pricing card and not the crimson step card — a quiet
+       bordered cell, because there are six of them and they are a list, not a
+       set of offers. */
+    .vi-venues {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
     }
-    * { box-sizing: border-box; }
-    body { margin:0; background:var(--canvas); color:var(--ink); font-family:'Geist Variable','Geist',system-ui,-apple-system,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
-    a { color: var(--crimson); }
-    .serif { font-family:var(--serif); font-style:italic; font-weight:400; color:var(--crimson); }
-    .band { background:var(--ink); color:#F7F6F2; padding:20px 0; }
-    .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
-    .nav { display:flex; align-items:center; justify-content:space-between; gap:16px; }
-    .brand { display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:#fff; }
-    .brand img { width:26px; height:auto; }
-    .brand b { font-family:var(--serif); font-size:18px; letter-spacing:0.02em; font-weight:600; }
-    .nav a.home { color:rgba(255,255,255,0.75); text-decoration:none; font-size:14px; transition:color 0.15s ease; }
-    .nav a.home:hover { color:#fff; }
-
-    .hero {
-      background: radial-gradient(90% 130% at 50% -25%, #34090D 0%, var(--ink) 62%);
-      color:#F7F6F2; text-align:center;
-      padding: clamp(56px, 9vw, 96px) 0 clamp(64px, 10vw, 104px);
+    .vi-venue {
+      padding: clamp(24px, 2.6vw, 32px);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--canvas-paper);
+      transition: background 0.2s ease;
     }
-    .kicker { font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#FFB7BD; margin:0 0 18px; }
-    h1 { font-family:var(--serif); font-size: clamp(34px, 6vw, 60px); line-height:1.12; letter-spacing:-0.01em; font-weight:600; margin:0 0 22px; }
-    h1 .serif { color:#E89AA0; }
-    .hero p { font-size: clamp(16px, 2.2vw, 19px); color:rgba(247,246,242,0.78); max-width:64ch; margin:0 auto; }
-
-    main { padding: clamp(56px, 8vw, 88px) 0 24px; }
-    section { margin: 0 0 clamp(56px, 8vw, 80px); }
-    .eyebrow { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--crimson); font-weight:600; margin:0 0 10px; }
-    h2 { font-family:var(--serif); font-size: clamp(24px, 3.4vw, 34px); letter-spacing:-0.01em; line-height:1.15; font-weight:600; margin:0 0 16px; }
-    h3 { font-family:var(--serif); font-size: 19px; margin: 0 0 6px; letter-spacing:-0.005em; font-weight:600; }
-    p { color: var(--ink-soft); font-size: 16.5px; }
-    .lead { font-size: 18px; max-width:66ch; }
-    ul { padding-left: 0; list-style:none; margin: 20px 0 0; }
-    li { position:relative; padding-left: 26px; margin: 12px 0; color: var(--ink-soft); }
-    li::before { content:"→"; position:absolute; left:0; color:var(--crimson); }
-
-    .grid { display:grid; grid-template-columns: repeat(2,1fr); gap:18px; margin-top: 22px; }
-    .card {
-      background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:24px;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    .vi-venue:hover { background: var(--canvas-haze); }
+    .vi-venue__h {
+      font-family: var(--font-display); font-weight: 500;
+      font-size: 19px; letter-spacing: -0.015em; margin: 0;
     }
-    .card:hover { transform: translateY(-3px); border-color:#D6D5CF; box-shadow: 0 12px 28px -12px rgba(10,10,11,0.14); }
-    .card p { font-size:15px; color:var(--muted); margin:0; }
-    .step-n { font-family:var(--serif); font-style:italic; font-size:15px; color:var(--crimson); display:block; margin-bottom:8px; }
-    @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
-
-    details { border-bottom:1px solid var(--line); padding: 16px 0; }
-    details:first-of-type { border-top:1px solid var(--line); }
-    summary { font-weight:600; cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:16px; }
-    summary::-webkit-details-marker { display:none; }
-    summary::after { content:"+"; font-family:var(--serif); font-size:20px; line-height:1; color:var(--crimson); flex-shrink:0; transition: transform 0.18s ease; }
-    details[open] summary::after { transform: rotate(45deg); }
-    details p { margin: 10px 0 0; max-width:64ch; }
-
-    .cta {
-      background: radial-gradient(120% 120% at 18% 0%, var(--crimson) 0%, var(--crimson-deep) 55%, var(--crimson-darker) 100%);
-      color:#fff; border-radius:20px; text-align:center;
-      padding: clamp(36px, 6vw, 56px) 28px;
+    .vi-venue__p {
+      margin: 9px 0 0; color: var(--fg-muted);
+      font-size: 14.5px; line-height: var(--lh-relaxed);
     }
-    .cta h2 { color:#fff; }
-    .cta p { color: rgba(255,255,255,0.88); max-width:48ch; margin: 0 auto 26px; }
-    .cta-actions { display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap; }
-    .btn {
-      display:inline-block; background:#fff; color:var(--crimson); text-decoration:none; font-weight:600;
-      padding: 13px 26px; border-radius:999px;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -10px rgba(0,0,0,0.45); }
-    .btn.ghost { background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.55); }
-    .btn.ghost:hover { border-color:#fff; box-shadow:none; }
+    @media (max-width: 900px) { .vi-venues { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .vi-venues { grid-template-columns: 1fr; } }
 
-    footer { border-top:1px solid var(--line); margin-top: 48px; padding: 28px 0 56px; color: var(--subtle); font-size: 14px; }
-    footer a { color: var(--muted); text-decoration:none; margin-right: 16px; }
-    footer a:hover { color: var(--crimson); }
+    /* Proof strip — the real tour's numbers, lifted from the homepage's stat row. */
+    .vi-proof {
+      margin-top: clamp(30px, 4vw, 44px);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: clamp(16px, 2.4vw, 30px);
+      border-top: 1px solid var(--border);
+      padding-top: clamp(22px, 3vw, 30px);
+    }
+    .vi-proof__n {
+      font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 40px);
+      font-weight: 500; letter-spacing: -0.02em; line-height: 1;
+    }
+    .vi-proof__l {
+      margin-top: 8px; font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+      color: var(--fg-muted);
+    }
+    @media (max-width: 620px) { .vi-proof { grid-template-columns: repeat(2, 1fr); gap: 22px; } }
+
+    /* Closing CTA — same dark panel as the About page's, without importing the
+       whole About stylesheet for one block. */
+    .vi-cta {
+      background: var(--dark-bg); color: var(--dark-fg);
+      padding: clamp(56px, 8vw, 96px) 0;
+    }
+    .vi-cta__inner { display: flex; align-items: flex-end; justify-content: space-between; gap: clamp(28px, 5vw, 64px); flex-wrap: wrap; }
+    .vi-cta__h { font-family: var(--font-display); font-weight: 500; color: #fff; font-size: clamp(30px, 4vw, 46px); letter-spacing: -0.02em; line-height: 1.1; margin: 14px 0 0; }
+    .vi-cta__p { margin: 16px 0 0; color: rgba(247, 246, 242, 0.72); font-size: var(--fs-body-lg); line-height: var(--lh-relaxed); max-width: 52ch; }
+    .vi-cta__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    @media (max-width: 760px) { .vi-cta__inner { flex-direction: column; align-items: flex-start; } .vi-cta__actions { width: 100%; } .vi-cta__actions .v-btn { flex: 1 1 auto; justify-content: center; } }
   </style>
 </head>
 <body>
-  <div class="band">
-    <div class="wrap nav">
-      <a class="brand" href="/"><img src="/assets/viylsa-mark-white-sm.png" alt="" width="256" height="247"/><b>VIYLSA</b></a>
-      <a class="home" href="/">← Home</a>
+  <nav class="v-nav v-nav--scrolled">
+    <div class="v-nav__pill">
+      <a href="/" class="v-nav__brand">
+        <img src="/assets/viylsa-mark-sm.png" alt="" class="v-nav__mark" width="256" height="247"/>
+        <span class="v-nav__brand-name">VIYLSA</span>
+      </a>
+      <ul class="v-nav__links">
+        <li><a href="/#live-tour">Tour</a></li>
+        <li><a href="/#how">How it works</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+        <li><a href="/about.html">About</a></li>
+      </ul>
+      <div class="v-nav__cta">
+        <a href="/#contact" class="v-btn v-btn--primary">Book a demo</a>
+      </div>
     </div>
-  </div>
+  </nav>
 
-  <header class="hero">
-    <div class="wrap">
-      <p class="kicker">Islamabad &amp; Rawalpindi</p>
-      <h1>360° virtual tours, shot <span class="serif">where you are.</span></h1>
-      <p>VIYLSA is a local Islamabad &amp; Rawalpindi crew. We bring the 360° rig to your venue, capture it in a single afternoon, and hand you an interactive tour with a built-in AI guide that answers visitors in English and Urdu — so people across Pakistan can walk your space from their phone before they ever arrive.</p>
+  <header id="top" class="v-hero">
+    <div class="v-hero__glow" aria-hidden="true"></div>
+    <div class="v-hero__grain" aria-hidden="true"></div>
+    <div class="v-hero__inner">
+      <div class="v-hero__copy">
+        <p class="v-eyebrow v-eyebrow--crimson v-hero__eyebrow">Islamabad &amp; Rawalpindi</p>
+        <h1 class="v-display">360° virtual tours, shot <span class="v-display__em">where you are.</span></h1>
+        <p class="v-hero__sub">
+          <b>VIYLSA</b> is a local crew. We bring the 360° rig to your venue,
+          capture it in one afternoon, and hand back a tour anyone can walk from
+          their phone — with a guide that answers them in English or Urdu.
+        </p>
+        <div class="v-hero__cta">
+          <a href="#book" class="v-btn v-btn--primary v-btn--lg">Book a shoot</a>
+          <a href="https://razee4315.github.io/nutech-tour-threejs/" target="_blank" rel="noopener" class="v-btn v-btn--ghost-dark v-btn--lg">See a finished tour ↗</a>
+        </div>
+      </div>
     </div>
   </header>
 
-  <main class="wrap">
-    <section>
-      <p class="eyebrow">Why local matters</p>
-      <h2>A virtual tour company based in the twin cities</h2>
-      <p class="lead">Because we're local, there's no travel surcharge, no shipping, and no waiting on an out-of-town team. We scope your tour on a quick call, shoot around your opening hours, and deliver a hosted, shareable tour you can put on WhatsApp, your website, and Google Maps.</p>
-      <ul>
-        <li>On-site 360° capture across Islamabad, Rawalpindi and the wider Potohar region.</li>
-        <li>AI guide trained on your own floor plan, FAQ, pricing and brochures — replying in English &amp; Urdu, 24/7.</li>
-        <li>Visitor analytics so you can see who came, which spaces they opened, and the leads the guide captured.</li>
-        <li>Hosting, a shareable link, and a one-line website embed included with every package.</li>
-      </ul>
-    </section>
-
-    <section>
-      <p class="eyebrow">Who it's for</p>
-      <h2>Venues we tour in Islamabad &amp; Rawalpindi</h2>
-      <div class="grid">
-        <div class="card"><h3>Universities &amp; campuses</h3><p>Let prospective students walk hostels, labs and lecture halls — and have the AI guide answer admission, fee and hostel questions instantly.</p></div>
-        <div class="card"><h3>Hotels &amp; guest houses</h3><p>Show rooms, halls and dining the way guests will actually experience them, with booking enquiries captured around the clock.</p></div>
-        <div class="card"><h3>Real estate &amp; offices</h3><p>Let buyers and tenants tour a listing remotely and self-qualify before they ask for a physical viewing.</p></div>
-        <div class="card"><h3>Hospitals &amp; clinics</h3><p>Help patients and families find departments, wards and facilities calmly before they arrive.</p></div>
-        <div class="card"><h3>Showrooms &amp; retail</h3><p>Put your floor online so customers can browse and ask before making the trip.</p></div>
-        <div class="card"><h3>Event halls &amp; restaurants</h3><p>Let couples and planners walk the space and picture the day — and message you straight from the tour.</p></div>
+  <main>
+    <!-- Proof first. The old version of this page asked a stranger to believe
+         four sections of claims before naming a single venue we had shot. -->
+    <section class="v-section v-section--haze">
+      <div class="v-wrap">
+        <div class="v-section__head v-section__head--rule">
+          <p class="v-eyebrow v-eyebrow--crimson">Shot in Islamabad</p>
+          <h2 class="v-h2">We have already done this here.</h2>
+        </div>
+        <p class="v-tdemo__lede" style="max-width:62ch">
+          NUTECH — the National University of Technology on Islamabad's IJP Road —
+          is our first campus tour: fourteen scenes across three buildings, with
+          hotspots on the labs, the library and the hostel blocks. It is live,
+          it is embedded on our homepage, and you can walk it right now without
+          talking to us first.
+        </p>
+        <div class="vi-proof">
+          <div>
+            <div class="vi-proof__n">14</div>
+            <div class="vi-proof__l">Panoramic scenes</div>
+          </div>
+          <div>
+            <div class="vi-proof__n">28</div>
+            <div class="vi-proof__l">Interactive hotspots</div>
+          </div>
+          <div>
+            <div class="vi-proof__n">3</div>
+            <div class="vi-proof__l">Buildings linked</div>
+          </div>
+          <div>
+            <div class="vi-proof__n">1</div>
+            <div class="vi-proof__l">Afternoon on site</div>
+          </div>
+        </div>
+        <p style="margin-top:28px">
+          <a class="v-btn v-btn--link" href="/#live-tour">Walk the NUTECH tour on our homepage →</a>
+        </p>
       </div>
     </section>
 
-    <section>
-      <p class="eyebrow">The process</p>
-      <h2>How it works</h2>
-      <div class="grid">
-        <div class="card"><span class="step-n">Step one</span><h3>We capture</h3><p>Our twin-cities crew brings the 360° rig and shoots your venue in one afternoon — nothing to buy or ship.</p></div>
-        <div class="card"><span class="step-n">Step two</span><h3>We train the AI</h3><p>We feed the guide your documents so it answers visitors in English &amp; Urdu like your best front-desk staffer.</p></div>
-        <div class="card"><span class="step-n">Step three</span><h3>You go live</h3><p>One link for WhatsApp and email, or a one-line embed for your site — live on every device, the same day.</p></div>
-        <div class="card"><span class="step-n">Pricing</span><h3>Quoted to your space</h3><p>Starter, Professional and Enterprise packages, each with a fixed price before we shoot. <a href="/#pricing">See packages →</a></p></div>
+    <section class="v-section">
+      <div class="v-wrap">
+        <div class="v-section__head v-section__head--aside">
+          <p class="v-eyebrow">Why local matters</p>
+          <h2 class="v-h2">The crew is forty minutes away, not a flight.</h2>
+        </div>
+        <p class="v-tdemo__lede" style="max-width:62ch">
+          Being in the twin cities is not a marketing line, it is the price. There
+          is no travel surcharge, no equipment to ship, and no waiting on an
+          out-of-town team's calendar. We scope your tour on one call, shoot
+          around your opening hours, and hand back something you can put on
+          WhatsApp, your website and your Google Business listing the same week.
+        </p>
+        <ul class="v-ai__points" style="margin-top:26px">
+          <li><span class="v-ai__pt-ic">✓</span> On-site capture across Islamabad, Rawalpindi and the wider Potohar region</li>
+          <li><span class="v-ai__pt-ic">✓</span> A guide trained on your own floor plan, FAQ, pricing and brochures — answering in English &amp; Urdu, around the clock</li>
+          <li><span class="v-ai__pt-ic">✓</span> Visitor analytics: who came, which spaces they opened, what they asked</li>
+          <li><span class="v-ai__pt-ic">✓</span> Hosting, a shareable link and a one-line website embed, in every package</li>
+        </ul>
       </div>
     </section>
 
-    <section>
-      <p class="eyebrow">FAQ</p>
-      <h2>Questions from local venues</h2>
-      <details><summary>Do you only cover Islamabad and Rawalpindi?</summary><p>We're based in the twin cities and that's where we work fastest, but we shoot venues across Pakistan. Tell us where you are and we'll confirm scheduling.</p></details>
-      <details><summary>How long does a shoot take?</summary><p>Most venues are captured in a single afternoon. You don't need to close — we work around your opening hours and shoot only the spaces you choose.</p></details>
-      <details><summary>Does the AI guide really answer in Urdu?</summary><p>Yes. The guide replies in both English and Urdu, switchable by the visitor mid-conversation, and only answers from the documents you approve.</p></details>
-      <details><summary>What does it cost?</summary><p>Every venue is different, so each package is quoted to your space — one call to scope it, then a fixed price before we shoot.</p></details>
+    <section class="v-section v-section--haze">
+      <div class="v-wrap">
+        <div class="v-section__head v-section__head--rule">
+          <p class="v-eyebrow">Who it's for</p>
+          <h2 class="v-h2">Venues we tour in the twin cities.</h2>
+        </div>
+        <div class="vi-venues">
+          <div class="vi-venue">
+            <h3 class="vi-venue__h">Universities &amp; campuses</h3>
+            <p class="vi-venue__p">Let a student in Multan walk the hostel, the labs and a lecture hall before the admission deadline — and have the guide answer fee and hostel questions at midnight.</p>
+          </div>
+          <div class="vi-venue">
+            <h3 class="vi-venue__h">Hotels &amp; guest houses</h3>
+            <p class="vi-venue__p">Show the room, the hall and the dining space as a guest will actually meet them, with booking enquiries captured while the desk is asleep.</p>
+          </div>
+          <div class="vi-venue">
+            <h3 class="vi-venue__h">Real estate &amp; offices</h3>
+            <p class="vi-venue__p">Let a buyer abroad tour the listing and rule it in or out themselves, so the viewings you do drive across town for are the serious ones.</p>
+          </div>
+          <div class="vi-venue">
+            <h3 class="vi-venue__h">Hospitals &amp; clinics</h3>
+            <p class="vi-venue__p">Help a family find the department, the ward and the parking before they arrive, on the worst day of their week.</p>
+          </div>
+          <div class="vi-venue">
+            <h3 class="vi-venue__h">Showrooms &amp; retail</h3>
+            <p class="vi-venue__p">Put the floor online so someone in Rawalpindi can browse the range and ask a question before making the trip across the twin cities.</p>
+          </div>
+          <div class="vi-venue">
+            <h3 class="vi-venue__h">Event halls &amp; restaurants</h3>
+            <p class="vi-venue__p">Let a couple and their families walk the hall and picture the day, then message you from inside the tour while they are still standing in it.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="cta">
-      <h2>Book a tour in the twin cities</h2>
-      <p>Tell us about your venue in Islamabad or Rawalpindi and we'll show you how it looks as a 360° tour.</p>
-      <div class="cta-actions">
-        <a class="btn" href="https://wa.me/923105968568">WhatsApp us</a>
-        <a class="btn ghost" href="mailto:viylsavirtualtour@gmail.com">Email us</a>
+    <section class="v-section v-band">
+      <div class="v-band__grain" aria-hidden="true"></div>
+      <div class="v-band__glow" aria-hidden="true"></div>
+      <div class="v-wrap">
+        <div class="v-section__head v-section__head--bare">
+          <h2 class="v-h2 v-h2--onband">Three steps. Usually one afternoon.</h2>
+        </div>
+        <div class="v-rail">
+          <div class="v-rail__step">
+            <div class="v-rail__n">Step 01</div>
+            <h3 class="v-rail__h">We capture</h3>
+            <p class="v-rail__p">Our twin-cities crew brings the 360° rig and shoots your venue in a single afternoon. Nothing to buy, nothing to ship, and you do not have to close.</p>
+          </div>
+          <div class="v-rail__step">
+            <div class="v-rail__n">Step 02</div>
+            <h3 class="v-rail__h">We train the guide</h3>
+            <p class="v-rail__p">We feed it your own documents, so it answers visitors in English and Urdu the way your best front-desk staffer would — and only from what you approved.</p>
+          </div>
+          <div class="v-rail__step">
+            <div class="v-rail__n">Step 03</div>
+            <h3 class="v-rail__h">You go live</h3>
+            <p class="v-rail__p">One link for WhatsApp and email, or a one-line embed for your site. Live on every device, and yours to share the same day.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="v-section">
+      <div class="v-wrap v-faq__wrap">
+        <div class="v-section__head v-section__head--rule">
+          <p class="v-eyebrow">FAQ</p>
+          <h2 class="v-h2">Questions from local venues.</h2>
+        </div>
+        <div class="v-faq">
+          <details class="v-faq__item">
+            <summary class="v-faq__q">Do you only cover Islamabad and Rawalpindi?<span class="v-faq__chev" aria-hidden="true">+</span></summary>
+            <p class="v-faq__a">The twin cities and the Potohar region around them are where we work fastest and where there is no travel cost to pass on. We do shoot elsewhere in Pakistan — tell us where the venue is and we will quote the travel honestly rather than pretend distance is free.</p>
+          </details>
+          <details class="v-faq__item">
+            <summary class="v-faq__q">How long does a shoot take?<span class="v-faq__chev" aria-hidden="true">+</span></summary>
+            <p class="v-faq__a">Most venues are captured in one afternoon. You do not need to close: we work around your opening hours and shoot only the spaces you have chosen. NUTECH's fourteen scenes were a single visit.</p>
+          </details>
+          <details class="v-faq__item">
+            <summary class="v-faq__q">Does the AI guide really answer in Urdu?<span class="v-faq__chev" aria-hidden="true">+</span></summary>
+            <p class="v-faq__a">Yes, and a visitor can switch language mid-conversation. It answers only from the documents you approve, so it will say it does not know rather than invent a fee or a deadline. There is a working demo on our homepage.</p>
+          </details>
+          <details class="v-faq__item">
+            <summary class="v-faq__q">What does it cost?</summary>
+            <p class="v-faq__a">Every venue is a different size, so each package is quoted to your space. One call to scope it, then a fixed price in writing before anyone turns up with a camera — never a surprise at the end. <a href="/#pricing">See what each package includes →</a></p>
+          </details>
+          <details class="v-faq__item">
+            <summary class="v-faq__q">Who owns the tour and the photographs?<span class="v-faq__chev" aria-hidden="true">+</span></summary>
+            <p class="v-faq__a">You do. The panoramas are of your building, and the visitor data the tour collects is yours. Hosting is included for the period in your package, and you can take the whole thing elsewhere afterwards.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="book" class="vi-cta">
+      <div class="v-wrap vi-cta__inner">
+        <div>
+          <p class="v-eyebrow v-eyebrow--onband">Next step</p>
+          <h2 class="vi-cta__h">Tell us where the venue is.</h2>
+          <p class="vi-cta__p">
+            A university, a hall, a hotel, a clinic — anywhere in Islamabad or
+            Rawalpindi. Send us the address and we will tell you what it looks
+            like as a tour, and what it costs, before you commit to anything.
+          </p>
+        </div>
+        <div class="vi-cta__actions">
+          <a class="v-btn v-btn--primary v-btn--lg" href="https://wa.me/923105968568" target="_blank" rel="noopener">WhatsApp us</a>
+          <a class="v-btn v-btn--ghost-dark v-btn--lg" href="mailto:viylsavirtualtour@gmail.com">Email instead</a>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="wrap">
-    <a href="/">Home</a>
-    <a href="/about.html">About</a>
-    <a href="/privacy.html">Privacy</a>
-    <a href="/terms.html">Terms</a>
-    <div style="margin-top:14px">© 2026 VIYLSA. Bringing visits online.</div>
+  <footer class="v-footer">
+    <div class="v-wrap v-footer__inner">
+      <div class="v-footer__brand">
+        <a href="/" class="v-footer__brand-link">
+          <img src="/assets/viylsa-mark-white-sm.png" alt="" class="v-footer__mark" width="256" height="247" loading="lazy"/>
+          <div>
+            <div class="v-footer__name">VIYLSA</div>
+            <div class="v-footer__tag">Bringing visits online.</div>
+          </div>
+        </a>
+      </div>
+      <div class="v-footer__cols">
+        <div>
+          <div class="v-footer__col-h">Product</div>
+          <a href="/#live-tour">Live tour</a><a href="/#analytics">What you get back</a><a href="/#how">How it works</a><a href="/#pricing">Pricing</a><a href="/#faq">FAQ</a>
+        </div>
+        <div>
+          <div class="v-footer__col-h">Company</div>
+          <a href="/about.html">About</a><a href="/about.html#founders">Founders</a><a href="/#founding">Founding venues</a><a href="/#contact">Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
+        </div>
+        <div>
+          <div class="v-footer__col-h">Get in touch</div>
+          <a href="mailto:viylsavirtualtour@gmail.com">viylsavirtualtour@gmail.com</a>
+          <a href="https://www.viylsa.app">www.viylsa.app</a>
+        </div>
+      </div>
+    </div>
+    <div class="v-footer__base">
+      <span>© 2026 VIYLSA. All rights reserved.</span>
+      <a href="#top" class="v-footer__totop">Back to top ↑</a>
+    </div>
   </footer>
 
   <script type="application/ld+json">
@@ -215,6 +382,37 @@
           { "@type": "City", "name": "Rawalpindi" }
         ],
         "availableLanguage": ["en", "ur"]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.viylsa.app/virtual-tours-islamabad.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do you only cover Islamabad and Rawalpindi?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The twin cities and the Potohar region around them are where we work fastest and where there is no travel cost to pass on. We do shoot elsewhere in Pakistan — tell us where the venue is and we will quote the travel honestly rather than pretend distance is free." }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does a 360° shoot take?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Most venues are captured in one afternoon. You do not need to close: we work around your opening hours and shoot only the spaces you have chosen. NUTECH's fourteen scenes were a single visit." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the AI guide really answer in Urdu?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes, and a visitor can switch language mid-conversation. It answers only from the documents you approve, so it will say it does not know rather than invent a fee or a deadline." }
+          },
+          {
+            "@type": "Question",
+            "name": "What does a virtual tour cost in Islamabad?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Every venue is a different size, so each package is quoted to your space. One call to scope it, then a fixed price in writing before anyone turns up with a camera." }
+          },
+          {
+            "@type": "Question",
+            "name": "Who owns the tour and the photographs?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You do. The panoramas are of your building, and the visitor data the tour collects is yours. Hosting is included for the period in your package, and you can take the whole thing elsewhere afterwards." }
+          }
+        ]
       }
     ]
   }
