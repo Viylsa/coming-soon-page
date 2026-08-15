@@ -13,7 +13,7 @@ function Analytics() {
     ['Cafeteria', 51, '36%'],
   ];
   return (
-    <section id="analytics" className="v-section v-section--haze v-section--tailroom">
+    <section id="analytics" className="v-section v-section--haze">
       <div className="v-wrap v-rcpt__grid">
         <div className="v-rcpt__intro" data-reveal>
           {/* rule head — the label heads a hairline that runs out to the measure */}

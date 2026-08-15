@@ -1,5 +1,5 @@
-/* Reveal-on-scroll (single + staggered groups), counters, CTA spotlight.
-   Pure vanilla. Survives React re-renders by
+/* Reveal-on-scroll (single + staggered groups), counters, CTA spotlight,
+   off-screen marquee pause. Pure vanilla. Survives React re-renders by
    re-querying on every MutationObserver tick. Respects prefers-reduced-motion.
    (Nav scrollspy + the sliding indicator now live in Nav.jsx — one system.) */
 
@@ -95,6 +95,16 @@
     });
   }
 
+  // ── Pause the venue marquee while it's off-screen (saves wakeups) ──
+  const marqueeIo = new IntersectionObserver((entries) => {
+    for (const e of entries) e.target.classList.toggle('is-paused', !e.isIntersecting);
+  });
+  function bindMarquee() {
+    document.querySelectorAll('.v-hero__marquee:not(.is-marq)').forEach((m) => {
+      m.classList.add('is-marq');
+      marqueeIo.observe(m);
+    });
+  }
 
   function scan() {
     // Groups first so their children are claimed before the single-element pass.
@@ -118,6 +128,7 @@
       countIo.observe(el);
     });
     bindMagnetic();
+    bindMarquee();
   }
 
   // Initial pass + re-scan whenever React adds nodes. Bursts (the AI chat swaps

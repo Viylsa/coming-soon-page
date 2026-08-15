@@ -86,7 +86,6 @@ input:focus-visible, textarea:focus-visible {
    section eats before it reaches the card, roughly doubling that window. It is
    deliberately invisible in the stacked view; without JS (or with reduced
    motion, where nothing pins) it reads as a slightly airier section. */
-.v-section--tailroom { padding-bottom: calc(var(--pad-section) + clamp(120px, 16vh, 240px)); }
 /* invisible scroll anchor (e.g. #ai-guide alias inside #analytics) */
 .v-anchor { display: block; height: 0; width: 0; }
 .v-section__head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom: var(--head-gap); flex-wrap: wrap; }
@@ -396,9 +395,9 @@ input:focus-visible, textarea:focus-visible {
 }
 
 /* ---------- HERO — type-led editorial ----------
-   No photography, and nothing along the bottom edge: the brand carries the
-   hero. Deep ink, a soft crimson glow, film grain and big type. The live client
-   tour is one scroll away at #live-tour, where it can be dragged. */
+   No photography: the brand carries the hero. Deep ink, a soft crimson glow,
+   film grain and big type; a venue-type marquee along the bottom says "built
+   for every space". The live client tour is one scroll away at #live-tour. */
 .v-hero {
   position: relative;
   background:
@@ -417,7 +416,9 @@ input:focus-visible, textarea:focus-visible {
   min-height: calc(100svh + var(--stack-radius));
   display: flex; flex-direction: column;
   justify-content: center;
-  /* Top padding clears the floating nav (~88px). */
+  /* Top padding clears the floating nav (~88px); bottom padding reserves room
+     for the marquee, which is pinned absolutely to the hero's bottom edge (see
+     .v-hero__marquee) so it is ALWAYS the last thing inside the fold. */
   padding: clamp(96px, 12vw, 124px) 0 78px;
   overflow: hidden;
 }
@@ -518,6 +519,43 @@ input:focus-visible, textarea:focus-visible {
   0%, 100% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.5); }
   50%      { box-shadow: 0 0 0 5px rgba(61, 220, 132, 0); }
 }
+
+/* ── Venue-type marquee ── */
+.v-hero__marquee {
+  /* Pinned to the hero's bottom edge — decoupled from the centered copy column
+     so it can never be pushed below the fold by tall copy (the old margin-top +
+     trailing-flex-child layout was the root cause of the "marquee only appears
+     after scrolling" bug). It is aria-hidden decoration, so absolute is safe. */
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 18px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 14%, black 86%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 14%, black 86%, transparent);
+}
+.v-hero__marquee-track {
+  display: flex; width: max-content;
+  animation: v-marquee 36s linear infinite;
+}
+@keyframes v-marquee {
+  /* track holds 4 copies of the venue list; advancing by one copy (25%) loops
+     seamlessly with no blank gap on wide (≥1440px) monitors. */
+  to { transform: translateX(-25%); }
+}
+/* Pause on hover (lets people read the venue list) and while off-screen
+   (motion.js toggles .is-paused via an IntersectionObserver — no idle wakeups). */
+.v-hero__marquee:hover .v-hero__marquee-track,
+.v-hero__marquee.is-paused .v-hero__marquee-track { animation-play-state: paused; }
+.v-hero__marquee-item {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  padding-right: 18px;
+}
+.v-hero__marquee-dot { color: rgba(232, 154, 160, 0.6); padding-left: 18px; }
 
 @media (max-width: 560px) {
   .v-hero__cta { width: 100%; flex-direction: column; }
@@ -640,11 +678,13 @@ input:focus-visible, textarea:focus-visible {
   background: var(--crimson-field);
   color: #fff;
   overflow: hidden;
-  /* Full-screen band, content centred. min-height (not height) lets it grow
-     past the viewport when the stacked steps are taller — so nothing is clipped
-     on small phones; on desktop it fills the screen with the steps centred. */
-  min-height: 100vh;
-  min-height: 100svh;
+  /* Was min-height:100vh. A full-screen band sounds right and measured badly:
+     with ~470px of steps (and only ~290px of principles on About) it left
+     200–350px of empty crimson above AND below the content, which is what you
+     actually saw on screen while the next section climbed into view. Sized to
+     its content now, with a floor so it still reads as a deliberate full band
+     rather than a stripe. */
+  min-height: clamp(420px, 62vh, 680px);
   display: flex; flex-direction: column; justify-content: center;
 }
 .v-band__grain {
@@ -801,12 +841,44 @@ html.v-stack #main > * {
   position: sticky;
   top: var(--stack-top, 0px);
 }
+/* Measured shorter than the viewport, so it cannot own the screen while pinned
+   — it scrolls instead. stackSections.js sets this; see the note there. */
+html.v-stack #main > .is-unpinned {
+  position: relative;
+  top: auto;
+}
+
+/* ── Tail ──
+   The incoming section starts covering the pinned one the moment it locks, so
+   whatever sits at the bottom of a pinned section is read for the least time —
+   and at the FAQ's 26px of bottom padding, the last question was being wiped
+   mid-sentence. This adds a run of empty space after the content of every
+   pinned section, so the arriving section eats blank space first and the reader
+   gets that scroll distance with the content still whole.
+
+   Gated behind html.v-stack: without pinning there is nothing to outrun, and
+   the extra space would just be a hole in the page.
+
+   Applied to every stacked section, NOT only the pinned ones. The tail is part
+   of a section's height, and its height is what decides whether it pins — so
+   making the tail conditional on pinning is a feedback loop: a section just
+   under the threshold gets no tail, stays short, stays unpinned (and one just
+   over it latches the other way). Constant tail, stable height, and
+   stackSections.js subtracts it back out before deciding.
+
+   The hero is excluded: its bottom padding is measured against the marquee
+   pinned to its bottom edge, and this rule would outrank it. */
+:root { --stack-tail: clamp(90px, 13vh, 190px); }
+html.v-stack #main > *:not(.v-hero) {
+  padding-bottom: calc(var(--pad-section) + var(--stack-tail));
+}
 /* The footer is deliberately NOT sticky: it is the last thing on the page and
    should slide over the pinned contact band and stay there. It keeps
    position:relative from the rule above so it still paints on top of it. */
-/* The first section overlaps the hero upward by --stack-radius, so give the
-   hero that much extra bottom padding and the centred copy keeps its distance
-   from the seam. */
+/* The hero's marquee is pinned to its bottom edge, so the first section's
+   overlap would sit right on top of it. Lift it clear, and give the hero back
+   the same amount of bottom padding so the centred copy keeps its distance. */
+.v-hero__marquee { bottom: var(--stack-radius); }
 .v-hero { padding-bottom: calc(78px + var(--stack-radius)); }
 @media (max-height: 760px) {
   .v-hero { padding-bottom: calc(56px + var(--stack-radius)); }
@@ -1163,7 +1235,7 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
   [data-reveal], [data-reveal].is-in { opacity: 1 !important; transform: none !important; transition: none !important; }
   .v-hero__eyebrow, .v-display, .v-hero__sub, .v-hero__cta, .v-hero__trust,
   .v-hero__trust-dot,
-  .v-ai__dot, .v-ai__typing span, .v-ai__bubble,
+  .v-hero__marquee-track, .v-ai__dot, .v-ai__typing span, .v-ai__bubble,
   .v-tdemo__loading-shimmer { animation: none !important; transform: none !important; }
   .v-tdemo__hint { display: none; }
   .v-rcpt__bar-fill, .v-ai__lead { transition: none !important; }

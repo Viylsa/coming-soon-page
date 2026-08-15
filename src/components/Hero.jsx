@@ -2,9 +2,11 @@ import { IconArrowRight } from '../icons.jsx';
 import useSpotlight from '../useSpotlight.js';
 
 /* Type-led editorial hero — the brand carries it, centred. Deep ink, a soft
-   crimson glow + film grain, big type, nothing else. No photography and no
-   strip along the bottom: the type IS the hero, and the live client tour is one
-   scroll away at #live-tour where it can be dragged rather than looked at. */
+   crimson glow + film grain, big type, and a venue-type marquee pinned to the
+   hero's bottom edge (so it is always inside the fold) saying "built for every
+   space". The live client tour is one scroll away at #live-tour. */
+
+const VENUES = ['Universities', 'Hotels', 'Hospitals', 'Event halls', 'Real estate', 'Showrooms', 'Restaurants', 'Schools'];
 
 function Hero() {
   // Cursor-following grain spotlight — see src/useSpotlight.js. Shared with the
@@ -31,6 +33,17 @@ function Hero() {
               Book a demo <IconArrowRight size={18}/>
             </a>
           </div>
+        </div>
+      </div>
+
+      {/* Venue-type marquee — "built for every space", pinned to the hero bottom */}
+      <div className="v-hero__marquee" aria-hidden="true">
+        <div className="v-hero__marquee-track">
+          {[...VENUES, ...VENUES, ...VENUES, ...VENUES].map((v, i) => (
+            <span className="v-hero__marquee-item" key={i}>
+              {v} <span className="v-hero__marquee-dot">·</span>
+            </span>
+          ))}
         </div>
       </div>
     </header>

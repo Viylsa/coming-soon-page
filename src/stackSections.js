@@ -4,9 +4,10 @@
  * expressed in CSS is WHERE each section should pin, because that depends on
  * its own height relative to the viewport:
  *
- *   section shorter than the viewport -> top: 0
- *       It pins as soon as its top reaches the top of the screen, and the next
- *       section rides up over it. This is the effect you actually see.
+ *   section shorter than the viewport -> not pinned at all (.is-unpinned)
+ *       Pinning it would park it at the top of the screen with the NEXT section
+ *       filling everything below it — the next section fully on show before you
+ *       have read this one. See the note in measure().
  *
  *   section TALLER than the viewport  -> top: viewportHeight - sectionHeight
  *       A negative value. The section scrolls normally until its BOTTOM edge
@@ -45,6 +46,9 @@
 
     // main is never sticky, so its rect always reflects its true flow position.
     let acc = main.getBoundingClientRect().top + window.scrollY;
+    const tailPx = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--stack-tail')
+    ) || 0;
 
     for (const el of items) {
       const cs = getComputedStyle(el);
@@ -52,8 +56,32 @@
       flowTops.set(el, acc);
       acc += el.offsetHeight;                 // a size, unaffected by sticky
 
-      const top = Math.min(0, vh - el.offsetHeight);
-      el.style.setProperty('--stack-top', Math.round(top) + 'px');
+      /* A section SHORTER than the viewport must not pin at all.
+       *
+       * Pinning it at top:0 holds it against the top of the screen while the
+       * gap beneath it — the whole rest of the viewport — is filled by the
+       * section that comes next. So the next section is on screen, in full,
+       * from the instant this one locks: you are shown the answer before you
+       * have finished the question. It reads as the page running ahead of you,
+       * and it is worst on exactly the sections that have the least content
+       * (How it works, the About principles, the closing CTA).
+       *
+       * Only a section that is at least as tall as the viewport can own the
+       * screen while it is pinned, so only those pin. Shorter ones scroll
+       * normally and keep their overlapping seam — the effect is unchanged
+       * where it works and simply absent where it misleads. */
+      /* "Taller than the viewport" is not a high enough bar. A section exactly
+       * one viewport tall pins with its content centred and the next section
+       * touching its bottom edge, so it starts being eaten after a couple of
+       * wheel notches — which is how the step cards ended up sliced in half.
+       * A section only earns pinning if its content still fills the screen once
+       * the tail is discounted, so there is a run of empty space below it when
+       * it locks. The tail is subtracted rather than added to the threshold
+       * because CSS applies it to every stacked section (see the note there):
+       * it is in offsetHeight either way, so it must come back out here. */
+      const tall = el.offsetHeight - tailPx >= vh;
+      el.classList.toggle('is-unpinned', !tall);
+      el.style.setProperty('--stack-top', tall ? Math.round(vh - el.offsetHeight) + 'px' : '0px');
     }
     seam();   // stick points just moved, so the lip progress is stale
   }
