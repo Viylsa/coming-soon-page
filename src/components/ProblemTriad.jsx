@@ -22,7 +22,7 @@ function ProblemTriad() {
       <div className="v-wrap">
         {/* aside head — label in a left margin column, like a printed report */}
         <div className="v-section__head" data-reveal="blur">
-          <h2 className="v-h2">Why a photo gallery isn't enough.</h2>
+          <h2 className="v-h2">Why a photo<br/>gallery isn't enough.</h2>
         </div>
         {/* The section argues "static photos lie" and then asks you to take
             its word for it. This shows it first: one real 360° scene from the

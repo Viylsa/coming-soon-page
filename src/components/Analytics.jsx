@@ -18,7 +18,7 @@ function Analytics() {
         <div className="v-rcpt__intro" data-reveal>
           {/* rule head — the label heads a hairline that runs out to the measure */}
           <div className="v-section__head">
-            <h2 className="v-h2">Every visit, <span className="v-nowrap">on the record.</span></h2>
+            <h2 className="v-h2">Every visit,<br/>on the record.</h2>
           </div>
           <p className="v-rcpt__lede">
             You stop guessing. A VIYLSA tour shows who came, which spaces they

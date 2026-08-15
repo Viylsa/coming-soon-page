@@ -35,7 +35,7 @@ function LiveTourPreview() {
       <div className="v-wrap">
         <div className="v-section__head" data-reveal>
           <div>
-            <h2 className="v-h2">This is exactly what your visitors <span className="v-serif">walk into.</span></h2>
+            <h2 className="v-h2">This is exactly what<br/>your visitors <span className="v-serif">walk into.</span></h2>
             <p className="v-tdemo__lede">
               Built for NUTECH, a university campus in Islamabad. Drag, click
               hotspots and browse every view: this is the live tour player,

@@ -73,7 +73,7 @@ function Contact() {
       <div className="v-wrap v-contact__inner">
         <div className="v-contact__intro" data-reveal>
           <h2 className="v-contact__h">
-            Let's bring your space <span className="v-serif">online.</span>
+            Let's bring your space<br/><span className="v-serif">online.</span>
           </h2>
           <p className="v-contact__p">
             Tell us about your venue: a university, a property, a hotel, a hall.

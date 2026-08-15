@@ -28,7 +28,7 @@ function HowItWorks() {
       <div className="v-wrap">
         {/* bare head — the brand band is announcement enough; no eyebrow label */}
         <div className="v-section__head" data-reveal="blur">
-          <h2 className="v-h2 v-h2--onband">Three steps. Usually one afternoon.</h2>
+          <h2 className="v-h2 v-h2--onband">Three steps.<br/>Usually one afternoon.</h2>
         </div>
         {/* Each card used to carry a big ghost numeral AND a "Step 01" label —
             the same number twice, and the third separate 01/02/03 treatment on

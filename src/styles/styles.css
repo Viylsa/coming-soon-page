@@ -66,21 +66,18 @@ input:focus-visible, textarea:focus-visible {
   line-height: 1.1;
   font-weight: 500;
   margin: 14px 0 0;
-  /* Only balances the headlines that genuinely need two lines; the ones that
-     fit now stay on one, so no break is arbitrary. */
+  /* Headlines break where the markup says (<br/>), not where the measure runs
+     out — see the note on any two-line headline. balance is left on for the
+     narrower viewports, where a forced line may still need to wrap again and
+     two ragged halves look worse than two even ones. */
   text-wrap: balance;
-  /* Was 22ch — which computes to ~650px inside a 1180px container, so every
-     headline between 700 and 900px wide was forced to wrap with a third of the
-     measure still empty, and balance then split it into two even halves at
-     whatever word fell nearest the middle. That is what read as headlines
-     breaking at random. At 32ch (~940px) every headline on the site sits on one
-     line at desktop and wraps only when the viewport actually requires it. */
+  /* Was 22ch (~650px in a 1180px container), which forced a wrap into every
+     headline over ~700px with a third of the measure still empty. 32ch is wide
+     enough that nothing wraps unless it is meant to. */
   max-width: 32ch;
 }
 .v-serif { font-family: var(--font-serif); font-style: italic; color: var(--viylsa-crimson); letter-spacing: -0.01em; font-weight: 400; }
 .v-muted { color: var(--fg-muted); }
-/* Keeps a phrase together so a narrow column cannot break it at a bad word. */
-.v-nowrap { white-space: nowrap; }
 .v-mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; }
 
 /* Sections carry their own opaque background rather than letting the body show
