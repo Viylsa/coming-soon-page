@@ -17,7 +17,6 @@ self-hosted (`@fontsource`), so there is no external Google Fonts request.
 ```
 index.html                  Homepage shell + SEO metadata + JSON-LD
 about.html                  Brand / E-E-A-T page (static)
-virtual-tours-islamabad.html  Local landing page (static)
 privacy.html / terms.html   Legal pages (static)
 vite.config.js              Build config (multi-page input)
 scripts/prerender.mjs       Post-build prerender of the homepage

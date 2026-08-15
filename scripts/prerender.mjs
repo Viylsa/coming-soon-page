@@ -20,10 +20,9 @@ import { writeFileSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const PORT = 4317;
-// The React-rendered routes. privacy.html / terms.html /
-// virtual-tours-islamabad.html are hand-written HTML and already crawlable, so
-// they are not listed. about.html is a React entry (src/about.jsx) and needs the
-// same snapshot treatment as the homepage.
+// The React-rendered routes. privacy.html and terms.html are hand-written HTML
+// and already crawlable, so they are not listed. about.html is a React entry
+// (src/about.jsx) and needs the same snapshot treatment as the homepage.
 // `awaitAI` is homepage-only: About has no AI-guide demo, and waiting for a
 // selector that will never appear costs a 30-second timeout on every build.
 const ROUTES = {

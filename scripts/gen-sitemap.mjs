@@ -35,7 +35,6 @@ const PAGES = [
   // About is now a React entry, so its lastmod tracks the page component and
   // its stylesheet too — not just the HTML shell, which barely changes.
   { loc: '/about.html', sources: ['about.html', 'src/pages/About.jsx', 'src/styles/about.css'] },
-  { loc: '/virtual-tours-islamabad.html', sources: ['virtual-tours-islamabad.html'] },
 ];
 
 /** Committer date (YYYY-MM-DD) of the newest commit touching `path`, or null. */

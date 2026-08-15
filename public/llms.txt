@@ -26,8 +26,6 @@ clinics, real estate and offices, showrooms and retail, event halls and restaura
 
 - [Home](https://www.viylsa.app/): what a VIYLSA tour is, a live tour of the NUTECH
   campus in Islamabad, how it works, packages, and FAQ.
-- [Virtual tours in Islamabad & Rawalpindi](https://www.viylsa.app/virtual-tours-islamabad.html):
-  local service area, venue types, and how a shoot runs.
 - [About](https://www.viylsa.app/about.html): the founding team and why VIYLSA exists.
 - [Privacy](https://www.viylsa.app/privacy.html)
 - [Terms](https://www.viylsa.app/terms.html)
