@@ -1513,7 +1513,22 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
   font-family: var(--font-mono);
   font-size: 11px; letter-spacing: 0.04em;
   color: rgba(255,255,255,0.4);
+  line-height: 1.7;
 }
+/* A failed send has to be legible, not a footnote — it is the only thing
+   standing between a lost lead and a second attempt. */
+.v-contact__formnote--error {
+  color: #FFB7BD;
+  font-size: 12px;
+  text-align: left;
+  padding: 12px 14px;
+  border: 1px solid rgba(232, 154, 160, 0.35);
+  border-radius: var(--radius-md);
+  background: rgba(127, 20, 26, 0.16);
+}
+.v-contact__formnote--error a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+/* Submitting: the button stays put and stops taking clicks. */
+.v-contact__submit[disabled] { opacity: 0.72; cursor: progress; }
 .v-contact__sent { text-align: center; padding: 22px 8px; }
 .v-contact__sent-ic {
   width: 56px; height: 56px; margin: 0 auto 18px;

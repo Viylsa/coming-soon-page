@@ -16,10 +16,17 @@ const EMAIL = 'viylsavirtualtour@gmail.com';
    window.open(), which returns null when blocked (popup blockers, the Instagram/
    Facebook in-app browsers common in Pakistan, desktop without WhatsApp) while
    the old code still flipped to a "sent" success state. No more false success. */
+/* Formspree endpoint — posting here delivers the enquiry to the VIYLSA inbox.
+   The <form> carries this as a real action/method too, so with JS disabled or
+   the bundle failed the browser posts natively and Formspree renders its own
+   confirmation. The fetch below is the enhancement, not the mechanism. */
+const FORM_ENDPOINT = 'https://formspree.io/f/mdenloak';
+
 function Contact() {
-  const [sent, setSent] = React.useState(false);
-  const [form, setForm] = React.useState({ name: '', org: '', message: '' });
-  const waRef = React.useRef(null);
+  // idle -> sending -> sent | error
+  const [status, setStatus] = React.useState('idle');
+  const [form, setForm] = React.useState({ name: '', email: '', org: '', message: '' });
+  const sent = status === 'sent';
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -31,18 +38,25 @@ function Contact() {
 
   const waHref = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(composeText(form));
 
-  const onWaClick = (e) => {
-    const f = e.currentTarget.closest('form');
-    if (f && !f.reportValidity()) { e.preventDefault(); return; }
-    setSent(true); // the anchor navigation (new tab) proceeds normally
-  };
-
-  // Enter inside a field submits the form — route it through the same anchor so
-  // there is a single conversion path. (Native validation has already passed if
-  // onSubmit fires.)
-  const onSubmit = (e) => {
+  /* Post to Formspree without leaving the page. On a network failure the state
+     goes to 'error' rather than a success screen: the one thing this form must
+     never do is tell someone their enquiry arrived when it did not. The error
+     state hands them WhatsApp and the mail address instead. */
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (waRef.current) waRef.current.click();
+    const el = e.currentTarget;
+    if (!el.reportValidity()) return;
+    setStatus('sending');
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(el),
+      });
+      setStatus(res.ok ? 'sent' : 'error');
+    } catch {
+      setStatus('error');
+    }
   };
 
   const onEmailInstead = (e) => {
@@ -100,14 +114,20 @@ function Contact() {
           </div>
         </div>
 
-        <form className="v-contact__form" data-reveal onSubmit={onSubmit}>
+        <form
+          className="v-contact__form"
+          data-reveal
+          action={FORM_ENDPOINT}
+          method="POST"
+          onSubmit={onSubmit}
+        >
           {sent ? (
             <div className="v-contact__sent">
               <span className="v-contact__sent-ic"><IconCheck size={26}/></span>
-              <h3>Continue in WhatsApp</h3>
+              <h3>Thanks — that's with us</h3>
               <p>
-                Your message is pre-filled. Just press send and we'll reply
-                within one business day. Didn't open? Message us directly on{' '}
+                Your enquiry is in our inbox and we'll reply within one business
+                day. In a hurry? Message us on{' '}
                 <a href={'https://wa.me/' + WHATSAPP_NUMBER} target="_blank" rel="noopener">{WHATSAPP_DISPLAY}</a>{' '}
                 or email <a href={'mailto:' + EMAIL}>{EMAIL}</a>.
               </p>
@@ -118,6 +138,12 @@ function Contact() {
                 <label htmlFor="c-name">Name</label>
                 <input id="c-name" name="fullname" type="text" required placeholder="Your name" value={form.name} onChange={update('name')}/>
               </div>
+              {/* Named `email` because Formspree uses that field as the reply-to
+                  address — without it an enquiry arrives with no way to answer it. */}
+              <div className="v-field">
+                <label htmlFor="c-email">Email</label>
+                <input id="c-email" name="email" type="email" required placeholder="you@venue.com" value={form.email} onChange={update('email')}/>
+              </div>
               <div className="v-field">
                 <label htmlFor="c-org">Venue / organisation <span className="v-field__opt">(optional)</span></label>
                 <input id="c-org" name="org" type="text" placeholder="University, hotel, property…" value={form.org} onChange={update('org')}/>
@@ -126,13 +152,28 @@ function Contact() {
                 <label htmlFor="c-msg">What would you like to bring online?</label>
                 <textarea id="c-msg" name="message" rows="4" required placeholder="Tell us about your space…" value={form.message} onChange={update('message')}></textarea>
               </div>
-              <a ref={waRef} href={waHref} target="_blank" rel="noopener" className="v-btn v-btn--primary v-btn--lg v-contact__submit" onClick={onWaClick}>
-                <IconWhatsApp size={18}/> Book my demo on WhatsApp
-              </a>
-              <button type="button" className="v-btn v-btn--ghost-dark v-btn--lg v-contact__submit v-contact__submit--alt" onClick={onEmailInstead}>
-                <IconMail size={16}/> Send by email instead
+
+              {/* Formspree reads these: a readable subject line in the inbox, and
+                  a honeypot that only a bot fills in. */}
+              <input type="hidden" name="_subject" value="VIYLSA demo request from the website"/>
+              <input type="text" name="_gotcha" tabIndex="-1" autoComplete="off" aria-hidden="true" style={{ display: 'none' }}/>
+
+              <button type="submit" className="v-btn v-btn--primary v-btn--lg v-contact__submit" disabled={status === 'sending'}>
+                <IconMail size={17}/> {status === 'sending' ? 'Sending…' : 'Send enquiry'}
               </button>
-              <p className="v-contact__formnote">Opens WhatsApp with your message ready to send. No VIYLSA account or sign-up needed.</p>
+              <a href={waHref} target="_blank" rel="noopener" className="v-btn v-btn--ghost-dark v-btn--lg v-contact__submit v-contact__submit--alt">
+                <IconWhatsApp size={18}/> Or message us on WhatsApp
+              </a>
+
+              {status === 'error' ? (
+                <p className="v-contact__formnote v-contact__formnote--error" role="alert">
+                  That didn't send — the connection dropped somewhere. Please
+                  message us on <a href={'https://wa.me/' + WHATSAPP_NUMBER} target="_blank" rel="noopener">{WHATSAPP_DISPLAY}</a>{' '}
+                  or email <a href={'mailto:' + EMAIL}>{EMAIL}</a> and we'll pick it up straight away.
+                </p>
+              ) : (
+                <p className="v-contact__formnote">Goes straight to our inbox — we reply within one business day. No VIYLSA account or sign-up needed.</p>
+              )}
             </>
           )}
         </form>
