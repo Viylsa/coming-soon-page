@@ -93,74 +93,6 @@ const PRINCIPLES = [
   },
 ];
 
-const FACTS = [
-  ['Based in', 'Islamabad & Rawalpindi, Pakistan'],
-  ['Coverage', 'Venues across Pakistan'],
-  ['AI guide', 'Answers in English & Urdu'],
-  ['Typical shoot', 'A single afternoon, around your hours'],
-  ['Delivery', 'Live in 3–10 days, by package'],
-  ['Response', 'Within one business day'],
-];
-
-/* The twin cities, drawn.
-   "Islamabad & Rawalpindi" is stated four times across the site as text and was
-   never once shown. This is a schematic, not a survey map — the Margallas along
-   the top, the two cities, the corridor between them — and it says so, because
-   a diagram that implies survey accuracy it doesn't have is worse than no map.
-   Inline SVG so it costs no request and inherits the section's colours. */
-function CoverageMap() {
-  return (
-    <figure className="va-map" data-reveal="wipe">
-      <svg className="va-map__svg" viewBox="0 0 520 344" role="img"
-           aria-labelledby="va-map-t va-map-d">
-        <title id="va-map-t">Where VIYLSA shoots</title>
-        <desc id="va-map-d">
-          A schematic of the Islamabad–Rawalpindi corridor: the Margalla Hills
-          across the north, Islamabad below them, Rawalpindi to the south, and a
-          ring showing the area the crew reaches within about an hour.
-        </desc>
-
-        {/* Margalla ridge — three offset strokes read as hills without pretending
-            to be a contour survey */}
-        <g className="va-map__ridge" fill="none" strokeLinecap="round">
-          <path d="M18 66 Q 96 30 168 58 T 320 44 T 502 62"/>
-          <path d="M18 84 Q 104 50 170 76 T 322 62 T 502 80" opacity="0.66"/>
-          <path d="M18 102 Q 112 72 172 94 T 324 82 T 502 98" opacity="0.36"/>
-        </g>
-        <text className="va-map__label va-map__label--faint" x="18" y="126">MARGALLA HILLS</text>
-
-        {/* The corridor: Islamabad sits north-east of Rawalpindi, joined by the
-            road the crew actually drives */}
-        <path className="va-map__road" d="M196 232 C 236 214, 268 196, 318 170"/>
-
-        {/* Reach ring */}
-        <circle className="va-map__ring" cx="262" cy="196" r="118"/>
-        <circle className="va-map__ring va-map__ring--inner" cx="262" cy="196" r="72"/>
-
-        {/* Cities */}
-        <g>
-          <circle className="va-map__dot" cx="318" cy="170" r="7"/>
-          <circle className="va-map__dot-halo" cx="318" cy="170" r="15"/>
-          <text className="va-map__city" x="336" y="167">Islamabad</text>
-        </g>
-        <g>
-          <circle className="va-map__dot" cx="196" cy="232" r="7"/>
-          <circle className="va-map__dot-halo" cx="196" cy="232" r="15"/>
-          <text className="va-map__city va-map__city--end" x="178" y="229">Rawalpindi</text>
-        </g>
-
-        <text className="va-map__label va-map__label--faint" x="262" y="336"
-              textAnchor="middle">WITHIN ABOUT AN HOUR&apos;S DRIVE</text>
-      </svg>
-      <figcaption className="va-map__cap">
-        <span className="va-map__cap-k">Schematic · not to scale</span>
-        Both founders live here, so a shoot inside the twin cities is a drive,
-        not a trip. Beyond it we travel: tell us where the venue is and we&apos;ll
-        quote the travel honestly rather than pretend distance is free.
-      </figcaption>
-    </figure>
-  );
-}
 
 function FounderCard({ f }) {
   const hasLinks = f.linkedin || f.github;
@@ -415,25 +347,6 @@ export default function About() {
                 </article>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ---------- Facts ---------- */}
-        <section className="v-section">
-          <div className="v-wrap">
-            <div className="v-section__head v-section__head--rule" data-reveal="blur">
-              <div className="v-eyebrow">The details</div>
-              <h2 className="v-h2">Where we work, and how fast.</h2>
-            </div>
-            <CoverageMap/>
-            <dl className="va-facts" data-reveal-group>
-              {FACTS.map(([k, v]) => (
-                <div className="va-fact" key={k} data-reveal>
-                  <dt>{k}</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </section>
 

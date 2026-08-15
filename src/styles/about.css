@@ -280,33 +280,6 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
   color: rgba(255, 255, 255, 0.78);
 }
 
-/* ---------- Facts ---------- */
-.va-facts {
-  margin: 0;
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--canvas-mist);
-  border-left: 1px solid var(--canvas-mist);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-.va-fact {
-  padding: 22px 24px;
-  border-right: 1px solid var(--canvas-mist);
-  border-bottom: 1px solid var(--canvas-mist);
-  background: var(--canvas-paper);
-}
-.va-fact dt {
-  font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
-  color: var(--fg-muted);
-}
-.va-fact dd {
-  margin: 8px 0 0;
-  font-size: 15px; font-weight: 500; line-height: var(--lh-normal);
-  color: var(--fg);
-}
-
 /* ---------- Closing CTA ---------- */
 .va-cta {
   background: var(--dark-bg);
@@ -335,7 +308,6 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
 @media (max-width: 900px) {
   .va-founders { grid-template-columns: 1fr; }
   .va-principles { grid-template-columns: 1fr; gap: 26px; }
-  .va-facts { grid-template-columns: repeat(2, 1fr); }
   .va-cta__inner { flex-direction: column; align-items: flex-start; }
 }
 /* !important so it wins over the html.v-js-gated entrance rules above, which
@@ -349,58 +321,7 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
   /* Number moves above the heading — a 96px column is dead weight at this width */
   .va-chapter { grid-template-columns: 1fr; gap: 10px; }
   .va-chapter__n { font-size: 26px; padding-top: 0; }
-  .va-facts { grid-template-columns: 1fr; }
   .va-cta__actions { width: 100%; }
   .va-cta__actions .v-btn { flex: 1 1 auto; justify-content: center; }
 }
 
-/* ── Coverage map ──
-   A schematic of the twin cities, drawn inline (see CoverageMap in About.jsx).
-   Sits between the section head and the facts list: the facts say "Islamabad &
-   Rawalpindi", this shows what that means for someone deciding whether we can
-   reach them. Strokes are currentColor-derived so it stays legible if the
-   section's background ever changes band. */
-.va-map {
-  margin: clamp(28px, 4vw, 44px) 0 clamp(34px, 5vw, 52px);
-  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  align-items: center; gap: clamp(24px, 4vw, 56px);
-}
-.va-map__svg {
-  width: 100%; height: auto; display: block;
-  overflow: visible;
-}
-.va-map__ridge { stroke: var(--viylsa-crimson); stroke-width: 1.6; opacity: 0.5; }
-.va-map__road {
-  fill: none; stroke: var(--fg); stroke-width: 1.4;
-  stroke-dasharray: 5 5; opacity: 0.45;
-}
-.va-map__ring {
-  fill: none; stroke: var(--viylsa-crimson);
-  stroke-width: 1; stroke-dasharray: 3 7; opacity: 0.42;
-}
-.va-map__ring--inner { opacity: 0.22; stroke-dasharray: 2 6; }
-.va-map__dot { fill: var(--viylsa-crimson); }
-.va-map__dot-halo { fill: var(--viylsa-crimson); opacity: 0.12; }
-.va-map__city {
-  font-family: var(--font-display); font-weight: 400;
-  font-size: 19px; fill: var(--fg);
-}
-.va-map__city--end, .va-map__label--end { text-anchor: end; }
-.va-map__label {
-  font-family: var(--font-mono); font-size: 9.5px;
-  letter-spacing: 0.14em; fill: var(--fg-muted);
-}
-.va-map__label--faint { fill: var(--fg-subtle); }
-.va-map__cap {
-  font-size: 15px; line-height: 1.65; color: var(--fg-muted);
-  max-width: 46ch;
-}
-.va-map__cap-k {
-  display: block;
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--viylsa-crimson); margin-bottom: 8px;
-}
-@media (max-width: 760px) {
-  .va-map { grid-template-columns: 1fr; gap: 22px; }
-}
