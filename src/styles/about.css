@@ -280,35 +280,10 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
   color: rgba(255, 255, 255, 0.78);
 }
 
-/* ---------- Closing CTA ---------- */
-.va-cta {
-  background: var(--dark-bg);
-  color: var(--dark-fg);
-  padding: var(--pad-dark) 0;
-  position: relative; overflow: hidden;
-}
-.va-cta__inner {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  gap: clamp(24px, 4vw, 48px); flex-wrap: wrap;
-}
-.va-cta__h {
-  font-family: var(--font-display);
-  font-size: var(--fs-h1); line-height: var(--lh-tight);
-  letter-spacing: var(--tracking-tight); font-weight: 500;
-  margin: 14px 0 0; color: #fff; max-width: 18ch;
-}
-.va-cta__p {
-  margin: 14px 0 0; max-width: 52ch;
-  font-size: var(--fs-body); line-height: var(--lh-relaxed);
-  color: rgba(255, 255, 255, 0.72);
-}
-.va-cta__actions { display: flex; gap: 12px; flex-wrap: wrap; }
-
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .va-founders { grid-template-columns: 1fr; }
   .va-principles { grid-template-columns: 1fr; gap: 26px; }
-  .va-cta__inner { flex-direction: column; align-items: flex-start; }
 }
 /* !important so it wins over the html.v-js-gated entrance rules above, which
    carry higher specificity — same pattern as the homepage's reduced-motion block. */
@@ -321,7 +296,5 @@ html.v-js .va-hero__meta { animation: va-hero-rise 0.7s var(--ease-out) both; an
   /* Number moves above the heading — a 96px column is dead weight at this width */
   .va-chapter { grid-template-columns: 1fr; gap: 10px; }
   .va-chapter__n { font-size: 26px; padding-top: 0; }
-  .va-cta__actions { width: 100%; }
-  .va-cta__actions .v-btn { flex: 1 1 auto; justify-content: center; }
 }
 

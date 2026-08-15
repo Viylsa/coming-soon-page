@@ -1,7 +1,8 @@
 import React from 'react';
 import Nav from '../components/Nav.jsx';
+import Contact from '../components/Contact.jsx';
 import FooterCTA from '../components/FooterCTA.jsx';
-import { IconArrowRight, IconLinkedIn, IconWhatsApp, IconMail } from '../icons.jsx';
+import { IconArrowRight, IconLinkedIn } from '../icons.jsx';
 import useSpotlight from '../useSpotlight.js';
 
 /* ---------------------------------------------------------------------------
@@ -347,29 +348,12 @@ export default function About() {
           </div>
         </section>
 
-        {/* ---------- CTA ---------- */}
-        <section className="va-cta">
-          <div className="v-wrap va-cta__inner" data-reveal="scale">
-            <div>
-              {/* Was word-for-word the homepage's closing headline. This one is
-                  the founders' page, so it closes on the founders. */}
-              <h2 className="va-cta__h">Talk to the three of us.</h2>
-              <p className="va-cta__p">
-                Tell us about your venue and we'll show you what it looks like as a
-                360° tour, and exactly what it takes to get there.
-              </p>
-            </div>
-            <div className="va-cta__actions">
-              <a href="https://wa.me/923105968568" className="v-btn v-btn--primary v-btn--lg"
-                 target="_blank" rel="noopener noreferrer">
-                <IconWhatsApp size={18}/> WhatsApp us
-              </a>
-              <a href="mailto:viylsavirtualtour@gmail.com" className="v-btn v-btn--ghost-dark v-btn--lg">
-                <IconMail size={16}/> Email instead
-              </a>
-            </div>
-          </div>
-        </section>
+        {/* The homepage's Contact section, not a slimmer copy of it. About used
+            to close on a two-button panel with no form at all, so a reader who
+            got all the way to the bottom of the founders' page had to go back
+            to the homepage to say anything. Same block, same Formspree form,
+            same footer underneath. */}
+        <Contact/>
       </main>
 
       <FooterCTA base="/"/>
