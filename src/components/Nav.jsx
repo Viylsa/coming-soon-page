@@ -28,7 +28,7 @@ const resolve = (base, href) => (isFragment(href) ? base + href : href);
    links become '/#pricing' and navigate home first. The scrollspy below still
    queries the bare fragment, finds nothing off-homepage, and bails — which is
    exactly right: no section here, no indicator. */
-function Nav({ base = '', current = null }) {
+function Nav({ base = '', current = null, ctaHref = null }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false); // mobile drawer
   // `current` seeds the active link on a sub-page, where there are no sections
@@ -36,8 +36,14 @@ function Nav({ base = '', current = null }) {
   // meaningful instead of hiding.
   const [activeHref, setActiveHref] = React.useState(current);
   const linksRef = React.useRef(null);
+  const drawerRef = React.useRef(null);
+  const triggerRef = React.useRef(null);
   const hoveringRef = React.useRef(false);
   const [ind, setInd] = React.useState({ left: 0, width: 0, opacity: 0 });
+
+  // The demo CTA defaults to this page's #contact; About passes its own so the
+  // header CTA stays local (see P2-10) while section links still go home.
+  const demoHref = ctaHref ?? base + '#contact';
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -46,13 +52,61 @@ function Nav({ base = '', current = null }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Lock scroll + close on Escape while the mobile drawer is open.
+  /* Mobile drawer — a modal dialog pattern (P1-01):
+     - closed state is inert + aria-hidden, so no invisible focus targets;
+     - open moves focus into the menu, contains Tab inside it, and Escape
+       returns focus to the trigger;
+     - following a link closes the menu WITHOUT yanking focus back — attention
+       belongs to the destination;
+     - the body's previous overflow value is restored verbatim;
+     - growing past the menu breakpoint closes it and releases the scroll lock;
+     - the state is broadcast (viylsa:menu) so the sticky CTA can hide too. */
   React.useEffect(() => {
     if (!open) return;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.dispatchEvent(new CustomEvent('viylsa:menu', { detail: { open: true } }));
+
+    // Focus lands on the menu panel itself; Tab containment keeps it there.
+    const raf = requestAnimationFrame(() => drawerRef.current?.focus());
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        triggerRef.current?.focus();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const dialog = drawerRef.current;
+      if (!dialog) return;
+      const focusables = dialog.querySelectorAll('a[href], button:not([disabled])');
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     document.addEventListener('keydown', onKey);
-    return () => { document.body.style.overflow = ''; document.removeEventListener('keydown', onKey); };
+    return () => {
+      cancelAnimationFrame(raf);
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener('keydown', onKey);
+      document.dispatchEvent(new CustomEvent('viylsa:menu', { detail: { open: false } }));
+    };
+  }, [open]);
+
+  // Resizing onto the desktop layout must never leave a locked page or a
+  // rendered-but-unreachable menu (the drawer is display:none ≥881px).
+  React.useEffect(() => {
+    if (!open) return;
+    const mq = window.matchMedia('(min-width: 881px)');
+    const onChange = () => { if (mq.matches) setOpen(false); };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
   }, [open]);
 
   // Scrollspy: whichever section is actually ON TOP at the probe line drives the
@@ -137,34 +191,38 @@ function Nav({ base = '', current = null }) {
           <span className="v-nav__brand-name">VIYLSA</span>
         </a>
 
-        <ul
-          ref={linksRef}
-          className="v-nav__links"
-          onMouseLeave={onLeaveList}
-        >
+        {/* The sliding indicator lives on this wrapper, OUTSIDE the <ul>: a span
+            cannot be a direct child of a list (P1-07). positionTo measures
+            against this wrapper, which shares the list's box exactly. */}
+        <div ref={linksRef} className="v-nav__links-wrap" onMouseLeave={onLeaveList}>
           <span
             className="v-nav__indicator"
+            aria-hidden="true"
             style={{ left: ind.left + 'px', width: ind.width + 'px', opacity: ind.opacity }}
           />
-          {LINKS.map(([l, h]) => (
-            <li key={l}>
-              <a
-                href={resolve(base, h)}
-                aria-current={h === activeHref ? 'true' : undefined}
-                onMouseEnter={onEnter}
-              >{l}</a>
-            </li>
-          ))}
-        </ul>
+          <ul className="v-nav__links">
+            {LINKS.map(([l, h]) => (
+              <li key={l}>
+                <a
+                  href={resolve(base, h)}
+                  aria-current={h === activeHref ? 'true' : undefined}
+                  onMouseEnter={onEnter}
+                >{l}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div className="v-nav__cta">
-          <a href={base + '#contact'} className="v-btn v-btn--primary v-btn--sm">
+          <a href={demoHref} className="v-btn v-btn--primary v-btn--sm">
             Book a demo <IconArrowRight size={16}/>
           </a>
           <button
+            ref={triggerRef}
             className={'v-nav__menu' + (open ? ' v-nav__menu--open' : '')}
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
+            aria-controls="v-nav-drawer"
             onClick={() => setOpen((v) => !v)}
           >
             <span></span><span></span><span></span>
@@ -172,19 +230,31 @@ function Nav({ base = '', current = null }) {
         </div>
       </div>
 
-      {/* Mobile drawer */}
-      <div className={'v-nav__drawer' + (open ? ' v-nav__drawer--open' : '')}>
+      {/* Mobile drawer — modal menu. `inert` (React 18 renders it as the bare
+          attribute) removes closed content from tab order AND the a11y tree
+          while keeping it mounted for the close animation. */}
+      <div
+        id="v-nav-drawer"
+        ref={drawerRef}
+        className={'v-nav__drawer' + (open ? ' v-nav__drawer--open' : '')}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+        tabIndex={-1}
+        aria-hidden={!open}
+        {...(open ? {} : { inert: '' })}
+      >
         <ul className="v-nav__drawer-links">
           {LINKS.map(([l, h], i) => (
             <li key={l} style={{ transitionDelay: open ? (60 + i * 50) + 'ms' : '0ms' }}>
               <a href={resolve(base, h)} onClick={() => setOpen(false)}>
-                <span className="v-nav__drawer-num">0{i + 1}</span> {l}
+                <span className="v-nav__drawer-num" aria-hidden="true">0{i + 1}</span> {l}
               </a>
             </li>
           ))}
         </ul>
         <div className="v-nav__drawer-cta">
-          <a href={base + '#contact'} className="v-btn v-btn--primary v-btn--lg" onClick={() => setOpen(false)}>
+          <a href={demoHref} className="v-btn v-btn--primary v-btn--lg" onClick={() => setOpen(false)}>
             Book a demo <IconArrowRight size={16}/>
           </a>
         </div>

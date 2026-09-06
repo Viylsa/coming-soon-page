@@ -5,20 +5,20 @@ function HowItWorks() {
     {
       n: '01',
       Icon: IconCamera,
-      h: 'We capture',
-      p: 'Our Islamabad & Rawalpindi crew brings a 360° rig and shoots your venue in one afternoon. No hardware to buy, nothing to ship.',
+      h: 'We capture your space',
+      p: 'Our Islamabad & Rawalpindi crew shoots your venue in a single visit. No hardware to buy, nothing to ship, no closure needed. Photography time is separate from build time.',
     },
     {
       n: '02',
       Icon: IconSparkle,
-      h: 'We train the AI',
-      p: 'Feed it your floor plan, FAQ, pricing and brochures. It answers visitors in English and Urdu, 24/7, like your best front-desk staffer.',
+      h: 'We build, you review',
+      p: 'We stitch the panoramas, link the walking routes, add hotspots and (optionally) train the AI guide on your documents. You review the tour and approve it before anything goes live.',
     },
     {
       n: '03',
       Icon: IconBox,
-      h: 'You go live',
-      p: 'One line of code on your site, or a shareable link for WhatsApp & email. Live the same day, on every device.',
+      h: 'We publish and support',
+      p: 'One line of code on your site, or a shareable link for WhatsApp & email. Delivery lands within the window in your package, and we stay on call after launch.',
     },
   ];
   return (
@@ -28,7 +28,7 @@ function HowItWorks() {
       <div className="v-wrap">
         {/* bare head — the brand band is announcement enough; no eyebrow label */}
         <div className="v-section__head" data-reveal="blur">
-          <h2 className="v-h2 v-h2--onband">Three steps.<br/>Usually one afternoon.</h2>
+          <h2 className="v-h2 v-h2--onband">Three steps.<br/>From shoot to live tour.</h2>
         </div>
         {/* Each card used to carry a big ghost numeral AND a "Step 01" label —
             the same number twice, and the third separate 01/02/03 treatment on

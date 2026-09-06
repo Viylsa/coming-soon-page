@@ -203,7 +203,12 @@ input:focus-visible, textarea:focus-visible {
 .v-nav--scrolled .v-nav__mark { transform: scale(0.95); }
 .v-nav__brand-name { font-family: var(--font-logo); font-weight: 600; font-size: 16px; letter-spacing: 0.02em; }
 
-/* Sliding-indicator link rail */
+/* Sliding-indicator link rail. The indicator is a sibling of the <ul> on this
+   wrapper (a span can't be a list child); the wrapper shares the list's box. */
+.v-nav__links-wrap {
+  position: relative;
+  display: flex;
+}
 .v-nav__links {
   position: relative;
   display: flex; gap: 4px;
@@ -276,7 +281,9 @@ input:focus-visible, textarea:focus-visible {
 .v-nav__menu--open span:nth-child(2) { opacity: 0; }
 .v-nav__menu--open span:nth-child(3) { top: 22px; transform: rotate(-45deg); }
 
-/* Mobile drawer */
+/* Mobile drawer — a modal menu (P1-01). JS adds/removes `inert` when closed so
+   its links never join the tab order invisibly; height is bounded to the
+   viewport so short landscape screens scroll the menu itself. */
 .v-nav__drawer {
   position: absolute;
   top: calc(100% + 10px); left: 16px; right: 16px;
@@ -286,11 +293,16 @@ input:focus-visible, textarea:focus-visible {
   border: 1px solid rgba(255, 210, 210, 0.10);
   border-radius: 18px;
   padding: 18px 14px 16px;
+  max-height: calc(100dvh - 120px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0; transform: translateY(-8px) scale(0.98);
   transform-origin: top center;
   transition: opacity 200ms ease, transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
   pointer-events: none;
 }
+/* The panel itself is a programmatic focus target, not a control. */
+.v-nav__drawer:focus { outline: none; }
 .v-nav__drawer--open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
 .v-nav__drawer-links { list-style: none; margin: 0; padding: 0; }
 .v-nav__drawer-links li {
@@ -326,7 +338,7 @@ input:focus-visible, textarea:focus-visible {
 @media (max-width: 880px) {
   .v-nav__pill { padding: 7px 7px 7px 15px; gap: 11px; }
   .v-nav__brand { padding-right: 0; }
-  .v-nav__links { display: none; }
+  .v-nav__links-wrap { display: none; }
   .v-nav__cta .v-btn--link { display: none; }
   /* Show the hamburger as soon as the links collapse — no dead-zone where
      navigation is unreachable (561–880px used to have neither). */
@@ -468,22 +480,6 @@ input:focus-visible, textarea:focus-visible {
   margin-top: 32px;
   display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
 }
-.v-hero__trust {
-  margin-top: 22px;
-  display: inline-flex; align-items: center; gap: 9px;
-  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.03em;
-  color: rgba(255, 255, 255, 0.58);
-}
-.v-hero__trust-dot {
-  width: 7px; height: 7px; border-radius: 999px; flex-shrink: 0;
-  background: #3ddc84;
-  box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.5);
-  animation: v-pulse-live 2.4s ease-in-out infinite;
-}
-@keyframes v-pulse-live {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.5); }
-  50%      { box-shadow: 0 0 0 5px rgba(61, 220, 132, 0); }
-}
 
 /* ── Venue-type marquee ── */
 .v-hero__marquee {
@@ -604,13 +600,21 @@ input:focus-visible, textarea:focus-visible {
 }
 .v-lens__cap-k {
   display: block;
-  font-family: var(--font-mono); font-size: 10.5px;
-  letter-spacing: 0.14em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: 11.5px;
+  letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--viylsa-crimson); margin-bottom: 6px;
 }
 @media (max-width: 560px) {
   /* The label no longer fits inside an 18% column on a phone */
   .v-lens__crop-label { display: none; }
+}
+
+/* Mobile-lens fallback: the full 2000×454 strip is an unreadable ~80px sliver at
+   phone widths. Crop to the same centre the marked rectangle sits over instead
+   of shrinking the whole panorama (P2-05). */
+@media (max-width: 640px) {
+  .v-lens__frame { height: 220px; }
+  .v-lens__frame img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; }
 }
 
 /* "Built for …" audience strip */
@@ -707,7 +711,7 @@ input:focus-visible, textarea:focus-visible {
   transition: transform 0.34s var(--ease-spring), background 0.25s ease;
 }
 .v-rail__step:hover .v-rail__node { transform: rotate(-6deg) scale(1.08); background: rgba(255, 255, 255, 0.22); }
-.v-rail__n { position: relative; z-index: 1; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #FFB7BD; margin-top: 22px; }
+.v-rail__n { position: relative; z-index: 1; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #FFB7BD; margin-top: 22px; }
 .v-rail__h { position: relative; z-index: 1; font-family: var(--font-display); font-size: clamp(20px, 2.4vw, 25px); font-weight: 500; letter-spacing: -0.02em; margin: 6px 0 0; color: #fff; }
 .v-rail__p { position: relative; z-index: 1; margin: 10px 0 0; font-size: 14.5px; line-height: 1.62; color: rgba(255, 255, 255, 0.78); }
 /* 3-up card rail → 1 col at the 900 primary breakpoint (was 800, which left a
@@ -722,6 +726,8 @@ input:focus-visible, textarea:focus-visible {
 /* align-items: stretch (the default) is deliberate — all three cards share the
    tallest card's height so the row reads as one block, whatever the copy does. */
 .v-pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding-top: 18px; }
+/* Quoting explainer under the section head (P2-08) */
+.v-pricing__note { margin: 14px 0 0; max-width: 56ch; font-size: 15.5px; line-height: 1.6; color: var(--fg-soft); }
 .v-plan { background: var(--canvas-paper); border: 1px solid var(--canvas-mist); border-radius: var(--radius-lg); padding: 30px 28px; display: flex; flex-direction: column; position: relative; }
 /* The popular plan sits flush in the row — same top and bottom edge as its
    neighbours. It earns its emphasis from the crimson border, top-accent, halo
@@ -904,12 +910,18 @@ html.v-stack #main > *:not(.v-hero) {
 .v-footer__name { font-family: var(--font-logo); font-size: 19px; color: white; font-weight: 600; letter-spacing: 0.03em; }
 .v-footer__tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
 .v-footer__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-.v-footer__cols > div { display: flex; flex-direction: column; gap: 8px; }
-.v-footer__col-h { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
-.v-footer__cols a { color: rgba(255,255,255,0.7); font-size: 14px; text-decoration: none; }
+.v-footer__cols > div, .v-footer__cols > nav { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.v-footer__col-h { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin: 0 0 4px; font-weight: 500; }
+.v-footer__cols a { color: rgba(255,255,255,0.7); font-size: 14px; text-decoration: none; overflow-wrap: anywhere; }
 .v-footer__cols a:hover { color: white; }
-.v-footer__social { display: flex; flex-direction: row; gap: 16px; margin-top: 6px; }
-.v-footer__social a { display: inline-flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); transition: color 200ms ease; }
+.v-footer__social { display: flex; flex-direction: row; gap: 12px; margin-top: 6px; }
+/* Generous invisible padding around small glyphs: 44px targets, no bigger icons. */
+.v-footer__social a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin: -8px;
+  color: rgba(255,255,255,0.6);
+  transition: color 200ms ease;
+}
 .v-footer__social a:hover { color: white; }
 .v-footer__base { max-width: 1180px; margin: 36px auto 0; padding: 22px 32px 0; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; color: rgba(255,255,255,0.5); }
 .v-footer__base .v-mono { color: rgba(255,255,255,0.4); }
@@ -968,6 +980,54 @@ html.v-stack #main > *:not(.v-hero) {
   font-family: var(--font-mono); font-size: 12px;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: rgba(255,255,255,0.5);
+  z-index: 2;
+  /* Non-blocking: the loading notice must never intercept touches meant for
+     the tour loading beneath it; only its explicit links take clicks. */
+  pointer-events: none;
+}
+.v-tdemo__loading a { pointer-events: auto; }
+/* Idle state: a real tour poster plus an explicit activation affordance. The
+   iframe is only created after the visitor asks for it (P1-04). */
+.v-tdemo__poster {
+  position: absolute; inset: 0;
+  background: #1a1816;
+}
+.v-tdemo__poster img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  opacity: 0.55;
+}
+.v-tdemo__poster::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 90% at 30% 8%, rgba(127, 20, 26, 0.42) 0%, rgba(127, 20, 26, 0) 52%),
+    linear-gradient(180deg, rgba(10, 10, 11, 0.1) 0%, rgba(10, 10, 11, 0.72) 100%);
+}
+.v-tdemo__poster-ui {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; text-align: center; padding: 24px;
+}
+.v-tdemo__play {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--viylsa-crimson); color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  font-family: var(--font-body); font-weight: 500; font-size: 16px;
+  padding: 14px 26px; cursor: pointer;
+  box-shadow: var(--shadow-crimson);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.v-tdemo__play:hover { background: var(--viylsa-crimson-deep); }
+.v-tdemo__play:active { background: var(--viylsa-crimson-darker); transform: translateY(1px); }
+.v-tdemo__play-ic {
+  width: 38px; height: 38px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  display: grid; place-items: center;
+}
+.v-tdemo__poster-hint {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
 }
 .v-tdemo__loading-shimmer {
   width: 120px; height: 4px; border-radius: 999px;
@@ -1151,7 +1211,6 @@ html.v-js .v-hero__eyebrow { animation: v-hero-rise 0.6s var(--ease-out) both; a
 html.v-js .v-display { transform-origin: center; }
 html.v-js .v-hero__sub { animation: v-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.28s; }
 html.v-js .v-hero__cta { animation: v-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.40s; }
-html.v-js .v-hero__trust { animation: v-hero-rise 0.7s var(--ease-out) both; animation-delay: 0.52s; }
 
 /* ── Analytics dashboard "comes alive" ── KPI tiles stagger in, the bars grow
    after them (see --d in Analytics.jsx), the insight lands last. tabular-nums
@@ -1197,21 +1256,27 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
      animation rules (which carry higher specificity). */
   html { scroll-behavior: auto; }
   .v-faq__item::details-content, .v-faq__a { transition: none !important; transform: none !important; }
-  [data-reveal], [data-reveal].is-in { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .v-hero__eyebrow, .v-display, .v-hero__sub, .v-hero__cta, .v-hero__trust,
-  .v-hero__trust-dot,
+  /* filter and clip-path too: the blur and wipe reveal variants must never
+     leave content visually obscured when motion is off (P1-06). */
+  [data-reveal], [data-reveal].is-in {
+    opacity: 1 !important; transform: none !important;
+    filter: none !important; clip-path: none !important;
+    transition: none !important;
+  }
+  .v-hero__eyebrow, .v-display, .v-hero__sub, .v-hero__cta,
   .v-hero__marquee-track, .v-ai__dot, .v-ai__typing span, .v-ai__bubble,
   .v-tdemo__loading-shimmer { animation: none !important; transform: none !important; }
   .v-tdemo__hint { display: none; }
-  .v-rcpt__bar-fill, .v-ai__lead { transition: none !important; }
+  .v-rcpt__bar-fill { transition: none !important; }
   .v-rcpt__dash .v-rcpt__kpi, .v-rcpt__dash .v-rcpt__foot { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 
 
-/* Tour stats strip (under the live demo) */
+/* Tour stats strip (under the live demo) — three real stats, three equal
+   columns (P2-04: the grid used to define four slots for three items). */
 .v-tdemo__stats {
-  display: grid; grid-template-columns: repeat(4, 1fr);
+  display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 18px 24px;
   margin-top: clamp(20px, 3vw, 30px);
   padding: 22px clamp(4px, 2vw, 18px);
@@ -1224,12 +1289,14 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
   color: var(--fg);
 }
 .v-tdemo__stat-l {
-  font-family: var(--font-mono); font-size: 10.5px;
+  font-family: var(--font-mono); font-size: 11.5px;
   letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--fg-muted); margin-top: 3px;
 }
 @media (max-width: 640px) {
-  .v-tdemo__stats { grid-template-columns: repeat(2, 1fr); }
+  .v-tdemo__stats { gap: 12px; padding-top: 18px; padding-bottom: 18px; }
+  .v-tdemo__stat-n { font-size: 21px; }
+  .v-tdemo__stat-l { font-size: 10.5px; letter-spacing: 0.06em; }
 }
 
 /* Founding-venues offer (turns "one tour" into "get in early") */
@@ -1292,6 +1359,8 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
   font-size: 15.5px; line-height: 1.65;
   max-width: 68ch;
 }
+/* Prose links inside answers need a persistent cue beyond color. */
+.v-faq__a a { color: var(--viylsa-crimson); text-decoration: underline; text-underline-offset: 2px; }
 /* Smooth expand/collapse. ::details-content + interpolate-size animate the
    native <details> height; browsers without support fall back to instant. */
 .v-faq__item { interpolate-size: allow-keywords; }
@@ -1320,8 +1389,8 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
   gap: 12px;
 }
 .v-plan__cov-k {
-  font-family: var(--font-mono); font-size: 10.5px;
-  letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.07em; text-transform: uppercase;
   color: var(--fg-muted);
 }
 .v-plan__cov-v {
@@ -1332,8 +1401,8 @@ html.v-js .v-rcpt__dash.is-in .v-rcpt__foot { opacity: 1; transform: none; trans
 
 .v-plan__plus {
   margin-top: 18px;
-  font-family: var(--font-mono); font-size: 10.5px;
-  letter-spacing: 0.08em; text-transform: uppercase;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--viylsa-crimson);
 }
 .v-plan__plus + .v-plan__features { margin-top: 12px; }
@@ -1432,13 +1501,13 @@ a.v-contact__item:hover .v-contact__ic {
 .v-contact__item-k {
   display: block;
   font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: rgba(255,255,255,0.5); margin-bottom: 2px;
+  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.56); margin-bottom: 2px;
 }
-.v-contact__item-v { display: block; font-size: 15px; color: rgba(255,255,255,0.92); }
+.v-contact__item-v { display: block; font-size: 15px; color: rgba(255,255,255,0.92); overflow-wrap: anywhere; }
 a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 
-/* Form card */
+/* Form card. color-scheme dark renders the native select/controls to match. */
 .v-contact__form {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.10);
@@ -1446,26 +1515,30 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
   padding: 28px;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  color-scheme: dark;
 }
 .v-field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
 .v-field label {
   font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(255,255,255,0.66);
+  font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase;
+  color: rgba(255,255,255,0.72);
 }
-.v-field__opt { text-transform: none; letter-spacing: 0; color: rgba(255,255,255,0.4); }
-.v-field input, .v-field textarea {
+.v-field__opt { text-transform: none; letter-spacing: 0; color: rgba(255,255,255,0.44); }
+/* 16px floor: smaller inputs trigger iOS Safari's focus zoom (P1-05). */
+.v-field input, .v-field textarea, .v-field select {
   font-family: var(--font-body);
-  font-size: 15px; color: #fff;
+  font-size: 16px; color: #fff;
   background: rgba(10,10,11,0.5);
   border: 1px solid rgba(255,255,255,0.14);
   border-radius: var(--radius-md);
   padding: 12px 14px;
   transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
   resize: vertical;
+  width: 100%;
 }
+.v-field select { cursor: pointer; }
 .v-field input::placeholder, .v-field textarea::placeholder { color: rgba(255,255,255,0.34); }
-.v-field input:focus, .v-field textarea:focus {
+.v-field input:focus, .v-field textarea:focus, .v-field select:focus {
   outline: none;
   border-color: var(--viylsa-crimson);
   background: rgba(10,10,11,0.72);
@@ -1476,10 +1549,13 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 .v-contact__formnote {
   margin: 14px 0 0; text-align: center;
   font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.4);
+  font-size: 12px; letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.52);
   line-height: 1.7;
 }
+/* Meaningful reading text, so the privacy line carries a persistent link cue. */
+.v-contact__privacy a { color: rgba(255,255,255,0.8); text-decoration: underline; text-underline-offset: 2px; }
+.v-contact__privacy a:hover { color: #fff; }
 /* A failed send has to be legible, not a footnote — it is the only thing
    standing between a lost lead and a second attempt. */
 .v-contact__formnote--error {
@@ -1537,7 +1613,7 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 .v-ai__avatar { width: 40px; height: 40px; border-radius: 12px; background: var(--crimson-field); color: #fff; display: grid; place-items: center; flex-shrink: 0; box-shadow: var(--shadow-crimson); }
 .v-ai__head-meta { flex: 1; min-width: 0; }
 .v-ai__name { font-family: var(--font-display); font-weight: 500; font-size: 15px; letter-spacing: -0.01em; }
-.v-ai__sub { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); margin-top: 3px; display: flex; align-items: center; gap: 6px; }
+.v-ai__sub { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--fg-muted); margin-top: 3px; display: flex; align-items: center; gap: 6px; }
 .v-ai__dot { width: 6px; height: 6px; border-radius: 999px; background: var(--viylsa-crimson-bright); box-shadow: 0 0 0 0 rgba(220,20,60,0.5); animation: v-pulse-dot 2s ease-in-out infinite; }
 @keyframes v-pulse-dot {
   0%, 100% { box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.55); }
@@ -1560,9 +1636,17 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
 }
 .v-ai__typing span:nth-child(2) { animation-delay: 0.15s; }
 .v-ai__typing span:nth-child(3) { animation-delay: 0.30s; }
-.v-ai__lead { margin-top: 16px; display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: #1ea75a; opacity: 0; transform: translateY(6px); transition: opacity 0.4s ease, transform 0.4s ease; }
-.v-ai__lead.is-shown { opacity: 1; transform: none; }
-.v-ai__lead-ic { width: 20px; height: 20px; border-radius: 999px; display: grid; place-items: center; background: rgba(30,167,90,0.12); color: #1ea75a; }
+/* Footer row of the demo card: the reading control. */
+.v-ai__foot { margin-top: 16px; display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+.v-ai__next {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-body); font-size: 13.5px; font-weight: 500;
+  color: var(--fg-muted); background: transparent;
+  border: 1px solid var(--canvas-line); border-radius: var(--radius-pill);
+  padding: 9px 16px; cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+.v-ai__next:hover { color: var(--viylsa-crimson); border-color: var(--viylsa-crimson); background: var(--viylsa-crimson-soft); }
 .v-ai__caption { margin-top: 16px; text-align: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--fg-muted); }
 @media (max-width: 860px) { .v-ai__grid { grid-template-columns: 1fr; gap: 36px; } }
 
@@ -1579,15 +1663,14 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
   box-shadow: 0 30px 60px -28px rgba(0,0,0,0.28), 0 4px 12px -6px rgba(0,0,0,0.06);
 }
 .v-rcpt__card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid var(--canvas-mist); }
-.v-rcpt__card-title { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); }
-.v-rcpt__card-live { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--viylsa-crimson); }
+.v-rcpt__card-title { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); }
 .v-rcpt__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .v-rcpt__kpi { padding: 14px; background: var(--canvas-haze); border-radius: var(--radius-md); }
-.v-rcpt__kpi-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); }
+.v-rcpt__kpi-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); }
 .v-rcpt__kpi-num { font-family: var(--font-display); font-size: clamp(26px, 3.4vw, 34px); font-weight: 500; letter-spacing: -0.01em; color: var(--fg); line-height: 1.1; margin-top: 6px; }
 .v-rcpt__kpi-trend { font-size: 11px; color: var(--fg-muted); margin-top: 4px; }
 .v-rcpt__rooms { margin-top: 22px; }
-.v-rcpt__rooms-h { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: 12px; }
+.v-rcpt__rooms-h { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: 12px; }
 .v-rcpt__bar { display: grid; grid-template-columns: 108px 1fr auto; align-items: center; gap: 12px; margin-bottom: 11px; }
 .v-rcpt__bar-label { font-size: 13px; color: var(--fg); font-weight: 500; }
 .v-rcpt__bar-track { height: 8px; border-radius: 999px; background: var(--canvas-mist); overflow: hidden; }
@@ -1685,14 +1768,18 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   text-align: center; padding: 24px; color: rgba(255, 255, 255, 0.85);
 }
-.v-tdemo__fallback p, .v-tdemo__fallback .v-btn { position: relative; z-index: 1; }
+.v-tdemo__fallback p, .v-tdemo__fallback .v-btn, .v-tdemo__fallback-row { position: relative; z-index: 1; }
+.v-tdemo__fallback p { max-width: 46ch; }
+.v-tdemo__fallback-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
 
 
 /* ==================================================
    STICKY MOBILE CTA (phones only)
    ================================================== */
 .v-sticky-cta {
-  position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 45;
+  position: fixed; left: 16px; right: 16px; z-index: 45;
+  /* Keep clear of the home indicator / gesture bar on notched phones. */
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   display: none; align-items: center; justify-content: center; gap: 8px;
   padding: 15px 18px; border-radius: 14px;
   background: var(--viylsa-crimson); color: #fff;
@@ -1700,6 +1787,10 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
   text-decoration: none;
   box-shadow: 0 14px 32px -10px rgba(127, 20, 26, 0.65);
   transform: translateY(150%); opacity: 0;
+  /* pointer-events mirrors visibility in JS (StickyCTA sets it inline too), so a
+     hidden bar can never silently intercept taps — including in reduced motion,
+     where the translate is removed but the bar still fades. */
+  pointer-events: none;
   transition: transform 0.42s var(--ease-out), opacity 0.3s ease;
 }
 .v-sticky-cta.is-shown { transform: translateY(0); opacity: 1; }

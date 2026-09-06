@@ -38,11 +38,13 @@ const text = [...chars].join('');
 writeFileSync(GLYPH_FILE, text, 'utf8');
 console.log(`Subsetting to ${chars.size} unique characters: ${text.replace(/[‌‍]/g, '·')}`);
 
-// ── Run pyftsubset (full layout closure for the complex script) ──────────────
+// ── Run the subsetter (full layout closure for the complex script) ───────────
+// Primary: pyftsubset (python + fonttools + brotli) — the original path.
+// Fallback: subset-font (harfbuzzjs, pure Node) — same subsetting algorithm,
+// used where Python isn't installed (e.g. Windows dev machines without it).
 mkdirSync(OUT_DIR, { recursive: true });
-// Honor a PYTHON override; some machines have multiple interpreters and only
-// one has fonttools+brotli installed.  e.g. PYTHON=python3 npm run subset:urdu
 const PYTHON = process.env.PYTHON || 'python';
+let pyOk = false;
 try {
   execFileSync(
     PYTHON,
@@ -57,9 +59,23 @@ try {
     ],
     { stdio: 'inherit' },
   );
-} finally {
-  rmSync(GLYPH_FILE, { force: true });
+  pyOk = true;
+} catch {
+  console.log('python fontTools unavailable — falling back to subset-font (harfbuzzjs)');
 }
+
+if (!pyOk) {
+  const subsetFont = (await import('subset-font')).default;
+  const fontBuffer = readFileSync(SRC);
+  const out = await subsetFont(fontBuffer, text, {
+    targetFormat: 'woff2',
+    // Keep the whole layout system so Nastaliq's contextual forms, ligatures
+    // and mark positioning survive the subset, like --layout-features=* above.
+    layoutFeatures: ['*'],
+  });
+  writeFileSync(OUT, out);
+}
+rmSync(GLYPH_FILE, { force: true });
 
 const before = statSync(SRC).size;
 const after = statSync(OUT).size;

@@ -17,22 +17,22 @@ function FooterCTA({ base = '' }) {
             </div></a>
           </div>
           <div className="v-footer__cols">
-            <div>
-              <div className="v-footer__col-h">Product</div>
-              <a href={base + '#live-tour'}>Live tour</a><a href={base + '#analytics'}>What you get back</a><a href={base + '#how'}>How it works</a><a href={base + '#pricing'}>Pricing</a><a href={base + '#faq'}>FAQ</a>
-            </div>
-            <div>
-              <div className="v-footer__col-h">Company</div>
+            <nav aria-label="Product">
+              <h2 className="v-footer__col-h">Product</h2>
+              <a href={base + '#live-tour'}>Live tour</a><a href={base + '#analytics'}>What you get back</a><a href={base + '#how'}>How it works</a><a href={base + '#pricing'}>Packages</a><a href={base + '#faq'}>FAQ</a>
+            </nav>
+            <nav aria-label="Company">
+              <h2 className="v-footer__col-h">Company</h2>
               <a href="/about.html">About</a><a href="/about.html#founders">Founders</a><a href={base + '#founding'}>Founding venues</a><a href={base + '#contact'}>Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
-            </div>
+            </nav>
             <div>
-              <div className="v-footer__col-h">Get in touch</div>
-              <a href="mailto:viylsavirtualtour@gmail.com">viylsavirtualtour@gmail.com</a>
+              <h2 className="v-footer__col-h">Get in touch</h2>
+              <a href="mailto:viylsavirtualtour@gmail.com" className="v-footer__email">viylsavirtualtour@gmail.com</a>
               <a href="https://www.viylsa.app">www.viylsa.app</a>
               <div className="v-footer__social">
-                <a href="https://www.facebook.com/profile.php?id=61571004368984" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Facebook"><IconFacebook size={18}/></a>
-                <a href="https://www.linkedin.com/company/viylsa-tours/" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on LinkedIn"><IconLinkedIn size={18}/></a>
-                <a href="https://www.instagram.com/viylsa_virtualtours" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Instagram"><IconInstagram size={18}/></a>
+                <a href="https://www.facebook.com/profile.php?id=61571004368984" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Facebook (opens in a new tab)"><IconFacebook size={18}/></a>
+                <a href="https://www.linkedin.com/company/viylsa-tours/" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on LinkedIn (opens in a new tab)"><IconLinkedIn size={18}/></a>
+                <a href="https://www.instagram.com/viylsa_virtualtours" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Instagram (opens in a new tab)"><IconInstagram size={18}/></a>
               </div>
             </div>
           </div>

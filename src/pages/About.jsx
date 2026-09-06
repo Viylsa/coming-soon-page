@@ -35,7 +35,7 @@ const FOUNDERS = [
     photoPos: '',   // pre-cropped to 4:5 around the face, so centre crop is exact
     linkedin: 'https://www.linkedin.com/in/aleenatahir/',
     github: 'https://github.com/AleenaTahir1',
-    bio: 'Deep in the tech with Saqlain by morning, planning the next post with Aena by afternoon, and the reason both of them have something to do tomorrow. She carries the plan for where VIYLSA goes next, and a habit of picking up whichever role the week turns out to be missing.',
+    bio: 'Carries the plan for where VIYLSA goes next, and the reason both halves of it have something to do tomorrow. Deep in the tech with Saqlain by morning, planning the next post with Aena by afternoon, and picking up whichever role the week turns out to be missing.',
   },
   {
     name: 'Saqlain Abbas',
@@ -46,7 +46,7 @@ const FOUNDERS = [
     photoPos: '',   // file is pre-cropped to 4:5, so the default centre crop is exact
     linkedin: 'https://www.linkedin.com/in/saqlainrazee/',
     github: 'https://github.com/Razee4315',
-    bio: 'Will turn anything into a conversation about logic, and is the first to tell you he runs on the least of it. Self-declared ignoramus. Also the one who builds the tour player, the bilingual AI guide and the analytics behind them, and who knows every layer of the stack cold. The theory is negotiable. The code ships.',
+    bio: 'Builds the tour player, the bilingual AI guide and the analytics behind them, and knows every layer of the stack cold. Happiest turning anything into a conversation about logic. The theory is negotiable. The code ships.',
   },
   {
     name: 'Aena Habib',
@@ -57,7 +57,7 @@ const FOUNDERS = [
     photoPos: '',   // pre-cropped to 4:5 around the face, so centre crop is exact
     linkedin: 'https://www.linkedin.com/in/aena-habib-260947354/',
     github: 'https://github.com/EN-AenaHabib',
-    bio: 'Every post, every frame and every “what if we did it like this” starts with her, and her eye is the reason a VIYLSA tour looks like VIYLSA. Put her and Aleena on the same problem and something ships. They are best friends, which at work almost never survives contact, and here somehow keeps producing.',
+    bio: 'Her eye is the reason a VIYLSA tour looks like VIYLSA: every post, every frame and every "what if we did it like this" starts with her. Put her and Aleena on the same problem and something ships. Best friends whose partnership somehow keeps producing.',
   },
 ];
 
@@ -90,7 +90,7 @@ const PRINCIPLES = [
   {
     n: '03',
     h: 'Proof over promises.',
-    p: 'A real client tour is embedded on our homepage, not a marketing video of one. You can drag it, open the hotspots and judge the product before you talk to us.',
+    p: 'The NUTECH campus tour is embedded on our homepage, not a marketing video of one. You can drag it, open the hotspots and judge the product before you talk to us.',
   },
 ];
 
@@ -151,7 +151,9 @@ export default function About() {
   return (
     <>
       <a className="v-skip" href="#main">Skip to content</a>
-      <Nav base="/" current="/about.html"/>
+      {/* ctaHref: the header demo CTA stays local to this page's #contact (P2-10),
+          while the section links still ride home via base='/'. */}
+      <Nav base="/" current="/about.html" ctaHref="#contact"/>
 
       <main id="main">
         {/* ---------- Hero ---------- */}
@@ -175,8 +177,8 @@ export default function About() {
             <p className="va-hero__lede">
               VIYLSA turns universities, hotels, hospitals, real estate and showrooms
               into 360° virtual tours, each one with a built-in AI guide that answers
-              visitors in English and Urdu, captures enquiries, and shows you exactly
-              who came and what they cared about.
+              visitors in English and Urdu, captures enquiries, and shows you which
+              spaces attract attention.
             </p>
             <div className="va-hero__meta">
               <div><span className="va-hero__k">Studio</span> Islamabad &amp; Rawalpindi</div>

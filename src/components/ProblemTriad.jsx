@@ -2,18 +2,18 @@ function ProblemTriad() {
   const items = [
     {
       n: '01',
-      h: 'Static photos lie.',
-      p: 'A wide-angle lens makes a tiny room look palatial, whether it\'s a lecture hall, a hospital ward, or a wedding lawn. A tour shows the space as it really is: corner to corner, ceiling to floor.',
+      h: 'Photos show a frame. A tour shows the space.',
+      p: 'A wide-angle photo can make a small room look palatial. The comparison below is an illustration of field of view, not a critique of anyone\'s gallery: a tour simply lets people see corner to corner, ceiling to floor, and judge for themselves.',
     },
     {
       n: '02',
-      h: 'Your doors close at 6.',
-      p: 'Digital demand doesn\'t. A student in Lahore, a patient\'s family abroad, a couple booking a hall: none of them should have to wait for your gate to open to look inside.',
+      h: 'Open after hours.',
+      p: 'A student in Lahore, a patient\'s family abroad, a couple booking a hall: they decide from their phone, long before your gate opens. A tour lets them explore whenever they like.',
     },
     {
       n: '03',
-      h: 'You don\'t know who visited.',
-      p: 'No name. No path through the building. No idea what they cared about. Every walk-in is a black box, until a tour hands you the receipt.',
+      h: 'You can\'t see what interested them.',
+      p: 'Every walk-in is a black box. A tour shows you which spaces attract attention, and collects enquiries from the visitors who choose to get in touch.',
     },
   ];
   const audience = ['Universities', 'Real estate', 'Hotels', 'Hospitals', 'Event halls', 'Retail'];
@@ -34,7 +34,7 @@ function ProblemTriad() {
           <div className="v-lens__frame">
             <img
               src="/assets/tour/nutech-lab-strip.jpg"
-              alt="A 360° view of the NUTECH computer lab. A marked rectangle covers less than a fifth of it — the slice a single wide-angle photograph captures."
+              alt="A 360° view of the NUTECH computer lab. A marked rectangle covers less than a fifth of it: the slice a single wide-angle photograph captures."
               width="2000" height="454" loading="lazy" decoding="async"
             />
             <div className="v-lens__crop" aria-hidden="true">

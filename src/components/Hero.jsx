@@ -26,11 +26,17 @@ function Hero() {
           </h1>
           <p className="v-hero__sub">
             <b>VIYLSA</b> turns your venue into a 360° tour anyone can walk from
-            their phone, and shows you exactly who's interested.
+            their phone, and shows you which spaces draw attention. Enquiries
+            come from visitors who choose to get in touch.
           </p>
           <div className="v-hero__cta">
             <a href="#contact" className="v-btn v-btn--primary v-btn--lg">
               Book a demo <IconArrowRight size={18}/>
+            </a>
+            {/* Second route: proof before conversation. The live NUTECH tour is
+                the section that earns trust, so make it reachable from the fold. */}
+            <a href="#live-tour" className="v-btn v-btn--ghost-dark v-btn--lg">
+              Explore the live tour
             </a>
           </div>
         </div>

@@ -149,6 +149,19 @@
     start();
   }
 
+  // Motion preference can change while the page is open (OS settings, quick
+  // settings toggles). Switching to reduce must reveal everything immediately —
+  // otherwise content observed but not yet intersecting stays hidden.
+  const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const onReduceChange = () => {
+    if (!reduceQuery.matches) return;
+    document.querySelectorAll('[data-reveal]:not(.is-in)').forEach((el) => el.classList.add('is-in'));
+    io.disconnect();
+    groupIo.disconnect();
+    countIo.disconnect();
+  };
+  if (reduceQuery.addEventListener) reduceQuery.addEventListener('change', onReduceChange);
+
   // ── Dev-only: assert every in-page anchor resolves to a live id ───
   // Catches dead "#…" links after section renames/merges (e.g. the AI-guide
   // demotion). Stripped from the production bundle by Vite's dead-code pass.

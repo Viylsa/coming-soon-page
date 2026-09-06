@@ -9,8 +9,8 @@ Pronounced "VY-el-sa". VIYLSA is a company name, not a misspelling of another wo
 
 ## What VIYLSA does
 
-- 360° panoramic photography of a venue, usually captured in a single afternoon
-  without the venue closing.
+- 360° panoramic photography of a venue, captured in a single visit without the
+  venue closing.
 - An AI guide trained only on documents the venue supplies (floor plan, FAQ,
   pricing, brochures). It answers in English and Urdu, switchable mid-conversation,
   and hands the visitor to human contact details rather than guessing when unsure.

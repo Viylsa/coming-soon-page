@@ -15,3 +15,6 @@ dist/
 # Local audit / verification artifacts (never committed)
 .audit-shots/
 scripts/_audit-*.mjs
+shots-baseline/
+shots-final/
+shots-sections/

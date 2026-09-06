@@ -8,7 +8,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'How long does the shoot take?',
-    a: 'Most venues are captured in a single afternoon. You don\'t need to close; we work around your opening hours and shoot the spaces you choose.',
+    a: 'Most venues are captured in a single visit, usually an afternoon. You don\'t need to close; we work around your opening hours and shoot the spaces you choose. The full tour then lands within your package\'s delivery window: photography day and delivery day are different things.',
   },
   {
     q: 'What do we need to prepare?',
@@ -20,7 +20,8 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Who owns the visitor data, and is it handled responsibly?',
-    a: 'Your tour\'s analytics and captured enquiries belong to you. The AI guide answers only from documents you approve, visitors are never required to identify themselves, and you can read our full approach on the privacy page.',
+    // JSX so the "privacy page" mention is a real link (P2-09).
+    a: <>Your tour's analytics and captured enquiries belong to you. The AI guide answers only from documents you approve, visitors are never required to identify themselves, and you can read our full approach on the <a href="/privacy.html">privacy page</a>.</>,
   },
   {
     q: 'What happens when the included hosting ends?',

@@ -1,12 +1,16 @@
 import { IconCheck, IconArrowRight } from '../icons.jsx';
 
-function Pricing() {
+/* Packages are quoted, not priced online — never invent amounts. The "Space"
+   rows are guidance about what each package is sized for, not hard limits.
+   `onChoose` carries the selected package into the contact form's enquiry
+   context (P2-08) — App owns the state; Contact renders it. */
+function Pricing({ onChoose }) {
   const plans = [
     {
       name: 'Starter',
       blurb: 'Small retail outlets, cafés, boutiques & compact commercial spaces.',
       coverage: [
-        ['Space', '500 – 1,000 sq ft'],
+        ['Typical space', '500 – 1,000 sq ft'],
         ['Scenes', 'Up to 10 panoramas'],
         ['Hotspots', 'Up to 8 hotspots'],
         ['Delivery', '3 – 5 days'],
@@ -20,13 +24,12 @@ function Pricing() {
         '6 months hosting & maintenance',
       ],
       featured: false,
-      cta: 'Get a quote',
     },
     {
       name: 'Professional',
       blurb: 'Medium offices, restaurants, real-estate agencies & growing businesses.',
       coverage: [
-        ['Space', '1,000 – 2,000 sq ft'],
+        ['Typical space', '1,000 – 2,000 sq ft'],
         ['Scenes', 'Up to 20 panoramas'],
         ['Hotspots', 'Up to 20, video & links'],
         ['Delivery', '5 – 7 days'],
@@ -41,13 +44,12 @@ function Pricing() {
         'WhatsApp & lead-form integration',
       ],
       featured: true,
-      cta: 'Get a quote',
     },
     {
       name: 'Enterprise',
       blurb: 'Large properties, hotels, hospitals, campuses & enterprise clients.',
       coverage: [
-        ['Space', '2,000 – 4,000 sq ft+'],
+        ['Typical space', '2,000 sq ft and up'],
         ['Scenes', 'Up to 40 panoramas'],
         ['Hotspots', 'Up to 60 rich media'],
         ['Delivery', '7 – 10 days'],
@@ -62,29 +64,30 @@ function Pricing() {
         'A direct line to the founders',
       ],
       featured: false,
-      cta: 'Get a quote',
     },
   ];
 
   return (
     <section id="pricing" className="v-section v-section--haze">
       <div className="v-wrap">
-        {/* Default head, not --aside: the plan cards below run the full measure,
-            so an indented headline would hang off nothing. The old headline was
-            "Three ways to bring your space online" — the third use of "bring
-            your space online" on one page. */}
         <div className="v-section__head" data-reveal>
-          <h2 className="v-h2">Three packages,<br/>sized to your space.</h2>
+          <div>
+            <h2 className="v-h2">Three packages,<br/>sized to your space.</h2>
+            <p className="v-pricing__note">
+              Quoted to your venue, with a fixed price agreed before we shoot.
+              No prices online, no surprises later. The ranges below show what
+              each package is sized for.
+            </p>
+          </div>
         </div>
 
         <div className="v-pricing" data-reveal-group>
           {plans.map((p) => (
             <div className={'v-plan ' + (p.featured ? 'v-plan--featured' : '')} key={p.name} data-reveal="scale">
-              {/* Was "Most popular" — a ranking claim a studio with one live
-                  client cannot back, and the most template-shaped pixel on the
-                  page. This says the same thing without inventing a league. */}
-              {p.featured && <span className="v-plan__tag">Most venues start here</span>}
-              <div className="v-plan__name">{p.name}</div>
+              {/* Scope-based, not a popularity claim (P1-02). */}
+              {p.featured && <span className="v-plan__tag">For growing venues</span>}
+              {/* A real heading: package names introduce their own content. */}
+              <h3 className="v-plan__name">{p.name}</h3>
               <div className="v-plan__blurb">{p.blurb}</div>
 
               <div className="v-plan__coverage">
@@ -102,8 +105,13 @@ function Pricing() {
                   <li key={f}><IconCheck size={16}/> {f}</li>
                 ))}
               </ul>
-              <a href="#contact" className={'v-btn v-btn--lg ' + (p.featured ? 'v-btn--primary' : 'v-btn--ghost')}>
-                {p.cta} <IconArrowRight size={16}/>
+              <a
+                href="#contact"
+                className={'v-btn v-btn--lg ' + (p.featured ? 'v-btn--primary' : 'v-btn--ghost')}
+                aria-label={`Get a quote for ${p.name}`}
+                onClick={() => onChoose && onChoose(p.name)}
+              >
+                Get a quote <IconArrowRight size={16}/>
               </a>
             </div>
           ))}

@@ -31,12 +31,28 @@
 
   // Pinning changes how the page responds to scrolling, so honour the same
   // preference the reveals and the hero entrance already respect.
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* P1-06: stacking is a desktop enhancement. On phones it competes with native
+     scrolling, and on very short viewports it parks more chrome than content.
+     Natural document flow is the baseline; the pin is added only where it is
+     proven comfortable, and re-enabled live if the window grows into range. */
+  const enableQuery = window.matchMedia('(min-width: 900px) and (min-height: 560px)');
+  const stackingAllowed = () => enableQuery.matches && !reduceQuery.matches;
 
   let items = [];
   let frame = 0;
   // Flow position of each section, i.e. where it would sit with no pinning.
   const flowTops = new WeakMap();
+
+  function disable() {
+    document.documentElement.classList.remove('v-stack');
+    items.forEach((el) => {
+      el.style.removeProperty('--stack-top');
+      el.style.removeProperty('--seam');
+      el.classList.remove('is-unpinned');
+    });
+  }
 
   function measure() {
     frame = 0;
@@ -131,6 +147,7 @@
   }
 
   function init() {
+    if (!stackingAllowed()) { disable(); return false; }
     const m = document.getElementById('main');
     if (!m) return false;
 
@@ -221,7 +238,72 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   interceptAnchors();
 
+  // Crossing the enable/disable boundary (rotation, window resize, split view)
+  // must tear the pin down cleanly — or rebuild it with fresh measurements.
+  if (enableQuery.addEventListener) {
+    enableQuery.addEventListener('change', () => {
+      if (stackingAllowed()) init();
+      else disable();
+    });
+  }
+  // Reduced motion switching on mid-visit behaves the same as starting reduced.
+  if (reduceQuery.addEventListener) {
+    reduceQuery.addEventListener('change', () => { if (reduceQuery.matches) disable(); });
+  }
+
   init();
+
+  /* Initial-hash and history reconciliation.
+   *
+   * A direct visit to /#pricing scrolls to the fragment while the prerendered
+   * HTML is on screen — but that scroll is animated (html has scroll-behavior:
+   * smooth), and createRoot().render() then REPLACES #main. The DOM swap
+   * cancels the animation, the viewport clamps back toward the top, and the
+   * browser never re-runs a fragment scroll for an already-visited hash. The
+   * visitor lands at the top of the page instead of the section they asked for.
+   *
+   * So: after React has rendered and stacking has measured, scroll the hash
+   * target to its flow position once. Only while the page is still near the
+   * top — if the visitor has already scrolled somewhere deliberately, we don't
+   * hijack them. Back/Forward (popstate) and plain hashchange re-reconcile
+   * without that gate, since those are explicit navigation acts. */
+  function reconcileHash() {
+    const id = window.location.hash.slice(1);
+    if (!id) return false;
+    const el = document.getElementById(id);
+    if (!el) return false;
+    // In a stacked section, use the flow position (the browser's rect-based
+    // jump is wrong while sections pin — see interceptAnchors). Otherwise a
+    // plain scrollIntoView honours the element's scroll-margin-top.
+    const flowTop = flowTopOf(el);
+    if (flowTop == null) {
+      el.scrollIntoView({ behavior: 'auto', block: 'start' });
+      return true;
+    }
+    const margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+    window.scrollTo({ top: Math.max(0, flowTop - margin), behavior: 'auto' });
+    return true;
+  }
+  let initialHashDone = false;
+  function reconcileInitial() {
+    if (initialHashDone) return;
+    if (!window.location.hash) { initialHashDone = true; return; }
+    // More than a viewport of movement reads as a deliberate scroll (by the
+    // visitor); a cancelled fragment animation leaves the viewport near the top.
+    if (window.scrollY > window.innerHeight) { initialHashDone = true; return; }
+    if (reconcileHash()) initialHashDone = true;
+  }
+  window.addEventListener('popstate', () => requestAnimationFrame(reconcileHash));
+  window.addEventListener('hashchange', () => requestAnimationFrame(reconcileHash));
+  if (document.readyState === 'complete') {
+    requestAnimationFrame(reconcileInitial);
+  } else {
+    window.addEventListener('load', () => requestAnimationFrame(reconcileInitial));
+  }
+  // init() re-runs when React replaces the prerendered #main — the moment the
+  // browser's own fragment scroll is most likely to have been cancelled.
+  const initAndReconcile = () => { init(); reconcileInitial(); };
+  // (init() was already called above; the observer below drives later re-inits.)
 
   /* Stays connected for the life of the page rather than disconnecting on first
    * success. #main arrives late on a fresh render, and is REPLACED on a
@@ -229,7 +311,7 @@
    * staleness check is a getElementById and two property reads, cheap enough to
    * run on a mutation batch. */
   const mo = new MutationObserver(() => {
-    if (isStale()) init();
+    if (isStale()) initAndReconcile();
   });
   mo.observe(document.documentElement, { childList: true, subtree: true });
 })();

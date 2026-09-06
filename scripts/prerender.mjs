@@ -32,12 +32,16 @@ const ROUTES = {
 
 const server = await preview({ preview: { port: PORT, strictPort: true } });
 const origin = `http://localhost:${PORT}`;
-const browser = await puppeteer.launch({
-  headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox'],
-});
+// Launched inside try so a failed launch (missing Chrome, crash) still reaches
+// the cleanup below instead of orphaning the preview server (P3-03).
+let browser = null;
 
 try {
+  browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+
   for (const [route, { file, awaitAI }] of Object.entries(ROUTES)) {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 1800 });
@@ -135,7 +139,7 @@ try {
     await page.close();
   }
 } finally {
-  await browser.close();
+  if (browser) await browser.close();
   await server.httpServer.close();
 }
 
