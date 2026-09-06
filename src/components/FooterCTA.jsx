@@ -1,48 +1,33 @@
+import FooterParticles from './FooterParticles.jsx';
 import { IconFacebook, IconLinkedIn, IconInstagram } from '../icons.jsx';
 
-/* `base` prefixes the in-page fragments so this footer also serves sub-pages —
-   see the note in Nav.jsx. "Back to top" stays a bare '#top': with no element
-   of that id, browsers special-case the fragment and scroll to the document
-   top, which is what it should do on every page. */
 function FooterCTA({ base = '' }) {
   return (
-    <>
-      <footer className="v-footer">
-        <div className="v-wrap v-footer__inner">
-            <div className="v-footer__brand">
-            <a href={base ? '/' : '#top'} className="v-footer__brand-link"><img src="/assets/viylsa-mark-white-sm.png" alt="" className="v-footer__mark" width="256" height="247" loading="lazy"/>
-            <div>
-              <div className="v-footer__name">VIYLSA</div>
-              <div className="v-footer__tag">Bringing visits online.</div>
-            </div></a>
-          </div>
-          <div className="v-footer__cols">
-            <nav aria-label="Product">
-              <h2 className="v-footer__col-h">Product</h2>
-              <a href={base + '#live-tour'}>Live tour</a><a href={base + '#analytics'}>What you get back</a><a href={base + '#how'}>How it works</a><a href={base + '#pricing'}>Packages</a><a href={base + '#faq'}>FAQ</a>
-            </nav>
-            <nav aria-label="Company">
-              <h2 className="v-footer__col-h">Company</h2>
-              <a href="/about.html">About</a><a href="/about.html#founders">Founders</a><a href={base + '#founding'}>Founding venues</a><a href={base + '#contact'}>Contact</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>
-            </nav>
-            <div>
-              <h2 className="v-footer__col-h">Get in touch</h2>
-              <a href="mailto:viylsavirtualtour@gmail.com" className="v-footer__email">viylsavirtualtour@gmail.com</a>
-              <a href="https://www.viylsa.app">www.viylsa.app</a>
-              <div className="v-footer__social">
-                <a href="https://www.facebook.com/profile.php?id=61571004368984" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Facebook (opens in a new tab)"><IconFacebook size={18}/></a>
-                <a href="https://www.linkedin.com/company/viylsa-tours/" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on LinkedIn (opens in a new tab)"><IconLinkedIn size={18}/></a>
-                <a href="https://www.instagram.com/viylsa_virtualtours" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Instagram (opens in a new tab)"><IconInstagram size={18}/></a>
-              </div>
-            </div>
-          </div>
+    <footer className="v-footer">
+
+      <div className="v-wrap">
+        <FooterParticles/>
+        <div className="v-footer__navigation">
+          <nav aria-label="Footer navigation">
+            <a href={base + '#live-tour'}>Live tour</a>
+            <a href={base + '#how'}>How it works</a>
+            <a href={base + '#pricing'}>Packages</a>
+            <a href="/about.html">About us</a>
+            <a href={base + '#contact'}>Contact ↗</a>
+          </nav>
         </div>
-        <div className="v-footer__base">
-          <span>© {new Date().getFullYear()} VIYLSA. All rights reserved.</span>
+        <div className="v-footer__bottom">
+          <span>© {new Date().getFullYear()} VIYLSA</span>
+          <div className="v-footer__legal"><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a></div>
+          <div className="v-footer__social">
+            <a href="https://www.facebook.com/profile.php?id=61571004368984" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Facebook (opens in a new tab)"><IconFacebook size={18}/></a>
+            <a href="https://www.linkedin.com/company/viylsa-tours/" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on LinkedIn (opens in a new tab)"><IconLinkedIn size={18}/></a>
+            <a href="https://www.instagram.com/viylsa_virtualtours" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Instagram (opens in a new tab)"><IconInstagram size={18}/></a>
+          </div>
           <a href="#top" className="v-footer__totop">Back to top ↑</a>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }
 export default FooterCTA;

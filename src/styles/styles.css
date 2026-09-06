@@ -1824,3 +1824,57 @@ a.v-contact__item:hover .v-contact__item-v { color: #fff; }
   font-size: 15px;
 }
 
+
+/* Compact brand signature. The light arrives, warms the mark, then departs. */
+.v-footer { position: relative; isolation: isolate; overflow: hidden; padding: 44px 0 22px; background: #0a090b; color: #b8afb1; }
+.v-footer__brandline { display: flex; align-items: center; gap: clamp(20px, 4vw, 52px); }
+.v-footer__seal { position: relative; display: flex; align-items: center; flex-shrink: 0; gap: 13px; padding: 10px 2px; text-decoration: none; color: #f0e9e5; font: 500 29px var(--font-display); letter-spacing: .015em; }
+.v-footer__seal::before { content: ''; position: absolute; inset: -25px -40px; z-index: -1; background: radial-gradient(ellipse, #bc294c35, transparent 70%); opacity: 0; animation: v-seal-glow 9s ease-in-out infinite; }
+.v-footer__seal-mark { width: 39px; height: 39px; background: #d8c1c6; mask: url('/assets/viylsa-mark-white-sm.png') center / contain no-repeat; animation: v-seal-ignite 9s ease-in-out infinite; }
+.v-footer__trace { position: relative; flex: 1; height: 1px; overflow: hidden; background: linear-gradient(90deg, transparent, #6b3a473f); }
+.v-footer__trace--out { background: linear-gradient(90deg, #6b3a473f, transparent); }
+.v-footer__trace::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, #ba395c 65%, #ffccd9 97%, transparent); transform: translateX(-105%); animation: v-trace-arrive 9s ease-in-out infinite; }
+.v-footer__trace--out::after { animation-name: v-trace-depart; }
+.v-footer__seal:hover { color: #f3b4c5; }
+.v-footer__navigation { display: flex; justify-content: center; padding: 28px 0 30px; }
+.v-footer__navigation nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 30px; }
+.v-footer__navigation a, .v-footer__legal a { display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; color: #b8afb1; text-decoration: none; transition: color .2s; }
+.v-footer__bottom { display: flex; align-items: center; gap: 26px; border-top: 1px solid #ffffff0d; padding-top: 14px; font-size: 11px; }
+.v-footer__legal { display: flex; gap: 20px; }
+.v-footer__bottom .v-footer__social { margin: 0 0 0 auto; gap: 4px; }
+.v-footer__bottom .v-footer__social a { margin: 0; color: #b8afb1; }
+.v-footer .v-footer__totop { display: inline-flex; align-items: center; min-height: 44px; font-size: 10px; color: #b8afb1; }
+.v-footer a:hover { color: #f3b4c5; }
+.v-footer a:focus-visible { outline: 2px solid #efb2c5; outline-offset: 5px; border-radius: 2px; }
+@keyframes v-trace-arrive { 0%, 8% { transform: translateX(-105%); opacity: 0; } 12% { opacity: 1; } 35% { transform: translateX(105%); opacity: 1; } 36%, 100% { transform: translateX(105%); opacity: 0; } }
+@keyframes v-trace-depart { 0%, 42% { transform: translateX(-105%); opacity: 0; } 45% { opacity: 1; } 72% { transform: translateX(105%); opacity: 1; } 73%, 100% { transform: translateX(105%); opacity: 0; } }
+@keyframes v-seal-ignite { 0%, 24%, 68%, 100% { background: #d8c1c6; filter: drop-shadow(0 0 0 transparent); } 34%, 44% { background: #ffb7cd; filter: drop-shadow(0 0 9px #e7457699); } }
+@keyframes v-seal-glow { 0%, 24%, 68%, 100% { opacity: 0; } 34%, 44% { opacity: 1; } }
+@media (max-width: 600px) { .v-footer { padding: 30px 0 20px; } .v-footer__seal { font-size: 25px; gap: 10px; } .v-footer__seal-mark { width: 33px; height: 33px; } .v-footer__navigation { padding: 18px 0; } .v-footer__navigation nav { gap: 0 20px; } .v-footer__bottom { flex-wrap: wrap; gap: 4px 20px; } .v-footer__bottom .v-footer__social { margin-left: 0; } .v-footer__totop { margin-left: auto; } }
+@media (prefers-reduced-motion: reduce) { .v-footer__trace::after, .v-footer__seal-mark, .v-footer__seal::before { animation: none; } }
+/* Larger, playful brand interaction without link underlines or text selection. */
+.v-footer__brandline { gap: clamp(18px, 4vw, 52px); padding: 10px 0; }
+.v-footer a.v-footer__seal, .v-footer a.v-footer__seal:hover, .v-footer a.v-footer__seal:focus { text-decoration: none; border-bottom: 0; background-image: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+.v-footer__seal { gap: 18px; padding: 18px 10px; font-size: clamp(38px, 4.8vw, 64px); transition: color .3s, transform .45s cubic-bezier(.2,.8,.2,1); }
+.v-footer__seal > span:last-child { display: inline-block; transition: letter-spacing .45s, text-shadow .45s; }
+.v-footer__seal-mark { width: clamp(48px, 5.5vw, 74px); height: clamp(48px, 5.5vw, 74px); transition: transform .65s cubic-bezier(.2,.8,.2,1); }
+.v-footer__seal::after { content: ''; position: absolute; inset: 4px -15px; pointer-events: none; border: 1px solid #e67b9a; border-radius: 50%; opacity: 0; transform: scale(.75); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+ .v-footer a.v-footer__seal:hover { transform: translateY(-4px); color: #ffe4ed; }
+ .v-footer__seal:hover > span:last-child { letter-spacing: .065em; text-shadow: 0 0 24px #ec5e8177; }
+ .v-footer__seal:hover .v-footer__seal-mark { transform: rotate(-12deg) scale(1.14); animation: none; background: #ffc6d8; filter: drop-shadow(0 0 15px #ed467baa); }
+ .v-footer__seal:hover::before { animation: none; opacity: 1; }
+ .v-footer__seal:hover::after { animation: v-brand-ripple 1.6s ease-out infinite; }
+ .v-footer__brandline:has(.v-footer__seal:hover) .v-footer__trace::after { animation-duration: 3s; }
+}
+@keyframes v-brand-ripple { 0% { transform: scale(.8); opacity: 0; } 18% { opacity: .3; } 100% { transform: scale(1.3); opacity: 0; } }
+@media (max-width: 600px) { .v-footer__brandline { gap: 12px; } .v-footer__seal { font-size: 36px; gap: 12px; padding: 14px 4px; } .v-footer__seal-mark { width: 46px; height: 46px; } }
+@media (prefers-reduced-motion: reduce) { .v-footer__seal, .v-footer__seal > span:last-child, .v-footer__seal-mark { transition: none; } }
+/* Quiet dotted brand; only individual particles react to the pointer. */
+.v-footer { padding-top: 8px; }
+.v-footer__particles { width: 100%; height: clamp(140px, 23vw, 280px); user-select: none; }
+.v-footer__particles canvas { display: block; width: 100%; height: 100%; font-family: var(--font-display); }
+.v-footer__navigation { padding-top: 0; }
+/* The closing form needs no extra tail before the footer. */
+#main > .v-contact, html.v-stack #main > .v-contact { padding-bottom: 30px; }
+.v-footer__particles { height: clamp(120px, 19vw, 230px); }

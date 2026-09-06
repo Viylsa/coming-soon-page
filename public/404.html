@@ -64,6 +64,29 @@
     .btn.ghost:hover { border-color:var(--crimson); box-shadow:none; }
 
     footer { border-top:1px solid var(--line); padding: 24px 0 48px; color:var(--subtle); font-size:14px; }
+
+    body { background: #0a090b; color: #f3e9e6; }
+    .band { background: transparent; padding: 22px 0; }
+    .wrap { max-width: 960px; }
+    main { padding: 8px 0 42px; text-align: center; }
+    .particle-code { height: clamp(170px, 28vw, 300px); position: relative; }
+    .particle-code canvas { display:block; width:100%; height:100%; font-family: Georgia, serif; }
+    .particle-code noscript { position:absolute; inset:0; font:150px Georgia; color:#9e6476; }
+    .code { color:#c28b9c; font-size:10px; letter-spacing:.2em; }
+    h1 { font-weight:400; font-size:clamp(30px, 5vw, 48px); }
+    h1 em { color:#daa0b1; }
+    .lead { color:#aaa0a5; margin:0 auto 26px; font-size:15px; max-width:52ch; }
+    .actions { justify-content:center; margin-bottom:28px; }
+    .btn.ghost { color:#dfc0cb; border-color:#ffffff26; }
+    .links { border-color:#ffffff12; padding-top:18px; }
+    .links ul { display:flex; justify-content:center; flex-wrap:wrap; gap:12px 24px; }
+    .links span { display:none; }
+    .links a, footer a { color:#c69aa8; font-size:13px; }
+    .links-h { color:#9f9298; }
+    footer { border-color:#ffffff12; color:#978991; font-size:12px; padding:20px 0; text-align:center; }
+    footer a { display:block; overflow-wrap:anywhere; }
+    a:focus-visible { outline-color:#e9a6bc; }
+    @media(prefers-reduced-motion:reduce) { .btn { transition:none; } .btn:hover { transform:none; } }
   </style>
 </head>
 <body>
@@ -75,7 +98,8 @@
 
   <main>
     <div class="wrap">
-      <p class="code">Error 404</p>
+      <div class="particle-code" role="img" aria-label="Error 404"><canvas aria-hidden="true"></canvas><noscript><span>404</span></noscript></div>
+      <p class="code">A little off the map</p>
       <h1>This page isn't <em>here.</em></h1>
       <p class="lead">The link may be out of date, or the address slightly off. Everything VIYLSA
       has is one click away below, including a live 360° tour you can walk right now.</p>
@@ -103,5 +127,9 @@
       <a href="mailto:viylsavirtualtour@gmail.com">viylsavirtualtour@gmail.com</a>
     </div>
   </footer>
+<script type="module">
+    import { mountBrandParticles } from '/brand-particles.js';
+    mountBrandParticles(document.querySelector('.particle-code canvas'), { label: '404', showLogo: false });
+  </script>
 </body>
 </html>
