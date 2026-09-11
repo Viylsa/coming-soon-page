@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconArrowRight, IconMail, IconMapPin, IconClock, IconCheck, IconWhatsApp } from '../icons.jsx';
+import { IconArrowRight, IconMail, IconMapPin, IconClock, IconCheck, IconWhatsApp, IconInstagram } from '../icons.jsx';
 
 /* WhatsApp number — international format, digits only, no + (for wa.me links). */
 const WHATSAPP_NUMBER = '923105968568';
@@ -138,6 +138,18 @@ function Contact({ package: selectedPackage = '' }) {
               <span>
                 <span className="v-contact__item-k">Based in</span>
                 <span className="v-contact__item-v">Islamabad &amp; Rawalpindi, Pakistan</span>
+              </span>
+            </div>
+            <div className="v-contact__item">
+              <span className="v-contact__ic"><IconInstagram size={18}/></span>
+              <span>
+                <span className="v-contact__item-k">Follow</span>
+                {/* Same handles as the footer — one source of truth per platform. */}
+                <span className="v-contact__social">
+                  <a href="https://www.instagram.com/viylsa_virtualtours" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Instagram (opens in a new tab)">Instagram</a>
+                  <a href="https://www.facebook.com/profile.php?id=61571004368984" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on Facebook (opens in a new tab)">Facebook</a>
+                  <a href="https://www.linkedin.com/company/viylsa-tours/" target="_blank" rel="noopener noreferrer" aria-label="VIYLSA on LinkedIn (opens in a new tab)">LinkedIn</a>
+                </span>
               </span>
             </div>
             <div className="v-contact__item">

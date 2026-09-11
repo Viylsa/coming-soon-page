@@ -90,7 +90,7 @@ const PRINCIPLES = [
   {
     n: '03',
     h: 'Proof over promises.',
-    p: 'The NUTECH campus tour is embedded on our homepage, not a marketing video of one. You can drag it, open the hotspots and judge the product before you talk to us.',
+    p: 'The NEIC tour, the NUTECH Entrepreneur & Incubation Centre, is embedded on our homepage, not a marketing video of it. You can drag it, open the hotspots and judge the product before you talk to us.',
   },
 ];
 

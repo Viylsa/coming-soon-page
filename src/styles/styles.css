@@ -1506,6 +1506,12 @@ a.v-contact__item:hover .v-contact__ic {
 }
 .v-contact__item-v { display: block; font-size: 15px; color: rgba(255,255,255,0.92); overflow-wrap: anywhere; }
 a.v-contact__item:hover .v-contact__item-v { color: #fff; }
+.v-contact__social { display: flex; gap: 18px; flex-wrap: wrap; }
+.v-contact__social a {
+  font-size: 15px; color: rgba(255,255,255,0.92); text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.v-contact__social a:hover { color: #E89AA0; }
 
 /* Form card. color-scheme dark renders the native select/controls to match. */
 .v-contact__form {

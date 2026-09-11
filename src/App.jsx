@@ -11,7 +11,7 @@ import Contact from './components/Contact.jsx';
 import FooterCTA from './components/FooterCTA.jsx';
 import StickyCTA from './components/StickyCTA.jsx';
 
-/* Section order is proof-first: the real NUTECH tour arrives in one short scroll
+/* Section order is proof-first: the real NEIC tour arrives in one short scroll
    (it is the one thing that proves VIYLSA isn't vaporware), THEN the problem it
    solves, THEN "what you get back" — the analytics dashboard with the bilingual
    AI guide folded in as a supporting sub-block (it is a capability of the tour,

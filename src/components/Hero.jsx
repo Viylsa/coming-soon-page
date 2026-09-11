@@ -33,7 +33,7 @@ function Hero() {
             <a href="#contact" className="v-btn v-btn--primary v-btn--lg">
               Book a demo <IconArrowRight size={18}/>
             </a>
-            {/* Second route: proof before conversation. The live NUTECH tour is
+            {/* Second route: proof before conversation. The live NEIC tour is
                 the section that earns trust, so make it reachable from the fold. */}
             <a href="#live-tour" className="v-btn v-btn--ghost-dark v-btn--lg">
               Explore the live tour

@@ -17,7 +17,7 @@ import { IconArrowRight, IconPlay } from '../icons.jsx';
    The tour stats and the founding-venues offer live here too: one section,
    one story. */
 
-const TOUR_URL = 'https://razee4315.github.io/nutech-tour-threejs/';
+const TOUR_URL = 'https://razee4315.github.io/NEIC-Tour/lab/';
 const SLOW_MS = 8000;   // show the "still loading" notice
 const FAIL_MS = 14000;  // give up and offer retry
 
@@ -52,9 +52,9 @@ function LiveTourPreview() {
   // toggle says the same thing two sections down, and it was the only stat that
   // wasn't a count of something in this tour.
   const stats = [
-    ['14', 'panoramic scenes'],
-    ['28', 'interactive hotspots'],
-    ['3', 'buildings linked'],
+    ['10', 'panoramic scenes'],
+    ['15', 'interactive hotspots'],
+    ['20', 'walking markers'],
   ];
 
   return (
@@ -64,9 +64,10 @@ function LiveTourPreview() {
           <div>
             <h2 className="v-h2">This is exactly what<br/>your visitors <span className="v-serif">walk into.</span></h2>
             <p className="v-tdemo__lede">
-              The NUTECH campus tour, a university in Islamabad, live in the
-              same player your visitors would use. Drag, click hotspots and
-              browse every view. No mock, no marketing video.
+              The NEIC tour, the NUTECH Entrepreneur &amp; Incubation Centre
+              in Islamabad, live in the same player your visitors would use.
+              Drag, click hotspots and browse every view. No mock, no marketing
+              video.
             </p>
           </div>
           <a href={TOUR_URL} target="_blank" rel="noopener" className="v-btn v-btn--link">Open tour in a new tab ↗</a>
@@ -76,7 +77,7 @@ function LiveTourPreview() {
           <div className="v-tdemo__chrome">
             <div className="v-tdemo__url">
               <span className="v-tdemo__lock">●</span>
-              VIYLSA tour player · NUTECH
+              VIYLSA tour player · NEIC
             </div>
             <div className="v-tdemo__spacer"></div>
           </div>
@@ -87,7 +88,7 @@ function LiveTourPreview() {
                 key={attempt}
                 className="v-tdemo__frame"
                 src={TOUR_URL}
-                title="VIYLSA Tour Player, live NUTECH campus tour"
+                title="VIYLSA Tour Player, live NEIC tour"
                 sandbox="allow-scripts allow-same-origin allow-popups allow-pointer-lock"
                 allow="fullscreen; xr-spatial-tracking; accelerometer; gyroscope"
                 allowFullScreen
@@ -98,9 +99,9 @@ function LiveTourPreview() {
             {state === 'idle' && (
               <div className="v-tdemo__poster">
                 <img
-                  src="/assets/tour/nutech-lab-strip.jpg"
+                  src="/assets/tour/neic-entrance.jpg"
                   alt=""
-                  width="2000" height="454" loading="lazy" decoding="async"
+                  width="1200" height="630" loading="lazy" decoding="async"
                 />
                 <div className="v-tdemo__poster-ui">
                   <button type="button" className="v-tdemo__play" onClick={activate}>
